@@ -1,25 +1,42 @@
 package data;
 
+/**
+ * The Packet class represents a package with specific dimensions (length and height) and weight
+ */
 public class Packet {
 
-	// length of package in millimeters
+	/**
+	 * The length of the package in millimeters
+	 */
 	public int length;
 
-	// width of package in millimeters
+	/**
+	 * The width of the package in millimeters
+	 */
 	public int width;
-	
-	// height of package in millimeters
+
+	/**
+	 * The height of the package in millimeters
+	 */
 	public int height;
-	
-	// weight of package in grams
+
+	/**
+	 * The weight of the package in grams
+	 */
 	public int weight;
 
-	// constructor
+	/**
+	 * Constructor for the Packet class
+	 *
+	 * @param length the length of the package in millimeters
+	 * @param width the width of the package in millimeters
+	 * @param height the height of the package in millimeters
+	 * @param weight the weight of the package in grams
+	 */
 	public Packet(int length, int width, int height, int weight) {
 		this.length = length;
 		this.width = width;
 		this.height = height;
 		this.weight = weight;
 	}
-	
 }

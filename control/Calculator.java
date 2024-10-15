@@ -3,12 +3,12 @@ package control;
 import data.Packet;
 
 /**
- * The Calculator class provides a method to calculate shipping costs based on the dimensions and weight of a packet.
+ * The Calculator class provides a method to calculate shipping costs based on the dimensions and weight of a packet
  */
 public class Calculator {
 
 	/**
-	 * Calculates the shipping costs based on the dimensions and weight of the given packet.
+	 * Calculates the shipping costs based on the dimensions and weight of the given packet
 	 * @param pack the packet for which the shipping costs are to be calculated
 	 * @return the calculated shipping costs
 	 */
