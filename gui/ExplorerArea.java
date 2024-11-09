@@ -14,9 +14,13 @@ import javafx.scene.control.TreeView;
 import javafx.util.Callback;
 
 /**
- * The ExplorerArea class represents the file explorer in the application, displaying the directory structure
- * and allowing file operations such as creating, deleting, and copying files and directories. It extends
- * the TabPane to include file system browsing functionality in a tabbed user interface.
+ * The ExplorerArea class provides a GUI component for displaying a file system
+ * structure within a tab. It extends {@link TabPane} to allow browsing and
+ * interacting with the file system. Users can perform actions like creating,
+ * deleting, and copying files or folders directly from this interface.
+ *
+ * @see gui.ExplorerArea.TreeCellImpl
+ * @see gui.ExplorerArea.FileItem
  */
 public class ExplorerArea extends TabPane {
 
@@ -27,8 +31,9 @@ public class ExplorerArea extends TabPane {
 	private TreeView<FileItem> treeView;
 
 	/**
-	 * The FileItem class is a wrapper for a File object to represent it within the TreeView.
-	 * It provides constructors for file paths and overrides the toString method to display the file name.
+	 * The FileItem class wraps a {@link File} object to be used in a TreeView,
+	 * representing file paths in the application. The class provides a custom
+	 * string representation for displaying the file name.
 	 */
 	class FileItem {
 		public File file;
@@ -165,10 +170,11 @@ public class ExplorerArea extends TabPane {
 		};
 	}
 
-
 	/**
-	 * The TreeCellImpl class defines custom behavior for the cells in the TreeView. It provides context menus based
-	 * on whether the item is a folder or a file, enabling actions like creating, deleting, and copying files.
+	 * The TreeCellImpl class defines custom behavior for cells in the TreeView.
+	 * This includes displaying context menus for various file actions like create,
+	 * delete, and copy. TreeCellImpl is used within {@link ExplorerArea#buildFileSystemBrowser(String)}
+	 * to add specific interactions for files and folders.
 	 */
 	private final class TreeCellImpl extends TreeCell<FileItem> {
 
@@ -239,8 +245,8 @@ public class ExplorerArea extends TabPane {
 	}
 
 	/**
-	 * Constructor for ExplorerArea. This initializes the explorer with one fixed tab
-	 * labeled "Explorer" that is not closable.
+	 * Constructor for ExplorerArea. Initializes the explorer with a fixed tab labeled
+	 * "Explorer" that is not closable.
 	 */
 	public ExplorerArea() {
 		explorerTab = new Tab("Explorer");

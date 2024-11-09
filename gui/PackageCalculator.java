@@ -10,18 +10,23 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- * The PackageCalculator class is the main entry point for the application. It is responsible for initializing and
- * setting up the user interface components, managing the application layout, and handling the main stage for the JavaFX
- * application.
+ * The PackageCalculator class serves as the main entry point for the application. It is responsible for initializing
+ * and configuring the layout and functionality of the user interface components, managing the application window, and
+ * setting up the primary stage for this JavaFX application.
+ *
+ * <p>This class utilizes a singleton pattern to ensure only one instance exists and can be accessed globally within
+ * the application.</p>
+ *
+ * @see javafx.application.Application
  */
 public class PackageCalculator extends Application {
 
 	/**
-	 * The name of the application, used as a title for the window.
+	 * The name of the application, displayed as the title of the main window.
 	 */
 	public final static String APPNAME = "PackageCalculator";
 
-	// Singleton instance of the PackageCalculator class
+	// Singleton instance of PackageCalculator
 	private static PackageCalculator instance;
 
 	/**
@@ -68,9 +73,8 @@ public class PackageCalculator extends Application {
 	 */
 	public StatusArea statusArea = new StatusArea();
 
-
 	/**
-	 * The root path of the current project.
+	 * The root directory path of the current project.
 	 */
 	public String rootPath;
 
@@ -78,65 +82,65 @@ public class PackageCalculator extends Application {
 	private Stage primaryStage;
 
 	/**
-	 * Gets the primary stage of the application, which is the main window.
+	 * Retrieves the primary stage, which serves as the main window for the application.
 	 *
-	 * @return The primary stage of the application.
+	 * @return The primary {@link Stage} instance.
 	 */
 	public Stage getPrimaryStage() {
 		return this.primaryStage;
 	}
 
 	/**
-	 * This is the main method of the application that sets up the layout of the various areas such as the toolbar,
-	 * explorer, editor, messages, and status areas. It also handles the window and its content initialization.
+	 * Sets up the primary layout and initializes the user interface with various sections, including toolbar, explorer,
+	 * editor, messages, and status areas.
 	 *
 	 * @param primaryStage The primary stage provided by the JavaFX runtime.
 	 */
 	@Override
 	public void start(Stage primaryStage) {
-		// Set singleton instance
+		// Initialize singleton instance
 		PackageCalculator.instance = this;
 
-		// Remember the primary stage
+		// Store the primary stage reference
 		this.primaryStage = primaryStage;
 
-		// SplitPane for editor and inspector
+		// Create a SplitPane for editor and inspector sections
 		SplitPane lr2SplitPane = new SplitPane();
 		lr2SplitPane.getItems().addAll(editorArea, inspectorArea);
 		lr2SplitPane.setDividerPositions(0.8f, 0.2f);
 
-		// SplitPane for editor/inspector and messages
+		// Create a vertical SplitPane for editor/inspector and messages areas
 		SplitPane tdSplitPane = new SplitPane();
 		tdSplitPane.setOrientation(Orientation.VERTICAL);
 		tdSplitPane.getItems().addAll(lr2SplitPane, messagesArea);
 		tdSplitPane.setDividerPositions(0.9f, 0.1f);
 
-		// SplitPane for explorer and editor/inspector/messages
+		// Create the main SplitPane for explorer and other sections
 		SplitPane lrSplitPane = new SplitPane();
 		lrSplitPane.getItems().addAll(explorerArea, tdSplitPane);
 		lrSplitPane.setDividerPositions(0.2f, 0.8f);
 
-		// Main layout with toolbar, split areas, and status area
+		// Set up the main layout, including toolbar, main split pane, and status area
 		BorderPane mainPane = new BorderPane();
 		mainPane.setTop(toolbarArea);
 		mainPane.setCenter(lrSplitPane);
 		mainPane.setBottom(statusArea);
 
-		// Setup and show the scene
+		// Configure the scene and set the window size to the screen's visual bounds
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 		Scene scene = new Scene(mainPane, screenBounds.getWidth(), screenBounds.getHeight(), true);
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
-		// Optionally load a default workspace
+		// Optional: Load a default project at startup
 		// ProjectHandling.openProject("/Users/...");
 	}
 
 	/**
-	 * The main method that launches the JavaFX application.
+	 * The main method to launch the JavaFX application.
 	 *
-	 * @param args Command-line arguments.
+	 * @param args Command-line arguments passed to the application.
 	 */
 	public static void main(String[] args) {
 		launch(args);

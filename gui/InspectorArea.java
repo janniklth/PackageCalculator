@@ -3,18 +3,20 @@ package gui;
 import javafx.scene.layout.GridPane;
 
 /**
- * The InspectorArea class represents a section of the user interface where details or properties of a selected item can
- * be inspected and modified. It extends the GridPane to allow flexible layout of UI components that will be used for
- * displaying and editing information.
+ * The InspectorArea class provides a dedicated area within the user interface for viewing and editing details of
+ * selected items. It extends {@link GridPane} for a flexible layout that can be customized as needed for specific
+ * types of data and interaction components.
+ *
+ * @see javafx.scene.layout.GridPane
  */
 public class InspectorArea extends GridPane {
 
     /**
-     * Constructor for InspectorArea. Initializes the grid for use in displaying information about selected items in the
-     * application. Additional UI elements will be added later to allow for interaction with this pane.
+     * Constructs an InspectorArea instance, initializing the basic layout structure.
+     * UI components for displaying and modifying item properties will be added as the
+     * application develops.
      */
     public InspectorArea() {
-        // TODO: Implement constructor (or even the full class)
-
+        // TODO: Implement constructor with relevant UI components
     }
 }

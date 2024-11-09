@@ -14,12 +14,17 @@ import javafx.scene.layout.GridPane;
  * The CalculatorArea class provides a graphical user interface for calculating shipping costs based
  * on the dimensions and weight of a package. It extends the GridPane layout to organize the input fields,
  * labels, and buttons in a grid.
+ *
+ * <p>CalculatorArea relies on the {@link Calculator} class for performing the shipping cost calculations
+ * and uses the {@link Helper} class to display alerts when user input is invalid.</p>
+ *
+ * @see Calculator
  */
 public class CalculatorArea extends GridPane {
 
 	// Input fields for package dimensions and weight
 	TextField lengthTextField = new TextField();
-	TextField widthTextField  = new TextField();
+	TextField widthTextField = new TextField();
 	TextField heightTextField = new TextField();
 	TextField weightTextField = new TextField();
 
@@ -37,18 +42,17 @@ public class CalculatorArea extends GridPane {
 	 * shippingCostLabel.
 	 *
 	 * @return the calculated shipping costs
+	 * @throws IllegalArgumentException if any input field contains invalid or wrong formatted data
 	 */
 	private double calcShippingCosts() {
-		// Declare costs variable
 		double costs = 0.0;
 
 		// Check if any text field is empty
 		if (lengthTextField.getText().isEmpty() || widthTextField.getText().isEmpty() ||
 				heightTextField.getText().isEmpty() || weightTextField.getText().isEmpty()) {
 
-			// Show an alert for missing input
 			Helper.showAlert(Alert.AlertType.ERROR, "Input Error", "All fields must be filled out.");
-			return costs; // Return 0.0 if the calculation can't proceed due to missing input
+			return costs;
 		}
 
 		// Try to parse user input values and calculate shipping cost and catch any exceptions
@@ -83,6 +87,8 @@ public class CalculatorArea extends GridPane {
 	 *
 	 * This constructor sets up the layout of the input fields, labels, and button. It also sets the
 	 * action listener for the "Calculate" button to trigger the shipping cost calculation.
+	 *
+	 * @see Helper#showAlert(Alert.AlertType, String, String)
 	 */
 	public CalculatorArea() {
 		// Set standard distance between elements
@@ -96,7 +102,7 @@ public class CalculatorArea extends GridPane {
 
 		// Add input fields for user input
 		this.add(lengthTextField, 2, 1);
-		this.add(widthTextField,  2, 2);
+		this.add(widthTextField, 2, 2);
 		this.add(heightTextField, 2, 3);
 		this.add(weightTextField, 2, 4);
 

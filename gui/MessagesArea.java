@@ -3,15 +3,18 @@ package gui;
 import javafx.scene.control.ListView;
 
 /**
- * The MessagesArea class represents a section of the user interface that displays a list of messages or logs. It
- * extends the ListView component, allowing strings to be added, displayed, and managed as individual message entries.
+ * The MessagesArea class provides a user interface component for displaying a series of messages or log entries.
+ * It extends {@link ListView} to facilitate message management, including adding, viewing, and potentially filtering
+ * messages in a list format.
+ *
+ * @see javafx.scene.control.ListView
  */
 public class MessagesArea extends ListView<String> {
 
     /**
-     * Constructor for MessagesArea. Initializes the list view for displaying messages...
+     * Constructs a MessagesArea instance, initializing the list view to display messages.
      */
     public MessagesArea() {
-        // TODO: Implement constructor (or even the full class)
+        // TODO: Implement constructor and functionality for adding and managing messages
     }
 }

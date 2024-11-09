@@ -1,6 +1,7 @@
 package gui;
 
 import control.ProjectHandling;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
@@ -13,31 +14,36 @@ import javafx.stage.Stage;
 /**
  * The ToolbarArea class represents the toolbar of the application, containing various buttons that allow the user to
  * perform key actions such as opening projects, creating new files, saving files, accessing settings, and getting info.
- * It extends the ToolBar component from JavaFX.
+ * It extends the {@link ToolBar} component from JavaFX.
+ *
+ * @see javafx.scene.control.ToolBar
  */
 public class ToolbarArea extends ToolBar {
 
 	/**
-	 * Shows a info dialog with information about the application version and authorship. This dialog is displayed in a
+	 * Shows an info dialog with information about the application version and authorship. This dialog is displayed in a
 	 * modal window.
 	 */
 	private void showInfoDialog() {
 		Stage dialog = new Stage();
 		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.setTitle("Application Info");
+
 		VBox vbox = new VBox(20);
 		Text infoText = new Text("Package Calculator v0.3 \n (c) 2020 I. Bogicevic J. Loth");
 		vbox.getChildren().add(infoText);
-		Scene dialogScene = new Scene(vbox, 400, 250);
+
+		Scene dialogScene = new Scene(vbox, 400, 200);
 		dialog.setScene(dialogScene);
-		dialog.show();
+		dialog.showAndWait();
 	}
 
 	/**
-	 * Constructor for the ToolbarArea. This initializes the buttons and their associated action listeners. Buttons
+	 * Constructor for the ToolbarArea. Initializes the buttons and their associated action listeners. Buttons
 	 * include options for opening a project, creating a new file, saving a file, and accessing the info popup.
 	 */
 	public ToolbarArea() {
-		// initialize buttons
+		// Initialize buttons
 		Button openProjectButton = new Button("Open Project");
 		Button newFileButton = new Button("New File");
 		Button saveFileButton = new Button("Save File");
@@ -46,7 +52,7 @@ public class ToolbarArea extends ToolBar {
 		Button aboutButton = new Button("About");
 		Button infoButton = new Button("Info");
 
-		// action listeners
+		// Set action listeners for buttons
 		openProjectButton.setOnAction(e -> ProjectHandling.openProject());
 		newFileButton.setOnAction(e -> ProjectHandling.newFile());
 		infoButton.setOnAction(e -> showInfoDialog());
