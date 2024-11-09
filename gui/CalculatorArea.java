@@ -1,8 +1,10 @@
 package gui;
 
 import control.Calculator;
+import control.Helper;
 import data.Packet;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -37,21 +39,41 @@ public class CalculatorArea extends GridPane {
 	 * @return the calculated shipping costs
 	 */
 	private double calcShippingCosts() {
-		// Initialize Calculator
-		Calculator calc = new Calculator();
+		// Declare costs variable
+		double costs = 0.0;
 
-		// Get user input values
-		int length = Integer.parseInt(lengthTextField.getText());
-		int width = Integer.parseInt(widthTextField.getText());
-		int height = Integer.parseInt(heightTextField.getText());
-		int weight = Integer.parseInt(weightTextField.getText());
+		// Check if any text field is empty
+		if (lengthTextField.getText().isEmpty() || widthTextField.getText().isEmpty() ||
+				heightTextField.getText().isEmpty() || weightTextField.getText().isEmpty()) {
 
-		// Perform calculation
-		Packet packet = new Packet(length, width, height, weight);
-		Double costs = calc.calcShippingCosts(packet);
+			// Show an alert for missing input
+			Helper.showAlert(Alert.AlertType.ERROR, "Input Error", "All fields must be filled out.");
+			return costs; // Return 0.0 if the calculation can't proceed due to missing input
+		}
 
-		// Show result
-		shippingCostLabel.setText(costs.toString());
+		// Try to parse user input values and calculate shipping cost and catch any exceptions
+		try {
+			int length = Integer.parseInt(lengthTextField.getText());
+			int width = Integer.parseInt(widthTextField.getText());
+			int height = Integer.parseInt(heightTextField.getText());
+			int weight = Integer.parseInt(weightTextField.getText());
+
+			// Create packet and calculate shipping costs
+			Packet packet = new Packet(length, width, height, weight);
+			costs = Calculator.calcShippingCosts(packet);
+
+			// Show result
+			shippingCostLabel.setText(Double.toString(costs));
+
+		} catch (NumberFormatException e) {
+			// Show an error message if non-numeric input is provided
+			Helper.showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter valid numbers in all fields.");
+			shippingCostLabel.setText("?");
+		} catch (IllegalArgumentException e) {
+			// Show the error message if the packet dimensions or weight are invalid
+			Helper.showAlert(Alert.AlertType.ERROR, "Invalid Input", e.getMessage());
+			shippingCostLabel.setText("?");
+		}
 
 		return costs;
 	}
