@@ -50,7 +50,7 @@ public class PackageCalculator extends Application {
 	/**
 	 * The ExplorerArea class represents a section of the user interface that displays a tree view of the project structure.
 	 */
-	public ExplorerArea explorerArea = new ExplorerArea();
+//	public ExplorerArea explorerArea = new ExplorerArea();
 
 	/**
 	 * The CalculatorArea class represents a section of the user interface where calculations can be performed.
@@ -115,15 +115,10 @@ public class PackageCalculator extends Application {
 		tdSplitPane.getItems().addAll(lr2SplitPane, messagesArea);
 		tdSplitPane.setDividerPositions(0.9f, 0.1f);
 
-		// Create the main SplitPane for explorer and other sections
-		SplitPane lrSplitPane = new SplitPane();
-		lrSplitPane.getItems().addAll(explorerArea, tdSplitPane);
-		lrSplitPane.setDividerPositions(0.2f, 0.8f);
-
 		// Set up the main layout, including toolbar, main split pane, and status area
 		BorderPane mainPane = new BorderPane();
 		mainPane.setTop(toolbarArea);
-		mainPane.setCenter(lrSplitPane);
+		mainPane.setCenter(tdSplitPane);
 		mainPane.setBottom(statusArea);
 
 		// Configure the scene and set the window size to the screen's visual bounds

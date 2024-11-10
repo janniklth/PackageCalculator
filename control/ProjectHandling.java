@@ -15,12 +15,10 @@ public class ProjectHandling {
 	 * Opens an existing project by specifying the root path
 	 * @param rootPath the root path of the project to be opened
 	 */
+	// TODO: Check if this can be deleted. It is not used in the code and there is no explorer area anymore.
 	static public void openProject(String rootPath) {
 		// update window title
 		PackageCalculator.getInstance().getPrimaryStage().setTitle(PackageCalculator.APPNAME + " – " + rootPath);
-
-		// load tree in explorer
-		PackageCalculator.getInstance().explorerArea.loadNewTree(rootPath);
 
 		// remember open project
 		PackageCalculator.getInstance().rootPath = rootPath;
