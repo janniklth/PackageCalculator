@@ -1,5 +1,7 @@
 package control;
 
+import gui.MessagesArea;
+import gui.PackageCalculator;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -24,6 +26,10 @@ public class Helper {
      * @param message the message content of the alert
      */
     public static void showAlert(AlertType alertType, String title, String message) {
+        // show message in messages area
+        PackageCalculator.getInstance().messagesArea.setMessage("Error: " + title + " - " + message);
+
+        // create and show alert dialog
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
