@@ -80,7 +80,7 @@ public class CalculatorArea extends GridPane {
 			shippingCostLabel.setText("?");
 		} catch (ShippingRuleException e) {
 			// Show the error message if the shipping rules could not be loaded
-			Helper.showAlert(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage());
+			Helper.showAlert(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: " + e.getCause());
             throw new RuntimeException(e);
         }
 
