@@ -24,9 +24,10 @@ jobs:
     # 3. Generate javadoc files
     - name: Generate Javadoc
       run: |
-        mkdir -p javadoc # create folder for the documentation
-        find . -name "*.java" > sources.txt # find all java files in the project
-        javadoc @sources.txt -d javadoc # generate javadoc for all java files
+        mkdir -p javadoc
+        javadoc -d javadoc \
+                -subpackages gui:data:control:test:exceptions \
+                .
 
     # 4. Publish javadoc to github actions
     - name: Deploy to GitHub Pages
