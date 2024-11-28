@@ -33,9 +33,9 @@ public class ShippingRuleLoader {
         }
 
         try (InputStream inputStream = ShippingRuleLoader.class.getClassLoader().getResourceAsStream(rules_json_path)) {
-            if (inputStream == null) {
-                throw new ShippingRuleException("Shipping rules file could not be opened: " + rules_json_path, null);
-            }
+//            if (inputStream == null) {
+//                throw new ShippingRuleException("Shipping rules file could not be opened: " + rules_json_path, null);
+//            }
 
             ObjectMapper mapper = new ObjectMapper();
 
