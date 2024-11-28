@@ -3,6 +3,7 @@ package gui;
 import control.Calculator;
 import control.Helper;
 import data.Packet;
+import exceptions.ShippingRuleException;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -71,15 +72,19 @@ public class CalculatorArea extends GridPane {
 
 		} catch (NumberFormatException e) {
 			// Show an error message if non-numeric input is provided
-			Helper.showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter valid numbers in all fields.");
+			Helper.showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter valid integer numbers in all fields.");
 			shippingCostLabel.setText("?");
 		} catch (IllegalArgumentException e) {
 			// Show the error message if the packet dimensions or weight are invalid
 			Helper.showAlert(Alert.AlertType.ERROR, "Invalid Input", e.getMessage());
 			shippingCostLabel.setText("?");
-		}
+		} catch (ShippingRuleException e) {
+			// Show the error message if the shipping rules could not be loaded
+			Helper.showAlert(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage());
+            throw new RuntimeException(e);
+        }
 
-		return costs;
+        return costs;
 	}
 
 	/**

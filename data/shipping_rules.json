@@ -1,0 +1,56 @@
+[
+  {
+    "type": "Small Parcel",
+    "maxLength": 300,
+    "maxWidth": 300,
+    "maxHeight": 150,
+    "maxWeight": 1000,
+    "maxGirth": null,
+    "cost": 3.89
+  },
+  {
+    "type": "Medium Parcel",
+    "maxLength": 600,
+    "maxWidth": 300,
+    "maxHeight": 150,
+    "maxWeight": 2000,
+    "maxGirth": null,
+    "cost": 4.39
+  },
+  {
+    "type": "Large Parcel",
+    "maxLength": 1200,
+    "maxWidth": 600,
+    "maxHeight": 600,
+    "maxWeight": 5000,
+    "maxGirth": 3000,
+    "cost": 5.89
+  },
+  {
+    "type": "Extra Large Parcel",
+    "maxLength": 1200,
+    "maxWidth": 600,
+    "maxHeight": 600,
+    "maxWeight": 10000,
+    "maxGirth": 3000,
+    "cost": 7.99
+  },
+  {
+    "type": "XXL Parcel",
+    "maxLength": 1200,
+    "maxWidth": 600,
+    "maxHeight": 600,
+    "maxWeight": 31000,
+    "maxGirth": 3000,
+    "cost": 14.99
+  },
+  {
+    "type": "XXXL Parcel",
+    "maxLength": 1200,
+    "maxWidth": 600,
+    "maxHeight": 600,
+    "maxWeight": 31000,
+    "maxGirth": null,
+    "cost": 14.99
+  }
+]
