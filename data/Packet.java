@@ -26,6 +26,11 @@ public class Packet {
 	public int weight;
 
 	/**
+	 * The girth of the package in millimeters
+	 */
+	public int girth;
+
+	/**
 	 * Constructor for the Packet class
 	 *
 	 * @param length the length of the package in millimeters
@@ -38,5 +43,6 @@ public class Packet {
 		this.width = width;
 		this.height = height;
 		this.weight = weight;
+		this.girth = length + 2 * width + 2 * height;
 	}
 }
