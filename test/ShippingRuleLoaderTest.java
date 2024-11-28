@@ -37,7 +37,17 @@ class ShippingRuleLoaderTest {
     }
 
     /**
+     * Tests that the default shipping rules (from hardcoded path) are loaded successfully.
+     */
+    @Test
+    void testLoadDefaultShippingRules() {
+        // Assert that the default shipping rules are loaded successfully
+        assertDoesNotThrow(() -> ShippingRuleLoader.loadShippingRules());
+    }
+
+    /**
      * Tests that all dimensions and weight limits are correctly loaded from the JSON file.
+     *
      * @throws Exception
      */
     @Test
@@ -55,17 +65,19 @@ class ShippingRuleLoaderTest {
 
     /**
      * Tests that an empty JSON file throws an exception.
+     *
      * @throws Exception
      */
     @Test
     void testLoadShippingRulesWithEmptyJson() {
         // Assert that the shippingRuleLoader should throw an exception
         Exception exception = assertThrows(ShippingRuleException.class, () -> ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_empty_rules.json"));
-        assertTrue(exception.getMessage().contains("No shipping rules found in the file"), "Exception message should indicate no rules found.");
+        assertTrue(exception.getCause().toString().contains("No shipping rules found in the file"), "Exception message should indicate no rules found.");
     }
 
     /**
      * Tests that a corrupted JSON file throws an exception.
+     *
      * @throws Exception
      */
     @Test
@@ -77,6 +89,7 @@ class ShippingRuleLoaderTest {
 
     /**
      * Tests that the rules are sorted by cost after loading.
+     *
      * @throws Exception
      */
     @Test
@@ -87,6 +100,16 @@ class ShippingRuleLoaderTest {
         // assert that the shipping rules are not null and that they are sorted by cost
         assertNotNull(shippingRules, "Shipping rules list should not be null.");
         assertTrue(isSortedByCost(shippingRules), "Shipping rules are not sorted by cost.");
+    }
+
+    /**
+     * Tests that an error is thrown when the shipping rules files cannot be found.
+     */
+    @Test
+    void testLoadShippingRulesFileNotFound() {
+        // Assert that the shippingRuleLoader should throw an exception
+        Exception exception = assertThrows(ShippingRuleException.class, () -> ShippingRuleLoader.loadCustomShippingRules("test/ressources/non_existent_file.json"));
+        assertTrue(exception.getMessage().contains("Shipping rules file not found"), "Exception message should indicate file not found.");
     }
 
     /**

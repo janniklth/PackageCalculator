@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
-
 /**
  * The ShippingRuleLoader class loads shipping rules from a JSON file and provides a method to retrieve them as a list of
  * {@link ShippingRule} objects.
@@ -46,6 +45,11 @@ public class ShippingRuleLoader {
                 throw new ShippingRuleException("No shipping rules found in the file: " + rules_json_path, null);
             }
 
+            // Validate the rules
+            for (ShippingRule rule : shippingRules) {
+                validateShippingRule(rule, rules_json_path);
+            }
+
             // Sort shipping rules by cost
             shippingRules.sort(Comparator.comparingDouble(ShippingRule::getCost));
 
@@ -53,6 +57,37 @@ public class ShippingRuleLoader {
 
         } catch (Exception e) {
             throw new ShippingRuleException("Error loading shipping rules from file: " + rules_json_path, e);
+        }
+    }
+
+    /**
+     * Validates the required fields of a ShippingRule.
+     * @param rule the ShippingRule to validate
+     * @param rules_json_path the path to the JSON file for error reporting
+     * @throws ShippingRuleException if any required field is missing or invalid
+     */
+    private static void validateShippingRule(ShippingRule rule, String rules_json_path) throws ShippingRuleException {
+        if (rule.getType() == null || rule.getType().isEmpty()) {
+            throw new ShippingRuleException("Missing 'type' field in shipping rule from file: " + rules_json_path, null);
+        }
+        if (rule.getMaxLength() <= 0) {
+            throw new ShippingRuleException("Invalid 'maxLength' field in shipping rule from file: " + rules_json_path, null);
+        }
+        if (rule.getMaxWidth() <= 0) {
+            throw new ShippingRuleException("Invalid 'maxWidth' field in shipping rule from file: " + rules_json_path, null);
+        }
+        if (rule.getMaxHeight() <= 0) {
+            throw new ShippingRuleException("Invalid 'maxHeight' field in shipping rule from file: " + rules_json_path, null);
+        }
+        if (rule.getMaxWeight() <= 0) {
+            throw new ShippingRuleException("Invalid 'maxWeight' field in shipping rule from file: " + rules_json_path, null);
+        }
+        if (rule.getCost() <= 0) {
+            throw new ShippingRuleException("Invalid 'cost' field in shipping rule from file: " + rules_json_path, null);
+        }
+        // maxGirth is optional, but if present, it should be a valid positive value
+        if (rule.getMaxGirth() != null && rule.getMaxGirth() <= 0) {
+            throw new ShippingRuleException("Invalid 'maxGirth' field in shipping rule from file: " + rules_json_path, null);
         }
     }
 
