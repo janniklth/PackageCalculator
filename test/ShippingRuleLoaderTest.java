@@ -72,7 +72,7 @@ class ShippingRuleLoaderTest {
     void testLoadShippingRulesWithEmptyJson() {
         // Assert that the shippingRuleLoader should throw an exception
         Exception exception = assertThrows(ShippingRuleException.class, () -> ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_empty_rules.json"));
-        assertTrue(exception.getMessage().contains("No shipping rules found in the file"), "Exception message should indicate no rules found.");
+        assertTrue(exception.getCause().toString().contains("No shipping rules found in the file"), "Exception message should indicate no rules found.");
     }
 
     /**
