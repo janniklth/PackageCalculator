@@ -1,0 +1,44 @@
+[
+  {
+    "type": "Medium",
+    "maxLength": 600,
+    "maxWidth": 200,
+    "maxHeight": 200,
+    "maxWeight": 1500,
+    "cost": 8.49
+  },
+  {
+    "type": "Large",
+    "maxLength": 1000,
+    "maxWidth": 400,
+    "maxHeight": 400,
+    "maxWeight": 10000,
+    "maxGirth": 3000,
+    "cost": 15.99
+  },
+  {
+    "type": "Small",
+    "maxLength": 400,
+    "maxWidth": 100,
+    "maxHeight": 100,
+    "maxWeight": 500,
+    "cost": 5.99
+  },
+  {
+    "type": "Extra Large",
+    "maxLength": 1200,
+    "maxWidth": 600,
+    "maxHeight": 600,
+    "maxWeight": 20000,
+    "maxGirth": 4000,
+    "cost": 20.99
+  },
+  {
+    "type": "Medium",
+    "maxLength": 600,
+    "maxWidth": 250,
+    "maxHeight": 250,
+    "maxWeight": 2000,
+    "cost": 12.49
+  }
+]

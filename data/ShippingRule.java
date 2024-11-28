@@ -50,6 +50,46 @@ public class ShippingRule {
     }
 
     /**
+     * Retrieves the maximum length of a package that can be shipped according to this rule.
+     * @return the maximum length as an int
+     */
+    public final int getMaxLength() {
+        return this.maxLength;
+    }
+
+    /**
+     * Retrieves the maximum width of a package that can be shipped according to this rule.
+     * @return the maximum width as an int
+     */
+    public final int getMaxWidth() {
+        return this.maxWidth;
+    }
+
+    /**
+     * Retrieves the maximum height of a package that can be shipped according to this rule.
+     * @return the maximum height as an int
+     */
+    public final int getMaxHeight() {
+        return this.maxHeight;
+    }
+
+    /**
+     * Retrieves the maximum weight of a package that can be shipped according to this rule.
+     * @return the maximum weight as an int
+     */
+    public final int getMaxWeight() {
+        return this.maxWeight;
+    }
+
+    /**
+     * Retrieves the maximum girth of a package that can be shipped according to this rule.
+     * @return the maximum girth as an int
+     */
+    public final Integer getMaxGirth() {
+        return this.maxGirth;
+    }
+
+    /**
      * Checks if the given packet fits within the dimensions and weight limits of this shipping rule.
      * @param pack the packet to check
      * @return true if the packet fits, false otherwise
