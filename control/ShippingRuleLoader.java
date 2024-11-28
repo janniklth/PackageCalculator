@@ -20,6 +20,12 @@ public class ShippingRuleLoader {
 
     private static final String RULES_FILE = "data/shipping_rules.json";
 
+    /**
+     * Loads the shipping rules from the JSON file specified by the RULES_FILE constant.
+     *
+     * @return a list of ShippingRule objects
+     * @throws ShippingRuleException if an error occurs while loading the shipping rules
+     */
     public static List<ShippingRule> loadShippingRules() throws ShippingRuleException {
         URL url = ShippingRuleLoader.class.getClassLoader().getResource(RULES_FILE);
         if (url == null) {
