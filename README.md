@@ -6,10 +6,15 @@ It includes a graphical user interface (GUI) for user interaction and supports l
 The project was part of the lecture advanced software engineering at DHBW Stuttgart.
 
 ## Features
+
+### Required Features
 - Calculate shipping costs based on package dimensions and weight.
-- Load custom shipping rules from JSON files.
 - Display error messages and alerts to the user.
 - Maintain a message area for logging important information.
+
+### Additional Features
+- Load custom shipping rules from JSON files.
+- Redesigned user interface with improved usability.
 
 
 ## Project Structure
