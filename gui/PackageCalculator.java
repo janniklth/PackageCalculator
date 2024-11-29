@@ -55,13 +55,13 @@ public class PackageCalculator extends Application {
 	/**
 	 * The CalculatorArea class represents a section of the user interface where calculations can be performed.
 	 */
-	public CalculatorArea editorArea = new CalculatorArea();
+	public CalculatorArea calculatorArea = new CalculatorArea();
 
 	/**
 	 * The InspectorArea class represents a section of the user interface where details or properties of a selected item can
 	 * be inspected and modified.
 	 */
-	public InspectorArea inspectorArea = new InspectorArea();
+	public CostsOverviewArea costsOverviewArea = new CostsOverviewArea();
 
 	/**
 	 * The MessagesArea class represents a section of the user interface that displays a list of messages or logs.
@@ -104,16 +104,16 @@ public class PackageCalculator extends Application {
 		// Store the primary stage reference
 		this.primaryStage = primaryStage;
 
-		// Create a SplitPane for editor and inspector sections
+		// Create a SplitPane for calculator and inspector sections
 		SplitPane lr2SplitPane = new SplitPane();
-		lr2SplitPane.getItems().addAll(editorArea, inspectorArea);
-		lr2SplitPane.setDividerPositions(0.8f, 0.2f);
+		lr2SplitPane.getItems().addAll(calculatorArea, costsOverviewArea);
+		lr2SplitPane.setDividerPositions(0.4f, 0.6f);
 
 		// Create a vertical SplitPane for editor/inspector and messages areas
 		SplitPane tdSplitPane = new SplitPane();
 		tdSplitPane.setOrientation(Orientation.VERTICAL);
 		tdSplitPane.getItems().addAll(lr2SplitPane, messagesArea);
-		tdSplitPane.setDividerPositions(0.9f, 0.1f);
+		tdSplitPane.setDividerPositions(0.8f, 0.2f);
 
 		// Set up the main layout, including toolbar, main split pane, and status area
 		BorderPane mainPane = new BorderPane();
@@ -123,13 +123,11 @@ public class PackageCalculator extends Application {
 
 		// Configure the scene and set the window size to the screen's visual bounds
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-		Scene scene = new Scene(mainPane, screenBounds.getWidth(), screenBounds.getHeight(), true);
+		Scene scene = new Scene(mainPane, 900, 500, true);
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.show();
-
-		// Optional: Load a default project at startup
-		// ProjectHandling.openProject("/Users/...");
 	}
 
 	/**
