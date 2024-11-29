@@ -123,7 +123,7 @@ public class PackageCalculator extends Application {
 
 		// Configure the scene and set the window size to the screen's visual bounds
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-		Scene scene = new Scene(mainPane, 900, 500, true);
+		Scene scene = new Scene(mainPane, 800, 500, true);
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);

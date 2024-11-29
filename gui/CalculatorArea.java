@@ -10,6 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /**
  * The CalculatorArea class provides a graphical user interface for calculating shipping costs based
@@ -21,7 +25,7 @@ import javafx.scene.layout.GridPane;
  *
  * @see Calculator
  */
-public class CalculatorArea extends GridPane {
+public class CalculatorArea extends VBox {
 
 	// Input fields for package dimensions and weight
 	TextField lengthTextField = new TextField();
@@ -81,10 +85,10 @@ public class CalculatorArea extends GridPane {
 		} catch (ShippingRuleException e) {
 			// Show the error message if the shipping rules could not be loaded
 			Helper.showAlert(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: " + e.getCause());
-            throw new RuntimeException(e);
-        }
+			throw new RuntimeException(e);
+		}
 
-        return costs;
+		return costs;
 	}
 
 	/**
@@ -96,33 +100,39 @@ public class CalculatorArea extends GridPane {
 	 * @see Helper#showAlert(Alert.AlertType, String, String)
 	 */
 	public CalculatorArea() {
-		// Set standard distance between elements
-		this.setPadding(new Insets(10, 10, 10, 10));
+		// Überschrift
+		Label heading = new Label("Shipping Cost Calculator");
+		heading.setFont(Font.font("System", FontWeight.BOLD, 20));
+		heading.setTextFill(Color.DARKSLATEBLUE);
 
-		// Add description labels for input fields
-		this.add(new Label("Length: "), 1, 1);
-		this.add(new Label("Width:  "), 1, 2);
-		this.add(new Label("Height: "), 1, 3);
-		this.add(new Label("Weight: "), 1, 4);
+		// Eingabe-Formular
+		GridPane form = new GridPane();
+		form.setHgap(10);
+		form.setVgap(10);
+		form.setPadding(new Insets(10));
 
-		// Add input fields for user input
-		this.add(lengthTextField, 2, 1);
-		this.add(widthTextField, 2, 2);
-		this.add(heightTextField, 2, 3);
-		this.add(weightTextField, 2, 4);
+		form.add(new Label("Length (mm):"), 0, 0);
+		form.add(lengthTextField, 1, 0);
+		form.add(new Label("Width (mm):"), 0, 1);
+		form.add(widthTextField, 1, 1);
+		form.add(new Label("Height (mm):"), 0, 2);
+		form.add(heightTextField, 1, 2);
+		form.add(new Label("Weight (g):"), 0, 3);
+		form.add(weightTextField, 1, 3);
 
-		// Add labels for measurement units
-		this.add(new Label("mm"), 3, 1);
-		this.add(new Label("mm"), 3, 2);
-		this.add(new Label("mm"), 3, 3);
-		this.add(new Label("g"), 3, 4);
+		// Ergebnisse und Button
+		form.add(new Label("Shipping Costs:"), 0, 4);
+		shippingCostLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
+		shippingCostLabel.setTextFill(Color.GREEN);
+		form.add(shippingCostLabel, 1, 4);
 
-		// Add shipping cost calculation line
-		this.add(new Label("Shipping Costs: "), 1, 5);
-		this.add(shippingCostLabel, 2, 5);
-		this.add(calcButton, 3, 5);
+		calcButton.setStyle("-fx-background-color: #0078D4; -fx-text-fill: white;");
+		calcButton.setOnAction(ae -> calcShippingCosts());
+		form.add(calcButton, 0, 5);
 
-		// Set action listener for the calculate button
-		calcButton.setOnAction(ae -> { calcShippingCosts(); });
+		// Gesamtansicht
+		this.setSpacing(20);
+		this.setPadding(new Insets(20));
+		this.getChildren().addAll(heading, form);
 	}
 }
