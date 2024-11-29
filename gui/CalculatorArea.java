@@ -100,12 +100,12 @@ public class CalculatorArea extends VBox {
 	 * @see Helper#showAlert(Alert.AlertType, String, String)
 	 */
 	public CalculatorArea() {
-		// Überschrift
+		// Heading
 		Label heading = new Label("Shipping Cost Calculator");
 		heading.setFont(Font.font("System", FontWeight.BOLD, 20));
 		heading.setTextFill(Color.DARKSLATEBLUE);
 
-		// Eingabe-Formular
+		// Input fields
 		GridPane form = new GridPane();
 		form.setHgap(10);
 		form.setVgap(10);
@@ -120,7 +120,7 @@ public class CalculatorArea extends VBox {
 		form.add(new Label("Weight (g):"), 0, 3);
 		form.add(weightTextField, 1, 3);
 
-		// Ergebnisse und Button
+		// result label and button to calculate
 		form.add(new Label("Shipping Costs:"), 0, 4);
 		shippingCostLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
 		shippingCostLabel.setTextFill(Color.GREEN);
@@ -130,7 +130,7 @@ public class CalculatorArea extends VBox {
 		calcButton.setOnAction(ae -> calcShippingCosts());
 		form.add(calcButton, 0, 5);
 
-		// Gesamtansicht
+		// compose layout
 		this.setSpacing(20);
 		this.setPadding(new Insets(20));
 		this.getChildren().addAll(heading, form);

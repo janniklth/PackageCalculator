@@ -21,12 +21,12 @@ public class CostsOverviewArea extends VBox {
     private final TableView<ShippingRule> tableView = new TableView<>();
 
     public CostsOverviewArea() {
-        // Überschrift
+        // heading
         Label heading = new Label("Costs Overview");
         heading.setFont(Font.font("System", FontWeight.BOLD, 20));
         heading.setTextFill(Color.DARKSLATEBLUE);
 
-        // Tabelle einrichten
+        // TableView setup
         TableColumn<ShippingRule, String> typeColumn = new TableColumn<>("Type");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
@@ -49,10 +49,10 @@ public class CostsOverviewArea extends VBox {
         tableView.getColumns().addAll(typeColumn, costColumn, dimensionsColumn, weightColumn);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // Daten laden
+        // load shipping rules into table
         loadShippingRulesIntoTable();
 
-        // Layout
+        // compose layout
         this.setSpacing(20);
         this.setPadding(new Insets(20));
         this.getChildren().addAll(heading, tableView);
