@@ -112,7 +112,7 @@ public class PackageCalculator extends Application {
 		// Create a vertical SplitPane for editor/inspector and messages areas
 		SplitPane tdSplitPane = new SplitPane();
 		tdSplitPane.setOrientation(Orientation.VERTICAL);
-		tdSplitPane.getItems().addAll(lr2SplitPane, messagesArea);
+		tdSplitPane.getItems().addAll(lr2SplitPane, messagesArea.getMessagesListView());
 		tdSplitPane.setDividerPositions(0.8f, 0.2f);
 
 		// Set up the main layout, including toolbar, main split pane, and status area

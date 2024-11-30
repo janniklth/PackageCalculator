@@ -27,7 +27,7 @@ public class Helper {
      */
     public static void showAlert(AlertType alertType, String title, String message) {
         // show message in messages area
-        PackageCalculator.getInstance().messagesArea.setMessage("Error: " + title + " - " + message);
+        PackageCalculator.getInstance().messagesArea.setMessage(title + " - " + message);
 
         // create and show alert dialog
         Alert alert = new Alert(alertType);
