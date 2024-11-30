@@ -106,8 +106,9 @@ public class PackageCalculator extends Application {
 
 		// Create a SplitPane for calculator and inspector sections
 		SplitPane lr2SplitPane = new SplitPane();
+		calculatorArea.setMaxWidth(320);
+		calculatorArea.setMinWidth(320);
 		lr2SplitPane.getItems().addAll(calculatorArea, costsOverviewArea);
-		lr2SplitPane.setDividerPositions(0.4f, 0.6f);
 
 		// Create a vertical SplitPane for editor/inspector and messages areas
 		SplitPane tdSplitPane = new SplitPane();
