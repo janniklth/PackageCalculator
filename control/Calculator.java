@@ -28,10 +28,11 @@ public class Calculator {
         // Convert the packet dimensions to metric units if needed
         Packet convertedPack = convertToMetric(pack);
 
-        // Loop through the loaded shipping rules to find the matching rule
+        // Loop through the loaded shipping rules to find the matching rule and convert the cost to the desired currency
         for (ShippingRule rule : shippingRules) {
             if (rule.matches(convertedPack)) {
-                return rule.getCost();
+                double costInEuro = rule.getCost();
+                return SettingsManager.getCurrency().convertFromEuro(costInEuro);
             }
         }
 

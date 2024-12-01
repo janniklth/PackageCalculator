@@ -121,7 +121,7 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
             costs = Calculator.calcShippingCosts(packet);
 
             // Show result
-            shippingCostLabel.setText(Double.toString(costs));
+            shippingCostLabel.setText(Double.toString(costs) + " " + SettingsManager.getCurrency().getSymbol());
 
         } catch (NumberFormatException e) {
             // Show an error message if non-numeric input is provided
@@ -145,7 +145,11 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
      */
     @Override
     public void onSettingsChanged() {
+        // update the labels to reflect the current measurement unit setting
         updateLabels();
+
+        // reset the calculation result to prevent confusion when changing the units or currency
+        shippingCostLabel.setText("?");
     }
 
     /**

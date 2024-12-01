@@ -2,8 +2,8 @@ package data;
 
 public enum Currency {
     EURO("Euro", "€", 1.0),
-    US_DOLLAR("US Dollar", "$", 1.18),
-    BRITISH_POUND("British Pound", "£", 0.86);
+    US_DOLLAR("US Dollar", "$", 1.07),
+    BRITISH_POUND("British Pound", "£", 0.84);
 
     private final String name;
     private final String symbol;
@@ -25,6 +25,14 @@ public enum Currency {
     }
 
     /**
+     * Returns the currency symbol.
+     * @return the currency symbol as a string
+     */
+    public String getSymbol() {
+        return symbol;
+    }
+
+    /**
      * Finds a Currency by its display string.
      *
      * @param displayString the display string to search for
@@ -38,5 +46,25 @@ public enum Currency {
             }
         }
         throw new IllegalArgumentException("Invalid display string: " + displayString);
+    }
+
+    /**
+     * Converts an amount from this currency to Euro, rounding to two decimal places.
+     *
+     * @param amount the amount to convert
+     * @return the amount in Euro
+     */
+    public double convertToEuro(double amount) {
+        return Math.round(amount / exchangeRateToEuro * 100.0) / 100.0;
+    }
+
+    /**
+     * Converts an amount from Euro to this currency, rounding to two decimal places.
+     *
+     * @param amount the amount to convert
+     * @return the amount in this currency
+     */
+    public double convertFromEuro(double amount) {
+        return Math.round(amount * exchangeRateToEuro * 100.0) / 100.0;
     }
 }
