@@ -1,6 +1,7 @@
 package gui;
 
 import control.SettingsManager;
+import data.Currency;
 import data.ErrorDisplayState;
 import data.MeasurementUnit;
 import javafx.geometry.Insets;
@@ -48,8 +49,10 @@ public class SettingsDialog {
         Label currencyLabel = new Label("Currency:");
         currencyLabel.setStyle("-fx-font-size: 14px;");
         ComboBox<String> currencyComboBox = new ComboBox<>();
-        currencyComboBox.getItems().addAll("EUR (€)", "USD ($)", "GBP (£)");
-        currencyComboBox.setValue(SettingsManager.getCurrency());
+        for (Currency currency : Currency.values()) {
+            currencyComboBox.getItems().add(currency.convertToDisplayString());
+        }
+        currencyComboBox.setValue(SettingsManager.getCurrency().convertToDisplayString());
 
         // Apply button
         Button applyButton = new Button("Apply");
@@ -62,7 +65,7 @@ public class SettingsDialog {
             SettingsManager.setShowErrorPopups(ErrorDisplayState.fromDisplayString(selectedErrorDisplay));
 
             String selectedCurrency = currencyComboBox.getValue();
-            SettingsManager.setCurrency(selectedCurrency);
+            SettingsManager.setCurrency(Currency.fromDisplayString(selectedCurrency));
 
             settingsDialog.close();
         });

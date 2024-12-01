@@ -2,6 +2,7 @@ package control;
 
 import data.MeasurementUnit;
 import data.ErrorDisplayState;
+import data.Currency;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class SettingsManager {
     private static List<SettingsListener> listeners = new ArrayList<>();
     private static MeasurementUnit measurementUnit = MeasurementUnit.METRIC;
     private static ErrorDisplayState errorDisplayState = ErrorDisplayState.POPUP_AND_LOG;
-    private static String currency = "EUR (€)";
+    private static Currency currency = Currency.EURO;
 
     public static MeasurementUnit getMeasurementUnit() {
         return measurementUnit;
@@ -29,11 +30,11 @@ public class SettingsManager {
         errorDisplayState = state;
     }
 
-    public static String getCurrency() {
+    public static Currency getCurrency() {
         return currency;
     }
 
-    public static void setCurrency(String selectedCurrency) {
+    public static void setCurrency(Currency selectedCurrency) {
         currency = selectedCurrency;
     }
 
