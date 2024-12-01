@@ -1,6 +1,6 @@
 package gui;
 
-import control.Helper;
+import control.MessageHandler;
 import control.ShippingRuleLoader;
 import data.ShippingRule;
 import exceptions.ShippingRuleException;
@@ -63,7 +63,7 @@ public class CostsOverviewArea extends VBox {
             List<ShippingRule> rules = ShippingRuleLoader.loadShippingRules();
             tableView.setItems(FXCollections.observableArrayList(rules));
         } catch (ShippingRuleException e) {
-            Helper.showAlert(Alert.AlertType.ERROR, "Error loading rules", e.getMessage());
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Error loading rules", e.getMessage());
         }
     }
 }

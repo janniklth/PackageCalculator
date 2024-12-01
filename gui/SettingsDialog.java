@@ -1,6 +1,7 @@
 package gui;
 
 import control.SettingsManager;
+import data.ErrorDisplayState;
 import data.MeasurementUnit;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -39,8 +40,10 @@ public class SettingsDialog {
         Label errorLabel = new Label("Show error messages:");
         errorLabel.setStyle("-fx-font-size: 14px;");
         ComboBox<String> errorPopupsComboBox = new ComboBox<>();
-        errorPopupsComboBox.getItems().addAll("Popup + log messages", "only log messages");
-        errorPopupsComboBox.setValue(SettingsManager.isShowErrorPopupsEnabled() ? "Popup + log messages" : "only log messages");
+        for (ErrorDisplayState state : ErrorDisplayState.values()) {
+            errorPopupsComboBox.getItems().add(state.convertToDisplayString());
+        }
+        errorPopupsComboBox.setValue(SettingsManager.getErrorDisplayState().convertToDisplayString());
 
         Label currencyLabel = new Label("Currency:");
         currencyLabel.setStyle("-fx-font-size: 14px;");
@@ -56,7 +59,7 @@ public class SettingsDialog {
             SettingsManager.setMeasurementUnit(MeasurementUnit.fromDisplayString(selectedUnit));
 
             String selectedErrorDisplay = errorPopupsComboBox.getValue();
-            SettingsManager.setShowErrorPopups(selectedErrorDisplay.equals("Popup + log messages"));
+            SettingsManager.setShowErrorPopups(ErrorDisplayState.fromDisplayString(selectedErrorDisplay));
 
             String selectedCurrency = currencyComboBox.getValue();
             SettingsManager.setCurrency(selectedCurrency);

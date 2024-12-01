@@ -1,6 +1,7 @@
 package control;
 
 import data.MeasurementUnit;
+import data.ErrorDisplayState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class SettingsManager {
     private static List<SettingsListener> listeners = new ArrayList<>();
     private static MeasurementUnit measurementUnit = MeasurementUnit.METRIC;
-    private static boolean showErrorPopupsEnabled = true; // Default to detailed errors
+    private static ErrorDisplayState errorDisplayState = ErrorDisplayState.POPUP_AND_LOG;
     private static String currency = "EUR (€)";
 
     public static MeasurementUnit getMeasurementUnit() {
@@ -20,12 +21,12 @@ public class SettingsManager {
         notifyListeners();
     }
 
-    public static boolean isShowErrorPopupsEnabled() {
-        return showErrorPopupsEnabled;
+    public static ErrorDisplayState getErrorDisplayState() {
+        return errorDisplayState;
     }
 
-    public static void setShowErrorPopups(boolean enabled) {
-        showErrorPopupsEnabled = enabled;
+    public static void setShowErrorPopups(ErrorDisplayState state) {
+        errorDisplayState = state;
     }
 
     public static String getCurrency() {

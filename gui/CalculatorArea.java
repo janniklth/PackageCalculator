@@ -1,7 +1,7 @@
 package gui;
 
 import control.Calculator;
-import control.Helper;
+import control.MessageHandler;
 import control.SettingsManager;
 import data.MeasurementUnit;
 import data.Packet;
@@ -105,7 +105,7 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         if (lengthTextField.getText().isEmpty() || widthTextField.getText().isEmpty() ||
                 heightTextField.getText().isEmpty() || weightTextField.getText().isEmpty()) {
 
-            Helper.showAlert(Alert.AlertType.ERROR, "Input Error", "All fields must be filled out.");
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Input Error", "All fields must be filled out.");
             return costs;
         }
 
@@ -125,15 +125,15 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
 
         } catch (NumberFormatException e) {
             // Show an error message if non-numeric input is provided
-            Helper.showAlert(Alert.AlertType.ERROR, "Invalid Input", "Please enter valid integer numbers in all fields.");
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Invalid Input", "Please enter valid integer numbers in all fields.");
             shippingCostLabel.setText("?");
         } catch (IllegalArgumentException e) {
             // Show the error message if the packet dimensions or weight are invalid
-            Helper.showAlert(Alert.AlertType.ERROR, "Invalid Input", e.getMessage());
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Invalid Input", e.getMessage());
             shippingCostLabel.setText("?");
         } catch (ShippingRuleException e) {
             // Show the error message if the shipping rules could not be loaded
-            Helper.showAlert(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: " + e.getCause());
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: " + e.getCause());
             throw new RuntimeException(e);
         }
         return costs;
