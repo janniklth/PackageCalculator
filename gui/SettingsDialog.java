@@ -75,27 +75,51 @@ public class SettingsDialog {
         cancelButton.setStyle("-fx-font-size: 14px;");
         cancelButton.setOnAction(e -> settingsDialog.close());
 
-        // Layout
+
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(15);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(15));
-        gridPane.add(unitsLabel, 0, 0);
-        gridPane.add(unitsComboBox, 1, 0);
-        gridPane.add(errorLabel, 0, 1);
-        gridPane.add(errorPopupsComboBox, 1, 1);
-        gridPane.add(currencyLabel, 0, 2);
-        gridPane.add(currencyComboBox, 1, 2);
+        gridPane.setHgap(10); // Abstand zwischen Spalten
+        gridPane.setVgap(15); // Abstand zwischen Zeilen
+        gridPane.setPadding(new Insets(15)); // Innenabstand
+        gridPane.setAlignment(Pos.TOP_CENTER); // Zentriert das GridPane
 
-        HBox buttonBox = new HBox(10, applyButton, cancelButton);
-        buttonBox.setAlignment(Pos.CENTER_RIGHT);
-        buttonBox.setPadding(new Insets(10, 0, 0, 0));
+        // Einheitliche Breite für alle ComboBoxes
+        double comboBoxWidth = 200;
 
-        VBox layout = new VBox(15, gridPane, buttonBox);
-        layout.setPadding(new Insets(15));
+        // Measurement units
+        VBox unitsBox = new VBox(5, unitsLabel, unitsComboBox);
+        unitsLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        unitsComboBox.setPrefWidth(comboBoxWidth);
 
-        // Set scene and show dialog
-        Scene dialogScene = new Scene(layout, 400, 220);
+        // Currency settings
+        VBox currencyBox = new VBox(5, currencyLabel, currencyComboBox);
+        currencyLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        currencyComboBox.setPrefWidth(comboBoxWidth);
+
+        // Error display settings
+        VBox errorBox = new VBox(5, errorLabel, errorPopupsComboBox);
+        errorLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        errorPopupsComboBox.setPrefWidth(comboBoxWidth);
+
+
+        // Einfügen der Boxen in das GridPane
+        gridPane.add(unitsBox, 0, 0);
+        gridPane.add(currencyBox, 0, 1);
+        gridPane.add(errorBox, 0, 2);
+
+        // Buttons
+        HBox buttonBox = new HBox(20, cancelButton, applyButton);
+        buttonBox.setAlignment(Pos.CENTER);
+        applyButton.setPrefWidth(90);
+        cancelButton.setPrefWidth(90);
+
+        // Hauptlayout
+        VBox layout = new VBox(20, gridPane, buttonBox);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.TOP_CENTER);
+        layout.setStyle("-fx-background-color: #ffffff;");
+
+        // Fenstergröße und Szene
+        Scene dialogScene = new Scene(layout, 275, 310);
         settingsDialog.setScene(dialogScene);
         settingsDialog.setResizable(false);
         settingsDialog.showAndWait();
