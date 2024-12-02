@@ -17,7 +17,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * The SettingsDialog class represents a modal dialog for changing application settings.
+ * The SettingsDialog class represents a modal dialog for changing application settings. It allows the user to change
+ * the measurement units, currency, and error display settings with ComboBoxes.
+ *
+ * @see SettingsManager
+ * @see MeasurementUnit
+ * @see Currency
+ * @see ErrorDisplayState
+ * @see ComboBox
  */
 public class SettingsDialog {
 
@@ -29,7 +36,7 @@ public class SettingsDialog {
         settingsDialog.initModality(Modality.APPLICATION_MODAL);
         settingsDialog.setTitle("Settings");
 
-        // Create UI components
+        // Measurement units settings
         Label unitsLabel = new Label("Measurement units:");
         ComboBox<String> unitsComboBox = new ComboBox<>();
         for (MeasurementUnit unit : MeasurementUnit.values()) {
@@ -37,15 +44,7 @@ public class SettingsDialog {
         }
         unitsComboBox.setValue(SettingsManager.getMeasurementUnit().convertToDisplayString());
 
-
-        Label errorLabel = new Label("Show error messages:");
-        errorLabel.setStyle("-fx-font-size: 14px;");
-        ComboBox<String> errorPopupsComboBox = new ComboBox<>();
-        for (ErrorDisplayState state : ErrorDisplayState.values()) {
-            errorPopupsComboBox.getItems().add(state.convertToDisplayString());
-        }
-        errorPopupsComboBox.setValue(SettingsManager.getErrorDisplayState().convertToDisplayString());
-
+        // Currency settings
         Label currencyLabel = new Label("Currency:");
         currencyLabel.setStyle("-fx-font-size: 14px;");
         ComboBox<String> currencyComboBox = new ComboBox<>();
@@ -54,7 +53,16 @@ public class SettingsDialog {
         }
         currencyComboBox.setValue(SettingsManager.getCurrency().convertToDisplayString());
 
-        // Apply button
+        // Error display settings
+        Label errorLabel = new Label("Show error messages:");
+        errorLabel.setStyle("-fx-font-size: 14px;");
+        ComboBox<String> errorPopupsComboBox = new ComboBox<>();
+        for (ErrorDisplayState state : ErrorDisplayState.values()) {
+            errorPopupsComboBox.getItems().add(state.convertToDisplayString());
+        }
+        errorPopupsComboBox.setValue(SettingsManager.getErrorDisplayState().convertToDisplayString());
+
+        // Apply button: Save settings to SettingsManager and close dialog
         Button applyButton = new Button("Apply");
         applyButton.setStyle("-fx-background-color: #0078D4; -fx-text-fill: white; -fx-font-size: 14px;");
         applyButton.setOnAction(e -> {
@@ -70,55 +78,52 @@ public class SettingsDialog {
             settingsDialog.close();
         });
 
-        // Cancel button
+        // Cancel button: Close dialog without saving settings
         Button cancelButton = new Button("Cancel");
         cancelButton.setStyle("-fx-font-size: 14px;");
         cancelButton.setOnAction(e -> settingsDialog.close());
 
-
+        // Layout with GridPane
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10); // Abstand zwischen Spalten
-        gridPane.setVgap(15); // Abstand zwischen Zeilen
-        gridPane.setPadding(new Insets(15)); // Innenabstand
-        gridPane.setAlignment(Pos.TOP_CENTER); // Zentriert das GridPane
+        gridPane.setHgap(10);
+        gridPane.setVgap(15);
+        gridPane.setPadding(new Insets(15));
+        gridPane.setAlignment(Pos.TOP_CENTER);
 
-        // Einheitliche Breite für alle ComboBoxes
+        // Uniform width for all ComboBoxes
         double comboBoxWidth = 200;
 
-        // Measurement units
+        // Layout for measurement unit settings
         VBox unitsBox = new VBox(5, unitsLabel, unitsComboBox);
         unitsLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
         unitsComboBox.setPrefWidth(comboBoxWidth);
+        gridPane.add(unitsBox, 0, 0);
 
-        // Currency settings
+        // Layout for currency settings
         VBox currencyBox = new VBox(5, currencyLabel, currencyComboBox);
         currencyLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
         currencyComboBox.setPrefWidth(comboBoxWidth);
+        gridPane.add(currencyBox, 0, 1);
 
-        // Error display settings
+        // Layout for error display settings
         VBox errorBox = new VBox(5, errorLabel, errorPopupsComboBox);
         errorLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
         errorPopupsComboBox.setPrefWidth(comboBoxWidth);
-
-
-        // Einfügen der Boxen in das GridPane
-        gridPane.add(unitsBox, 0, 0);
-        gridPane.add(currencyBox, 0, 1);
         gridPane.add(errorBox, 0, 2);
 
-        // Buttons
+        // Button layout
         HBox buttonBox = new HBox(20, cancelButton, applyButton);
         buttonBox.setAlignment(Pos.CENTER);
         applyButton.setPrefWidth(90);
         cancelButton.setPrefWidth(90);
 
-        // Hauptlayout
+        // Main layout
         VBox layout = new VBox(20, gridPane, buttonBox);
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setStyle("-fx-background-color: #ffffff;");
 
-        // Fenstergröße und Szene
+        // Display the dialog
         Scene dialogScene = new Scene(layout, 275, 310);
         settingsDialog.setScene(dialogScene);
         settingsDialog.setResizable(false);
