@@ -34,4 +34,64 @@ public enum MeasurementUnit {
         }
         throw new IllegalArgumentException("Invalid display string: " + displayString);
     }
+
+    /**
+     * Converts the given length value from the current unit to the target unit.
+     *
+     * @param length the length value to convert
+     * @param toUnit the target measurement unit
+     * @return the converted length value
+     */
+    public double convertLength(double length, MeasurementUnit toUnit) {
+        // Check if the unit is already in the target unit
+        if (this == toUnit) {
+            return length;
+        }
+
+        // Perform the conversion
+        switch (this) {
+            case METRIC:
+                if (toUnit == IMPERIAL) {
+                    return length / 25.4; // mm to inches
+                }
+                break;
+            case IMPERIAL:
+                if (toUnit == METRIC) {
+                    return length * 25.4; // inches to mm
+                }
+                break;
+        }
+
+        throw new IllegalArgumentException("Unsupported conversion from " + this + " to " + toUnit);
+    }
+
+    /**
+     * Converts the given weight value from the current unit to the target unit.
+     *
+     * @param weight the weight value to convert
+     * @param toUnit the target measurement unit
+     * @return the converted weight value
+     */
+    public double convertWeight(double weight, MeasurementUnit toUnit) {
+        // Check if the unit is already in the target unit
+        if (this == toUnit) {
+            return weight;
+        }
+
+        // Perform the conversion
+        switch (this) {
+            case METRIC:
+                if (toUnit == IMPERIAL) {
+                    return weight / 453.592; // grams to pounds
+                }
+                break;
+            case IMPERIAL:
+                if (toUnit == METRIC) {
+                    return weight * 453.592; // pounds to grams
+                }
+                break;
+        }
+
+        throw new IllegalArgumentException("Unsupported conversion from " + this + " to " + toUnit);
+    }
 }

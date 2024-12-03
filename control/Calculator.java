@@ -50,16 +50,13 @@ public class Calculator {
     private static Packet convertToMetric(Packet pack) {
         MeasurementUnit unit = SettingsManager.getMeasurementUnit();
 
-        if (unit == MeasurementUnit.IMPERIAL) {
-            double lengthInMM = pack.length * 25.4; // Inches to millimeters
-            double widthInMM = pack.width * 25.4;
-            double heightInMM = pack.height * 25.4;
-            double weightInGrams = pack.weight * 453.592; // Pounds to grams
+        // Convert the packet dimensions and weight to metric units if the current unit is imperial
+        double lengthInMM = SettingsManager.getMeasurementUnit().convertLength(pack.length, MeasurementUnit.METRIC);
+        double widthInMM = SettingsManager.getMeasurementUnit().convertLength(pack.width, MeasurementUnit.METRIC);
+        double heightInMM = SettingsManager.getMeasurementUnit().convertLength(pack.height, MeasurementUnit.METRIC);
+        double weightInGrams = SettingsManager.getMeasurementUnit().convertWeight(pack.weight, MeasurementUnit.METRIC);
 
-            return new Packet((int) lengthInMM, (int) widthInMM, (int) heightInMM, (int) weightInGrams);
-        }
-
-        // If already in metric, return the original packet
-        return pack;
+        // Return a new packet with the converted dimensions and weight (cast to integers)
+        return new Packet((int) lengthInMM, (int) widthInMM, (int) heightInMM, (int) weightInGrams);
     }
 }
