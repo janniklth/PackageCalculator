@@ -69,11 +69,6 @@ public class PackageCalculator extends Application {
 	public MessagesArea messagesArea = new MessagesArea();
 
 	/**
-	 * The StatusArea class represents a section of the user interface that displays status information.
-	 */
-	public StatusArea statusArea = new StatusArea();
-
-	/**
 	 * The root directory path of the current project.
 	 */
 	public String rootPath;
@@ -120,7 +115,6 @@ public class PackageCalculator extends Application {
 		BorderPane mainPane = new BorderPane();
 		mainPane.setTop(toolbarArea);
 		mainPane.setCenter(tdSplitPane);
-		mainPane.setBottom(statusArea);
 
 		// Configure the scene and set the window size to the screen's visual bounds
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
