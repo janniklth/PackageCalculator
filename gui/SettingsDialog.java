@@ -3,7 +3,7 @@ package gui;
 import control.SettingsManager;
 import data.Currency;
 import data.ErrorDisplayState;
-import data.MeasurementUnit;
+import data.MeasurementSystem;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  * the measurement units, currency, and error display settings with ComboBoxes.
  *
  * @see SettingsManager
- * @see MeasurementUnit
+ * @see MeasurementSystem
  * @see Currency
  * @see ErrorDisplayState
  * @see ComboBox
@@ -39,10 +39,10 @@ public class SettingsDialog {
         // Measurement units settings
         Label unitsLabel = new Label("Measurement units:");
         ComboBox<String> unitsComboBox = new ComboBox<>();
-        for (MeasurementUnit unit : MeasurementUnit.values()) {
+        for (MeasurementSystem unit : MeasurementSystem.values()) {
             unitsComboBox.getItems().add(unit.convertToDisplayString());
         }
-        unitsComboBox.setValue(SettingsManager.getMeasurementUnit().convertToDisplayString());
+        unitsComboBox.setValue(SettingsManager.getMeasurementSystem().convertToDisplayString());
 
         // Currency settings
         Label currencyLabel = new Label("Currency:");
@@ -67,7 +67,7 @@ public class SettingsDialog {
         applyButton.setStyle("-fx-background-color: #0078D4; -fx-text-fill: white; -fx-font-size: 14px;");
         applyButton.setOnAction(e -> {
             String selectedUnit = unitsComboBox.getValue();
-            SettingsManager.setMeasurementUnit(MeasurementUnit.fromDisplayString(selectedUnit));
+            SettingsManager.setMeasurementSystem(MeasurementSystem.fromDisplayString(selectedUnit));
 
             String selectedErrorDisplay = errorPopupsComboBox.getValue();
             SettingsManager.setShowErrorPopups(ErrorDisplayState.fromDisplayString(selectedErrorDisplay));

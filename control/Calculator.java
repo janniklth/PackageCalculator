@@ -1,6 +1,6 @@
 package control;
 
-import data.MeasurementUnit;
+import data.MeasurementSystem;
 import data.Packet;
 import data.ShippingRule;
 import exceptions.ShippingRuleException;
@@ -48,15 +48,16 @@ public class Calculator {
      * @return a new packet with dimensions and weight in metric units
      */
     private static Packet convertToMetric(Packet pack) {
-        MeasurementUnit unit = SettingsManager.getMeasurementUnit();
+        MeasurementSystem measurementSystem = SettingsManager.getMeasurementSystem();
 
         // Convert the packet dimensions and weight to metric units if the current unit is imperial
-        double lengthInMM = SettingsManager.getMeasurementUnit().convertLength(pack.length, MeasurementUnit.METRIC);
-        double widthInMM = SettingsManager.getMeasurementUnit().convertLength(pack.width, MeasurementUnit.METRIC);
-        double heightInMM = SettingsManager.getMeasurementUnit().convertLength(pack.height, MeasurementUnit.METRIC);
-        double weightInGrams = SettingsManager.getMeasurementUnit().convertWeight(pack.weight, MeasurementUnit.METRIC);
+        double lengthInMM = measurementSystem.convertLength(pack.length, MeasurementSystem.METRIC, true);
+        double widthInMM = measurementSystem.convertLength(pack.width, MeasurementSystem.METRIC, true);
+        double heightInMM = measurementSystem.convertLength(pack.height, MeasurementSystem.METRIC, true);
+        double weightInGrams = measurementSystem.convertWeight(pack.weight, MeasurementSystem.METRIC, true);
 
         // Return a new packet with the converted dimensions and weight (cast to integers)
         return new Packet((int) lengthInMM, (int) widthInMM, (int) heightInMM, (int) weightInGrams);
+
     }
 }

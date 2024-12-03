@@ -1,6 +1,6 @@
 package control;
 
-import data.MeasurementUnit;
+import data.MeasurementSystem;
 import data.ErrorDisplayState;
 import data.Currency;
 
@@ -9,16 +9,16 @@ import java.util.List;
 
 public class SettingsManager {
     private static List<SettingsListener> listeners = new ArrayList<>();
-    private static MeasurementUnit measurementUnit = MeasurementUnit.METRIC;
+    private static MeasurementSystem measurementSystem = MeasurementSystem.METRIC;
     private static ErrorDisplayState errorDisplayState = ErrorDisplayState.POPUP_AND_LOG;
     private static Currency currency = Currency.EURO;
 
-    public static MeasurementUnit getMeasurementUnit() {
-        return measurementUnit;
+    public static MeasurementSystem getMeasurementSystem() {
+        return measurementSystem;
     }
 
-    public static void setMeasurementUnit(MeasurementUnit unit) {
-        measurementUnit = unit;
+    public static void setMeasurementSystem(MeasurementSystem system) {
+        measurementSystem = system;
         notifyListeners();
     }
 

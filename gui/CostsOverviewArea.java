@@ -3,6 +3,7 @@ package gui;
 import control.MessageHandler;
 import control.SettingsManager;
 import control.ShippingRuleLoader;
+import data.MeasurementSystem;
 import data.ShippingRule;
 import exceptions.ShippingRuleException;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,11 +17,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.List;
-import java.util.Set;
 
 public class CostsOverviewArea extends VBox implements SettingsManager.SettingsListener {
 
     private final TableView<ShippingRule> tableView = new TableView<>();
+    private final TableColumn<ShippingRule, String> dimensionsColumn = new TableColumn<>();
+    private final TableColumn<ShippingRule, String> weightColumn = new TableColumn<>();
+    private final MeasurementSystem baseSystem = MeasurementSystem.METRIC;
 
     public CostsOverviewArea() {
         // heading
@@ -38,16 +41,22 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
                         SettingsManager.getCurrency().convertFromEuro(rule.getValue().getCost()))));
         costColumn.setStyle("-fx-alignment: CENTER; -fx-font-weight: bold;");
 
-        TableColumn<ShippingRule, String> dimensionsColumn = new TableColumn<>("Dimensions (mm)");
+        // Initialize columns with dynamic headers
+        dimensionsColumn.setText("Dimensions (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
         dimensionsColumn.setCellValueFactory(rule ->
-                new SimpleStringProperty(String.format("%d x %d x %d",
-                        rule.getValue().getMaxLength(),
-                        rule.getValue().getMaxWidth(),
-                        rule.getValue().getMaxHeight())));
+                new SimpleStringProperty(String.format("%.1f x %.1f x %.1f",
+                        baseSystem.convertLength(rule.getValue().getMaxLength(), SettingsManager.getMeasurementSystem(),
+                                false),
+                        baseSystem.convertLength(rule.getValue().getMaxWidth(), SettingsManager.getMeasurementSystem(),
+                                false),
+                        baseSystem.convertLength(rule.getValue().getMaxHeight(), SettingsManager.getMeasurementSystem(),
+                                false))));
 
-        TableColumn<ShippingRule, String> weightColumn = new TableColumn<>("Max Weight (g)");
+        weightColumn.setText("Max Weight (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + ")");
         weightColumn.setCellValueFactory(rule ->
-                new SimpleStringProperty(rule.getValue().getMaxWeight() + " g"));
+                new SimpleStringProperty(String.format("%.1f %s",
+                        baseSystem.convertWeight(rule.getValue().getMaxWeight(), SettingsManager.getMeasurementSystem(), false),
+                        SettingsManager.getMeasurementSystem().getWeightUnitSymbol())));
 
         tableView.getColumns().addAll(typeColumn, costColumn, dimensionsColumn, weightColumn);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -73,11 +82,13 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
         }
     }
 
-    /**
-     * Called when the settings have changed.
-     */
     @Override
     public void onSettingsChanged() {
+        // Update column headers
+        dimensionsColumn.setText("Dimensions (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
+        weightColumn.setText("Max Weight (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + ")");
+
+        // Refresh the table data
         tableView.refresh();
     }
 }

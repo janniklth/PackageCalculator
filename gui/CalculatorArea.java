@@ -3,7 +3,7 @@ package gui;
 import control.Calculator;
 import control.MessageHandler;
 import control.SettingsManager;
-import data.MeasurementUnit;
+import data.MeasurementSystem;
 import data.Packet;
 import exceptions.ShippingRuleException;
 import javafx.geometry.Insets;
@@ -23,7 +23,7 @@ import javafx.scene.text.FontWeight;
  *
  * <p>This class extends the VBox class and implements the SettingsManager.SettingsListener interface to listen for
  * changes in the settings. It supports converting the input values to the appropriate units based on the current
- * measurement unit setting.</p>
+ * measurement system setting.</p>
  */
 public class CalculatorArea extends VBox implements SettingsManager.SettingsListener {
 
@@ -145,23 +145,23 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
      */
     @Override
     public void onSettingsChanged() {
-        // update the labels to reflect the current measurement unit setting
+        // update the labels to reflect the current measurement system setting
         updateLabels();
 
-        // reset the calculation result to prevent confusion when changing the units or currency
+        // reset the calculation result to prevent confusion when changing the measurement system or currency
         shippingCostLabel.setText("?");
     }
 
     /**
-     * Updates the labels to reflect the current measurement unit setting.
+     * Updates the labels to reflect the current measurement system setting.
      *
-     * @see SettingsManager#getMeasurementUnit()
-     * @see MeasurementUnit
+     * @see SettingsManager#getMeasurementSystem()
+     * @see MeasurementSystem
      */
     private void updateLabels() {
-        MeasurementUnit unit = SettingsManager.getMeasurementUnit();
-        String lengthUnit = unit == MeasurementUnit.IMPERIAL ? "inches" : "mm";
-        String weightUnit = unit == MeasurementUnit.IMPERIAL ? "lbs" : "g";
+        MeasurementSystem unit = SettingsManager.getMeasurementSystem();
+        String lengthUnit = unit == MeasurementSystem.IMPERIAL ? "inches" : "mm";
+        String weightUnit = unit == MeasurementSystem.IMPERIAL ? "lbs" : "g";
 
         lengthLabel.setText("Length (" + lengthUnit + "):");
         widthLabel.setText("Width (" + lengthUnit + "):");
