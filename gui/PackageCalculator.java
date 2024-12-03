@@ -48,11 +48,6 @@ public class PackageCalculator extends Application {
 	public ToolbarArea toolbarArea = new ToolbarArea();
 
 	/**
-	 * The ExplorerArea class represents a section of the user interface that displays a tree view of the project structure.
-	 */
-//	public ExplorerArea explorerArea = new ExplorerArea();
-
-	/**
 	 * The CalculatorArea class represents a section of the user interface where calculations can be performed.
 	 */
 	public CalculatorArea calculatorArea = new CalculatorArea();
@@ -67,11 +62,6 @@ public class PackageCalculator extends Application {
 	 * The MessagesArea class represents a section of the user interface that displays a list of messages or logs.
 	 */
 	public MessagesArea messagesArea = new MessagesArea();
-
-	/**
-	 * The root directory path of the current project.
-	 */
-	public String rootPath;
 
 	// Primary stage (window) for the application
 	private Stage primaryStage;
