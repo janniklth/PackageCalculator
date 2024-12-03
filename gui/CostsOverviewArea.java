@@ -1,6 +1,7 @@
 package gui;
 
 import control.MessageHandler;
+import control.SettingsManager;
 import control.ShippingRuleLoader;
 import data.ShippingRule;
 import exceptions.ShippingRuleException;
@@ -15,8 +16,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.List;
+import java.util.Set;
 
-public class CostsOverviewArea extends VBox {
+public class CostsOverviewArea extends VBox implements SettingsManager.SettingsListener {
 
     private final TableView<ShippingRule> tableView = new TableView<>();
 
@@ -32,8 +34,9 @@ public class CostsOverviewArea extends VBox {
 
         TableColumn<ShippingRule, String> costColumn = new TableColumn<>("Cost");
         costColumn.setCellValueFactory(rule ->
-                new SimpleStringProperty(String.format("%.2f €", rule.getValue().getCost())));
-        costColumn.setStyle("-fx-alignment: CENTER;");
+                new SimpleStringProperty(String.format("%.2f " + SettingsManager.getCurrency().getSymbol(),
+                        SettingsManager.getCurrency().convertFromEuro(rule.getValue().getCost()))));
+        costColumn.setStyle("-fx-alignment: CENTER; -fx-font-weight: bold;");
 
         TableColumn<ShippingRule, String> dimensionsColumn = new TableColumn<>("Dimensions (mm)");
         dimensionsColumn.setCellValueFactory(rule ->
@@ -56,6 +59,9 @@ public class CostsOverviewArea extends VBox {
         this.setSpacing(20);
         this.setPadding(new Insets(20));
         this.getChildren().addAll(heading, tableView);
+
+        // Register for settings updates
+        SettingsManager.registerListener(this);
     }
 
     private void loadShippingRulesIntoTable() {
@@ -65,5 +71,13 @@ public class CostsOverviewArea extends VBox {
         } catch (ShippingRuleException e) {
             MessageHandler.handleMessage(Alert.AlertType.ERROR, "Error loading rules", e.getMessage());
         }
+    }
+
+    /**
+     * Called when the settings have changed.
+     */
+    @Override
+    public void onSettingsChanged() {
+        tableView.refresh();
     }
 }
