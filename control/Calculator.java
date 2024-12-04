@@ -5,7 +5,6 @@ import data.Packet;
 import data.ShippingRule;
 import exceptions.ShippingRuleException;
 import java.util.List;
-
 public class Calculator {
 
     /**
