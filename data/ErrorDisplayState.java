@@ -1,15 +1,25 @@
 package data;
 
 
-
-/*
- * The ErrorDisplayState enum represents the different states in which error messages can be displayed.
- * The available states are:
- * - POPUP_AND_LOG: Display error messages in a popup and log area
- * - LOG_ONLY: Display error messages only in the log area
+/**
+ * The ErrorDisplayState enum represents different states for displaying error messages and provides methods to get the
+ * display string and find a state by its display string.
+ *
+ * <p>The following states are available:</p>
+ * <ul>
+ *     <li>{@link data.ErrorDisplayState#POPUP_AND_LOG} - Display error messages in a popup and log area</li>
+ *     <li>{@link data.ErrorDisplayState#LOG_ONLY} - Display error messages only in the log area</li>
+ * </ul>
  */
 public enum ErrorDisplayState {
+    /**
+     * Display error messages in a popup and log area
+     */
     POPUP_AND_LOG("Popup + log messages"),
+
+    /**
+     * Display error messages only in the log area
+     */
     LOG_ONLY("only log messages");
 
     private final String displayString;

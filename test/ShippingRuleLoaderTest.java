@@ -15,17 +15,39 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ShippingRuleLoaderTest {
+/**
+ * Provides test cases for the {@link ShippingRuleLoader} class.
+ *
+ * <p>Tests the loading of shipping rules from JSON files, including the default rules and custom rules as well as testing
+ * error handling when the json file is not found or corrupted.</p>
+ *
+ * <p>Contains the following test cases:</p>
+ * <ul>
+ *     <li> {@link #testLoadShippingRulesSuccessfully()} - Tests that shipping rules are loaded correctly from a JSON file
+ *     with the correct parameters. </li>
+ *     <li> {@link #testLoadDefaultShippingRules()} - Tests that the default shipping rules are loaded successfully. </li>
+ *     <li> {@link #testLoadShippingRulesWithDimensionsAndWeight()} - Tests that all dimensions and weight limits are
+ *     correctly loaded from the JSON file. </li>
+ *     <li> {@link #testLoadShippingRulesWithEmptyJson()} - Tests that an empty JSON file throws a {@link ShippingRuleException}. </li>
+ *     <li> {@link #testLoadShippingRulesWithCorruptedJson()} - Tests that a corrupted JSON file throws a {@link ShippingRuleException}. </li>
+ *     <li> {@link #testShippingRulesAreSortedByCost()} - Tests that the rules are sorted by cost after loading. </li>
+ *     <li> {@link #testLoadShippingRulesFileNotFound()} - Tests that a {@link ShippingRuleException} is thrown when the
+ *     shipping rules file cannot be found. </li>
+ * </ul>
+ *
+ * @see ShippingRuleLoader
+ * @see ShippingRule
+ * @see ShippingRuleException
+ */
+public class ShippingRuleLoaderTest {
 
     private static final String TEMP_JSON_FILE = "src/test/resources/temp_shipping_rules.json";
 
     /**
      * Tests that shipping rules are loaded correctly from a JSON file.
-     *
-     * @throws Exception
      */
     @Test
-    void testLoadShippingRulesSuccessfully() throws Exception {
+    public void testLoadShippingRulesSuccessfully() throws Exception {
         // load shipping rules from the test JSON file
         List<ShippingRule> shippingRules = ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_basic_rules.json");
 
@@ -40,7 +62,7 @@ class ShippingRuleLoaderTest {
      * Tests that the default shipping rules (from hardcoded path) are loaded successfully.
      */
     @Test
-    void testLoadDefaultShippingRules() {
+    public void testLoadDefaultShippingRules() {
         // Assert that the default shipping rules are loaded successfully
         assertDoesNotThrow(() -> ShippingRuleLoader.loadShippingRules());
     }
@@ -51,7 +73,7 @@ class ShippingRuleLoaderTest {
      * @throws Exception
      */
     @Test
-    void testLoadShippingRulesWithDimensionsAndWeight() throws Exception {
+    public void testLoadShippingRulesWithDimensionsAndWeight() throws Exception {
         // load shipping rules from the test JSON file
         List<ShippingRule> shippingRules = ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_basic_rules.json");
 
@@ -65,35 +87,29 @@ class ShippingRuleLoaderTest {
 
     /**
      * Tests that an empty JSON file throws an exception.
-     *
-     * @throws Exception
      */
     @Test
-    void testLoadShippingRulesWithEmptyJson() {
+    public void testLoadShippingRulesWithEmptyJson() {
         // Assert that the shippingRuleLoader should throw an exception
         Exception exception = assertThrows(ShippingRuleException.class, () -> ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_empty_rules.json"));
         assertTrue(exception.getCause().toString().contains("No shipping rules found in the file"), "Exception message should indicate no rules found.");
     }
 
     /**
-     * Tests that a corrupted JSON file throws an exception.
-     *
-     * @throws Exception
+     * Tests that a corrupted JSON file throws an exception (e.g. missing closing bracket).
      */
     @Test
-    void testLoadShippingRulesWithCorruptedJson() {
+    public void testLoadShippingRulesWithCorruptedJson() {
         // Assert that the shippingRuleLoader should throw an exception
         Exception exception = assertThrows(ShippingRuleException.class, () -> ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_corrupted_rules.json"));
         assertTrue(exception.getMessage().contains("Error loading shipping rules from file"), "Exception message should indicate error loading rules.");
     }
 
     /**
-     * Tests that the rules are sorted by cost after loading.
-     *
-     * @throws Exception
+     * Tests that the rules are sorted by cost after loading (ascending order).
      */
     @Test
-    void testShippingRulesAreSortedByCost() throws Exception {
+    public void testShippingRulesAreSortedByCost() throws Exception {
         // load shipping rules from the test JSON file
         List<ShippingRule> shippingRules = ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_unssorted_rules.json");
 
@@ -106,7 +122,7 @@ class ShippingRuleLoaderTest {
      * Tests that an error is thrown when the shipping rules files cannot be found.
      */
     @Test
-    void testLoadShippingRulesFileNotFound() {
+    public void testLoadShippingRulesFileNotFound() {
         // Assert that the shippingRuleLoader should throw an exception
         Exception exception = assertThrows(ShippingRuleException.class, () -> ShippingRuleLoader.loadCustomShippingRules("test/ressources/non_existent_file.json"));
         assertTrue(exception.getMessage().contains("Shipping rules file not found"), "Exception message should indicate file not found.");

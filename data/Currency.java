@@ -1,8 +1,25 @@
 package data;
 
+/**
+ * The Currency enum represents different currencies and provides methods for converting between them.
+ *
+ * <p>Includes methods for converting an amount from the currency to Euro and vice versa and a method to find a Currency
+ * by its display string.</p>
+ */
 public enum Currency {
+    /**
+     * The Euro currency, last updated on 2024-12-01.
+     */
     EURO("Euro", "€", 1.0),
+
+    /**
+     * The US Dollar currency, last updated on 2024-12-01.
+     */
     US_DOLLAR("US Dollar", "$", 1.07),
+
+    /**
+     * The British Pound currency, last updated on 2024-12-01.
+     */
     BRITISH_POUND("British Pound", "£", 0.84);
 
     private final String name;

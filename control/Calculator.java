@@ -5,6 +5,19 @@ import data.Packet;
 import data.ShippingRule;
 import exceptions.ShippingRuleException;
 import java.util.List;
+
+/**
+ * The Calculator class provides methods for calculating shipping costs based on packet dimensions and weight.
+ *
+ * <p>Includes a method for calculating shipping costs using the loaded shipping rules and converting
+ * the packet dimensions to metric units if needed using the current setting from {@link SettingsManager} and converting
+ * method provided by {@link MeasurementSystem}. Also uses the {@link ShippingRuleLoader} to load the shipping rules
+ * from an external JSON file.</p>
+ *
+ * @see ShippingRuleLoader
+ * @see SettingsManager
+ * @see MeasurementSystem
+ */
 public class Calculator {
 
     /**

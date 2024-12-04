@@ -10,16 +10,17 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Random tests for the shipping cost calculation.
+ * Provides a random based test for the {@link Calculator} class.
  *
- * <p>These tests are designed to ensure that the shipping costs are correctly calculated for a wide range of random
- * packages. The tests generate random packages and calculate the shipping costs based on the rules defined in the
- * {@link Calculator} class. The expected costs are calculated based on the same rules and compared to the actual costs.</p>
+ * <p>Tests the shipping cost calculation for 1000 random packets based on the defined shipping rules. Ensures that
+ * exceptions are thrown for oversized packets and packets with invalid dimensions or weight.</p>
  *
  * @see Calculator
  * @see Packet
+ * @see IllegalArgumentException
+ * @see Random
  */
-class CalculatorRandomTest {
+public class CalculatorRandomTest {
 
     private final Random random = new Random();
 
@@ -28,7 +29,7 @@ class CalculatorRandomTest {
      * Ensures exceptions are thrown for oversized packets.
      */
     @Test
-    void testRandomPackets() {
+    public void testRandomPackets() {
         for (int i = 0; i < 1000; i++) {
             // Generate random packet
             Packet packet = generateRandomPacket();
@@ -75,7 +76,7 @@ class CalculatorRandomTest {
     }
 
     /**
-     * Calculates the expected cost for a given packet based on the defined rules.
+     * Helper function that calculates the expected cost for a given packet based on the defined rules.
      *
      * @param packet the packet for which the expected cost is to be calculated
      * @return the expected cost

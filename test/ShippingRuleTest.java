@@ -7,20 +7,38 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * The ShippingRuleTest class contains JUnit tests for the ShippingRule class.
+ * Provides test cases for the {@link ShippingRule} class.
  *
- * <p>These tests are designed to ensure that the ShippingRule class functions as expected and that
- * the shipping rules are correctly applied to packets based on their dimensions and weight.</p>
+ * <p>Tests the matching of packets to shipping rules based on the dimensions and weight of the packet. The tests
+ * ensure that packets that match the rule are correctly identified as a match and packets that do not match the rule
+ * are correctly identified as not a match.</p>
+ *
+ * <p>Contains the following test cases:</p>
+ * <ul>
+ *     <li> {@link #testMatches_ValidPacket_MatchesRule()} - Tests that a packet with dimensions and weight that are
+ *     clearly below the rule is correctly identified as a match. </li>
+ *     <li> {@link #testMatches_ValidLimitPacket_MatchesRule()} - Tests that a packet with dimension and weight at the
+ *     limit of the rule is correctly identified as a match. </li>
+ *     <li> {@link #testMatches_InvalidPacket_DimensionsExceed()} - Tests that a packet with dimensions that exceed the
+ *     rule is correctly identified as not a match. </li>
+ *     <li> {@link #testMatches_InvalidPacket_WeightExceeds()} - Tests that a packet with weight that exceeds the rule
+ *     is correctly identified as not a match. </li>
+ *     <li> {@link #testMatches_InvalidPacket_GirthExceeds()} - Tests that a packet with girth that exceeds the rule
+ *     (with girth limit) is correctly identified as not a match. </li>
+ *     <li> {@link #testMatches_InvalidPacket_NullPacket()} - Tests that a null-packet throws a NullPointerException. </li>
+ * </ul>
  *
  * @see ShippingRule
+ * @see Packet
+ * @see NullPointerException
  */
-class ShippingRuleTest {
+public class ShippingRuleTest {
 
     /**
      * Tests that a packet with dimensions and weight that are clearly below the rule is correctly identified as a match.
      */
     @Test
-    void testMatches_ValidPacket_MatchesRule() {
+    public void testMatches_ValidPacket_MatchesRule() {
         // create a shipping rule and a packet that matches this rule
         ShippingRule rule = createShippingRule("Small", 100, 100, 100, 100, null, 5.99);
         Packet packet = new Packet(50, 50, 50, 50);
@@ -33,7 +51,7 @@ class ShippingRuleTest {
      * Tests that a packet with dimension and weight at the limit of the rule is correctly identified as a match.
      */
     @Test
-    void testMatches_ValidLimitPacket_MatchesRule() {
+    public void testMatches_ValidLimitPacket_MatchesRule() {
         // create a shipping rule and a packet that matches this rules
         ShippingRule rule = createShippingRule("Small", 100, 100, 100, 100, null, 5.99);
         Packet packet = new Packet(100, 100, 100, 100);
@@ -46,7 +64,7 @@ class ShippingRuleTest {
      * Tests that a packet with dimensions that exceed the rule is correctly identified as not a match.
      */
     @Test
-    void testMatches_InvalidPacket_DimensionsExceed() {
+    public void testMatches_InvalidPacket_DimensionsExceed() {
         // create a shipping rule and a packet that does not match this rule due to dimensions
         ShippingRule rule = createShippingRule("Small", 100, 100, 100, 100, null, 5.99);
         Packet packet = new Packet(200, 200, 200, 100); // Length exceeds the limit
@@ -59,7 +77,7 @@ class ShippingRuleTest {
      * Tests that a packet with weight that exceeds the rule is correctly identified as not a match.
      */
     @Test
-    void testMatches_InvalidPacket_WeightExceeds() {
+    public void testMatches_InvalidPacket_WeightExceeds() {
         // create a shipping rule and an according packet that does not match this rule due to weight
         ShippingRule rule = createShippingRule("Small", 100, 100, 100, 100, null, 5.99);
         Packet packet = new Packet(100, 100, 100, 200);
@@ -69,10 +87,10 @@ class ShippingRuleTest {
     }
 
     /**
-     * Test that a packet with girth that exceeds the rule (with girth limit) is correctly identified as not a match.
+     * Tests that a packet with girth that exceeds the rule (with girth limit) is correctly identified as not a match.
      */
     @Test
-    void testMatches_InvalidPacket_GirthExceeds() {
+    public void testMatches_InvalidPacket_GirthExceeds() {
         // create a shipping rule and a packet that does not match this rule due to girth
         ShippingRule rule = createShippingRule("Small", 100, 100, 100, 100, 100, 5.99);
         Packet packet = new Packet(100, 100, 100, 100); // Girth exceeds the limit
@@ -85,7 +103,7 @@ class ShippingRuleTest {
      * Tests that a null-packet throws a NullPointerException.
      */
     @Test
-    void testMatches_InvalidPacket_NullPacket() {
+    public void testMatches_InvalidPacket_NullPacket() {
         // create a shipping rule
         ShippingRule rule = createShippingRule("Small", 100, 100, 100, 100, null, 5.0);
 

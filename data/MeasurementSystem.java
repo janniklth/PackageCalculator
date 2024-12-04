@@ -1,8 +1,24 @@
 package data;
 
 
+/**
+ * The MeasurementSystem enum represents different systems of measurement and provides methods to convert between them.
+ *
+ * <p>The following systems are available:</p>
+ * <ul>
+ *     <li>{@link data.MeasurementSystem#METRIC} - Metric system with units in millimeters and grams</li>
+ *     <li>{@link data.MeasurementSystem#IMPERIAL} - Imperial system with units in inches and pounds</li>
+ * </ul>
+ */
 public enum MeasurementSystem {
+    /**
+     * Metric system with units in millimeters and grams
+     */
     METRIC("Metric", "mm", "g"),
+
+    /**
+     * Imperial system with units in inches and pounds
+     */
     IMPERIAL("Imperial", "in", "lb");
 
     private final String name;

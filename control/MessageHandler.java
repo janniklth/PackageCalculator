@@ -14,7 +14,6 @@ import javafx.scene.control.Alert.AlertType;
  * @see ErrorDisplayState
  */
 public class MessageHandler {
-
     /**
      * Logs a message to the MessagesArea.
      *
