@@ -5,6 +5,9 @@ The Package Calculator is a Java-based application designed to calculate shippin
 It includes a graphical user interface (GUI) for user interaction and supports loading custom shipping rules from JSON files.
 The project was part of the lecture advanced software engineering at DHBW Stuttgart.
 
+Please note: A detailed documentation especially for the final submission (Javadoc, code coverage, and code metrics) is 
+available in the [documentation](documentation.md).
+
 ## Features
 
 ### Required Features
@@ -47,7 +50,7 @@ The project was part of the lecture advanced software engineering at DHBW Stuttg
 3. Run the `ShippingRuleLoaderTest` class to execute the tests for the `ShippingRuleLoader` class.
 4. Run the `CalculatorTest` class to execute the tests for the `Calculator` class.
 
-Note: The test results are already documented in the ... file.
+Note: The test results and code coverage are already documented in the [extended documentation](documentation.md).
 
 ## Usage of the tool
 1. Enter the package dimensions and weight in the provided text fields. Respect the table with possible package dimensions.
