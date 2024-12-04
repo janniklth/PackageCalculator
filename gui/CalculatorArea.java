@@ -6,6 +6,8 @@ import control.SettingsManager;
 import data.MeasurementSystem;
 import data.Packet;
 import exceptions.ShippingRuleException;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 
 /**
  * The CalculatorArea class represents the area of the application where the user can input the package dimensions and
@@ -105,6 +108,7 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         if (lengthTextField.getText().isEmpty() || widthTextField.getText().isEmpty() ||
                 heightTextField.getText().isEmpty() || weightTextField.getText().isEmpty()) {
 
+            showLoadingDotsAndResult("Error", Color.RED);
             MessageHandler.handleMessage(Alert.AlertType.ERROR, "Input Error", "All fields must be filled out.");
             return costs;
         }
@@ -121,24 +125,55 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
             costs = Calculator.calcShippingCosts(packet);
 
             // Show result
-            shippingCostLabel.setText(Double.toString(costs) + " " + SettingsManager.getCurrency().getSymbol());
+            showLoadingDotsAndResult(Double.toString(costs) + " " + SettingsManager.getCurrency().getSymbol(),
+                    Color.GREEN);
 
         } catch (NumberFormatException e) {
             // Show an error message if non-numeric input is provided
+            showLoadingDotsAndResult("Error", Color.RED);
             MessageHandler.handleMessage(Alert.AlertType.ERROR, "Invalid Input", "Please enter valid integer numbers in all fields.");
-            shippingCostLabel.setText("?");
         } catch (IllegalArgumentException e) {
             // Show the error message if the packet dimensions or weight are invalid
+            showLoadingDotsAndResult("Error", Color.RED);
             MessageHandler.handleMessage(Alert.AlertType.ERROR, "Invalid Input", e.getMessage());
-            shippingCostLabel.setText("?");
         } catch (ShippingRuleException e) {
             // Show the error message if the shipping rules could not be loaded
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: " + e.getCause());
+            showLoadingDotsAndResult("Error", Color.RED);
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: pac" + e.getCause());
             throw new RuntimeException(e);
         }
         return costs;
     }
 
+    /**
+     * Shows a loading animation with three black dots and then the result text in the specified color.
+     * @param resultText the text to show after the loading dots
+     * @param color the color to use for the result text
+     * @see Color
+     * @see Timeline
+     * @see KeyFrame
+     */
+    private void showLoadingDotsAndResult(String resultText, Color color) {
+        Timeline timeline = new Timeline();
+        String baseText = "";
+
+        // Animation of loading dots
+        for (int i = 0; i <= 3; i++) {
+            int count = i;
+            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.1 * i), e -> {
+                shippingCostLabel.setText(baseText + ".".repeat(count));
+                shippingCostLabel.setTextFill(Color.BLACK);
+            }));
+        }
+
+        // Show the result after the loading dots in the specified color
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.4), e -> {
+            shippingCostLabel.setText(resultText);
+            shippingCostLabel.setTextFill(color);
+        }));
+
+        timeline.play();
+    }
 
     /**
      * Called when the settings have changed.
