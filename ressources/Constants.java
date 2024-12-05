@@ -24,6 +24,15 @@ public class Constants {
     public static final String WEIGHT_FIELD_EMPTY = "- Weight field is empty.\n";
     public static final String ENTER_VALID_NUMBER = "Enter a valid integer number: ";
 
+    // Error messages for the calculator
+    public static final String INVALID_PACKAGE_MESSAGE = "Invalid package parameters: ";
+    public static final String INVALID_PACKAGE_LENGTH = "- Length must be greater than 0.\n";
+    public static final String INVALID_PACKAGE_WIDTH = "- Width must be greater than 0.\n";
+    public static final String INVALID_PACKAGE_HEIGHT = "- Height must be greater than 0.\n";
+    public static final String INVALID_PACKAGE_WEIGHT = "- Weight must be greater than 0.\n";
+    public static final String NO_SHIPPING_RULE_FOUND = "No suitable shipping rule found for the given package dimensions and weight.";
+    public static final String PACKAGE_IS_NULL = "Package is null. Please provide valid package dimensions and weight.";
+
     // Other error texts
     public static final String CALCULATION_ERROR_RESULT = "Error";
 
