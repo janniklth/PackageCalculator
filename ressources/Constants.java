@@ -68,4 +68,5 @@ public class Constants {
     public static final String TOOLBAR_SETTINGS_BUTTON_LABEL = "Settings";
     public static final String TOOLBAR_INFO_BUTTON_LABEL = "About";
     public static final String TOOLBAR_EXIT_BUTTON_LABEL = "Exit";
+    public static final String CALCULATE_BUTTON_NOTE = "Note: All different orientations of the package will\nbe tested automatically.";
 }

@@ -82,6 +82,11 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         calcButton.setOnAction(ae -> calcShippingCosts());
         form.add(calcButton, 0, 5);
 
+        // add a note next to the button to inform the user about the calculation and different orientations (not in the grid)
+        Label note = new Label(Constants.CALCULATE_BUTTON_NOTE);
+        note.setFont(Font.font(Constants.FONT_NAME, FontWeight.NORMAL, 12));
+        form.add(note, 0, 6, 2, 1);
+
         // Compose layout
         this.setSpacing(20);
         this.setPadding(new Insets(20));
