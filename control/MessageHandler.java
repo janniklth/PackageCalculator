@@ -33,7 +33,7 @@ public class MessageHandler {
         if (calculator != null && calculator.messagesArea != null) {
             calculator.messagesArea.setMessage(fullMessage);
         } else {
-            pendingMessages.add(fullMessage); // Nachricht zwischenspeichern
+            pendingMessages.add(fullMessage);
         }
     }
 

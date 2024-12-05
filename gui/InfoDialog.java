@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * The InfoDialog class represents a modal dialog for displaying application information.
  */
-public class InfoDialog {
+public final class InfoDialog {
 
     /**
      * Displays the information dialog with application details.
