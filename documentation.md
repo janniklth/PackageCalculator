@@ -9,7 +9,7 @@
 
 ## Introduction
 
-These file provides the main source of documentation for the project, especially the required documentation for the 
+These file provides the main source of documentation for the project submission, especially the required documentation for the 
 final submission (Javadoc, test results, code coverage, and code metrics).
 
 ## JavaDoc
