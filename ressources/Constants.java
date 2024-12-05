@@ -1,5 +1,22 @@
 package ressources;
 
+/**
+ * Provides constants for the application, such as file paths, error messages, labels, and other parameters.
+ *
+ * <p>Contains constants for the following:</p>
+ * <ul>
+ *     <li>Parameters for the application</li>
+ *     <li>Error messages for loading shipping rules</li>
+ *     <li>Error messages for user input</li>
+ *     <li>Error messages for the calculator</li>
+ *     <li>Other error texts</li>
+ *     <li>Labels for the user interface</li>
+ *     <li>Other texts</li>
+ *     <li>Further parameters for the user interface</li>
+ *     <li>Labels for the settings</li>
+ *     <li>Labels for the toolbar</li>
+ * </ul>
+ */
 public class Constants {
     // Parameters for the application
     public static final String RULES_FILE_PATH = "ressources/shipping_rules.json";
