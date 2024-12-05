@@ -65,6 +65,7 @@ public class Constants {
     public static final String COSTVIEW_TABLE_TYPE_COLUM_HEADER = "Type";
     public static final String COSTVIEW_TABLE_COST_COLUM_HEADER = "Cost";
     public static final String COSTVIEW_TABLE_DIMENSIONS_COLUM_HEADER = "Dimensions";
+    public static final String COSTVIEW_TABLE_GIRTH_COLUMN_HEADER = "Max Girth";
     public static final String COSTVIEW_TABLE_MAXWEIGHT_COLUMN_HEADER = "Max Weight";
 
     // Other texts

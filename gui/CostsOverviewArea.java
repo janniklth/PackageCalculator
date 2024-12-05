@@ -38,6 +38,7 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
 
     private final TableView<ShippingRule> tableView = new TableView<>();
     private final TableColumn<ShippingRule, String> dimensionsColumn = new TableColumn<>();
+    private final TableColumn<ShippingRule, String> girthColumn = new TableColumn<>();
     private final TableColumn<ShippingRule, String> weightColumn = new TableColumn<>();
     private final MeasurementSystem baseSystem = MeasurementSystem.METRIC;
 
@@ -55,6 +56,7 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
         final TableColumn<ShippingRule, String> typeColumn = new TableColumn<>(Constants.COSTVIEW_TABLE_TYPE_COLUM_HEADER);
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
+        // Initialize column for cost
         final TableColumn<ShippingRule, String> costColumn = new TableColumn<>(Constants.COSTVIEW_TABLE_COST_COLUM_HEADER);
         costColumn.setCellValueFactory(rule ->
                 new SimpleStringProperty(String.format("%.2f " + SettingsManager.getCurrency().getSymbol(),
@@ -72,6 +74,18 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
                         Double.valueOf(this.baseSystem.convertLength(rule.getValue().getMaxHeight(), SettingsManager.getMeasurementSystem(),
                                 false)))));
 
+        // Initialize column for girth with dynamic header (- if null)
+        this.girthColumn.setText(Constants.COSTVIEW_TABLE_GIRTH_COLUMN_HEADER + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
+        this.girthColumn.setCellValueFactory(rule -> {
+            if (rule.getValue().getMaxGirth() == null) {
+                return new SimpleStringProperty("- - -");
+            } else {
+                return new SimpleStringProperty(String.format("%.1f %s",
+                        Double.valueOf(this.baseSystem.convertLength(rule.getValue().getMaxGirth(), SettingsManager.getMeasurementSystem(), false)),
+                        SettingsManager.getMeasurementSystem().getLengthUnitSymbol()));
+            }
+        });
+
         // Initialize column for weight with dynamic header
         this.weightColumn.setText(Constants.COSTVIEW_TABLE_MAXWEIGHT_COLUMN_HEADER + " (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + ")");
         this.weightColumn.setCellValueFactory(rule ->
@@ -80,7 +94,7 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
                         SettingsManager.getMeasurementSystem().getWeightUnitSymbol())));
 
         // Add the columns to the table and set the column resize policy
-        tableView.getColumns().addAll(typeColumn, costColumn, dimensionsColumn, weightColumn);
+        tableView.getColumns().addAll(typeColumn, costColumn, dimensionsColumn, girthColumn, weightColumn);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 
@@ -118,6 +132,7 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
     public void onSettingsChanged() {
         // Update column headers
         this.dimensionsColumn.setText(Constants.COSTVIEW_TABLE_DIMENSIONS_COLUM_HEADER + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
+        this.girthColumn.setText(Constants.COSTVIEW_TABLE_GIRTH_COLUMN_HEADER + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
         this.weightColumn.setText(Constants.COSTVIEW_TABLE_MAXWEIGHT_COLUMN_HEADER + " (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + ")");
 
         // Refresh the table data

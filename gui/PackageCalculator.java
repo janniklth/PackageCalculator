@@ -100,7 +100,7 @@ public class PackageCalculator extends Application {
 		mainPane.setCenter(tdSplitPane);
 
 		// Configure the scene and set the window size to the screen's visual bounds
-		Scene scene = new Scene(mainPane, 800, 500, true);
+		Scene scene = new Scene(mainPane, 850, 500, true);
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
