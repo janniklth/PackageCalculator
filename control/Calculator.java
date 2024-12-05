@@ -45,17 +45,44 @@ public class Calculator {
         // Convert the packet dimensions to metric units if needed
         Packet convertedPack = convertToMetric(pack);
 
-        // Loop through the loaded shipping rules to find the matching rule and convert the cost to the desired currency
-        for (ShippingRule rule : shippingRules) {
-            if (rule.matches(convertedPack)) {
-                double costInEuro = rule.getCost();
-                return SettingsManager.getCurrency().convertFromEuro(costInEuro);
+        // Test all possible orientations of the packet
+        double length = convertedPack.getLength();
+        double width = convertedPack.getWidth();
+        double height = convertedPack.getHeight();
+
+        // Permutations of dimensions: {length, width, height}, {length, height, width}, ...
+        double[][] orientations = {
+                {length, width, height},
+                {length, height, width},
+                {width, length, height},
+                {width, height, length},
+                {height, length, width},
+                {height, width, length}
+        };
+
+        double minCost = Double.MAX_VALUE; // Initialize with a very high value
+
+        // Loop through the orientations and check each for the shipping rules
+        for (double[] orientation : orientations) {
+            Packet orientedPacket = new Packet((int) orientation[0], (int) orientation[1], (int) orientation[2], convertedPack.getWeight());
+
+            for (ShippingRule rule : shippingRules) {
+                if (rule.matches(orientedPacket)) {
+                    double costInEuro = rule.getCost();
+                    double convertedCost = SettingsManager.getCurrency().convertFromEuro(costInEuro);
+                    minCost = Math.min(minCost, convertedCost); // Update minimum cost
+                }
             }
         }
 
-        // If no rule matches, throw an exception (or return a default value if needed)
-        throw new IllegalArgumentException(Constants.NO_SHIPPING_RULE_FOUND);
+        // If no rule matches, throw an exception
+        if (minCost == Double.MAX_VALUE) {
+            throw new IllegalArgumentException(Constants.NO_SHIPPING_RULE_FOUND);
+        }
+
+        return minCost; // Return the minimum cost
     }
+
 
     /**
      * Converts the dimensions and weight of the given packet to metric units if the current

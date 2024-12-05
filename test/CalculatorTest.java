@@ -40,6 +40,10 @@ import org.junit.jupiter.api.Test;
  *     <li> {@link #testNullPacket()} - Tests that passing a null packet to the calculator throws an
  *     {@link IllegalArgumentException}. </li>
  *     <li> {@link #testExceedMaxGirth()} - Tests that a parcel exceeding the girth limit is priced correctly. </li>
+ *     <li> {@link #testOrientationsWidth()} - Tests that a parcel which would normally not fit due to it's width is
+ *     priced correctly (due to trying all orientations). </li>
+ *     <li> {@link #testOrientationsHeight()} - Tests that a parcel which would normally not fit due to it's height is
+ *     priced correctly (due to trying all orientations). </li>
  *     <li> {@link #testFloatingPointPrecisionForWeight()} - Tests calculation precision for a weight very close to
  *     the 10 kg boundary. </li>
  *     <li> {@link #testNearLimitCombination()} - Tests a parcel with near-limit dimensions and weight to ensure
@@ -201,6 +205,24 @@ public class CalculatorTest {
         Packet packet = new Packet(1200, 600, 600, 5000);
         double result = Calculator.calcShippingCosts(packet);
         assertEquals(14.99, result, "Parcel exceeding girth limit should cost 14.99 EUR.");
+    }
+
+    /**
+     * Tests that a parcel which would normally not fit (width), is priced correctly due to trying all orientations.
+     */
+    @Test void testOrientationsWidth() throws ShippingRuleException {
+        Packet packet = new Packet(600, 1200, 600, 5000);
+        double result = Calculator.calcShippingCosts(packet);
+        assertEquals(14.99, result, "Rotated parcel should cost 14.99 EUR.");
+    }
+
+    /**
+     * Tests that a parcel which would normally not fit (height), is priced correctly due to trying all orientations.
+     */
+    @Test void testOrientationsHeight() throws ShippingRuleException {
+        Packet packet = new Packet(600, 600, 1200, 5000);
+        double result = Calculator.calcShippingCosts(packet);
+        assertEquals(14.99, result, "Rotated parcel should cost 14.99 EUR.");
     }
 
     /**

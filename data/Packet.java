@@ -45,4 +45,36 @@ public class Packet {
 		this.weight = weight;
 		this.girth = length + 2 * width + 2 * height;
 	}
+
+	/**
+	 * Retrieves the length of the package
+	 * @return the length of the package in millimeters
+	 */
+	public int getLength() {
+		return length;
+	}
+
+	/**
+	 * Retrieves the width of the package
+	 * @return the width of the package in millimeters
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * Retrieves the height of the package
+	 * @return the height of the package in millimeters
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * Retrieves the weight of the package
+	 * @return the weight of the package in grams
+	 */
+	public int getWeight() {
+		return weight;
+	}
 }
