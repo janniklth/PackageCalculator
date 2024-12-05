@@ -42,13 +42,15 @@ available in the [documentation](documentation.md).
 
 - Java Development Kit (JDK) 23 or higher
 - IntelliJ IDEA or another Java IDE
+- JavaFX SDK 21 or higher
 
 
 ### Running the Application
 
 1. Clone the repository.
 2. Open the project in IntelliJ IDEA.
-3. Build and run the `PackageCalculator` class from the `gui` package.
+3. Configure the library pathes for JavaFX SDK and the shipped libraries.
+4. Build and run the `PackageCalculator` class from the `gui` package.
 
 ### Running Tests
 1. Open the project in IntelliJ IDEA.
