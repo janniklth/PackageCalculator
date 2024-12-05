@@ -1,0 +1,203 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Currency</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">data</a>
+</div>
+
+<h1>Coverage Summary for Class: Currency (data)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Currency</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.8%
+  </span>
+  <span class="absValue">
+    (15/16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package data;
+&nbsp;
+&nbsp;/**
+&nbsp; * The Currency enum represents different currencies and provides methods for converting between them.
+&nbsp; *
+&nbsp; * &lt;p&gt;Includes methods for converting an amount from the currency to Euro and vice versa and a method to find a Currency
+&nbsp; * by its display string.&lt;/p&gt;
+&nbsp; */
+<b class="fc">&nbsp;public enum Currency {</b>
+&nbsp;    /**
+&nbsp;     * The Euro currency, last updated on 2024-12-01.
+&nbsp;     */
+<b class="fc">&nbsp;    EURO(&quot;Euro&quot;, &quot;€&quot;, 1.0),</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The US Dollar currency, last updated on 2024-12-01.
+&nbsp;     */
+<b class="fc">&nbsp;    US_DOLLAR(&quot;US Dollar&quot;, &quot;$&quot;, 1.07),</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The British Pound currency, last updated on 2024-12-01.
+&nbsp;     */
+<b class="fc">&nbsp;    BRITISH_POUND(&quot;British Pound&quot;, &quot;£&quot;, 0.84);</b>
+&nbsp;
+&nbsp;    private final String name;
+&nbsp;    private final String symbol;
+&nbsp;    private final double exchangeRateToEuro;
+&nbsp;
+<b class="fc">&nbsp;    Currency(String name, String symbol, double exchangeRateToEuro) {</b>
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        this.symbol = symbol;</b>
+<b class="fc">&nbsp;        this.exchangeRateToEuro = exchangeRateToEuro;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns a user-friendly display string for the currency.
+&nbsp;     *
+&nbsp;     * @return the display string
+&nbsp;     */
+&nbsp;    public String convertToDisplayString() {
+<b class="fc">&nbsp;        return name + &quot; (&quot; + symbol + &quot;)&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the currency symbol.
+&nbsp;     * @return the currency symbol as a string
+&nbsp;     */
+&nbsp;    public String getSymbol() {
+<b class="nc">&nbsp;        return symbol;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Finds a Currency by its display string.
+&nbsp;     *
+&nbsp;     * @param displayString the display string to search for
+&nbsp;     * @return the corresponding Currency
+&nbsp;     * @throws IllegalArgumentException if no match is found
+&nbsp;     */
+&nbsp;    public static Currency fromDisplayString(String displayString) {
+<b class="fc">&nbsp;        for (Currency currency : values()) {</b>
+<b class="fc">&nbsp;            if (currency.convertToDisplayString().equals(displayString)) {</b>
+<b class="fc">&nbsp;                return currency;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        throw new IllegalArgumentException(&quot;Invalid display string: &quot; + displayString);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts an amount from this currency to Euro, rounding to two decimal places.
+&nbsp;     *
+&nbsp;     * @param amount the amount to convert
+&nbsp;     * @return the amount in Euro
+&nbsp;     */
+&nbsp;    public double convertToEuro(double amount) {
+<b class="fc">&nbsp;        return Math.round(amount / exchangeRateToEuro * 100.0) / 100.0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts an amount from Euro to this currency, rounding to two decimal places.
+&nbsp;     *
+&nbsp;     * @param amount the amount to convert
+&nbsp;     * @return the amount in this currency
+&nbsp;     */
+&nbsp;    public double convertFromEuro(double amount) {
+<b class="fc">&nbsp;        return Math.round(amount * exchangeRateToEuro * 100.0) / 100.0;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

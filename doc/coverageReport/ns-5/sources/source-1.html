@@ -1,0 +1,194 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Constants</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">ressources</a>
+</div>
+
+<h1>Coverage Summary for Class: Constants (ressources)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Constants</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package ressources;
+&nbsp;
+&nbsp;/**
+&nbsp; * Provides constants for the application, such as file paths, error messages, labels, and other parameters.
+&nbsp; *
+&nbsp; * &lt;p&gt;Contains constants for the following:&lt;/p&gt;
+&nbsp; * &lt;ul&gt;
+&nbsp; *     &lt;li&gt;Parameters for the application&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Error messages for loading shipping rules&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Error messages for user input&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Error messages for the calculator&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Other error texts&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Labels for the user interface&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Other texts&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Further parameters for the user interface&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Labels for the settings&lt;/li&gt;
+&nbsp; *     &lt;li&gt;Labels for the toolbar&lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; */
+<b class="nc">&nbsp;public class Constants {</b>
+&nbsp;    // Parameters for the application
+&nbsp;    public static final String RULES_FILE_PATH = &quot;ressources/shipping_rules.json&quot;;
+&nbsp;    public static final double CALCULATION_ANIMATION_DELAY = 0.1;
+&nbsp;    public static final double CALCULATION_ANIMATION_DURATION = 0.4;
+&nbsp;    public static final int CALCULATION_ANIMATION_CYCLES = 3;
+&nbsp;
+&nbsp;
+&nbsp;    // Error messages for loading shipping rules
+&nbsp;    public static final String SHIPPING_RULES_FILE_NOT_FOUND = &quot;Shipping rules file not found: &#39;%s&#39;&quot;;
+&nbsp;    public static final String SHIPPING_RULES_FILE_OPEN_ERROR = &quot;Shipping rules file could not be opened: &#39;%s&#39; \nPlease check the file.&quot;;
+&nbsp;    public static final String SHIPPING_RULES_EMPTY_ERROR = &quot;No shipping rules found in the file: &#39;%s&#39; \nPlease check the file.&quot;;
+&nbsp;    public static final String SHIPPING_RULES_INVALID_FIELD = &quot;Invalid/missing &#39;%s&#39; field in shipping rule from file: &#39;%s&#39; \nPlease check the file.&quot;;
+&nbsp;    public static final String SHIPPING_RULES_ERROR_LOADING = &quot;Error loading shipping rules: &quot;;
+&nbsp;
+&nbsp;    // Error messages for user input
+&nbsp;    public static final String INVALID_INPUT_TITLE = &quot;Invalid Input&quot;;
+&nbsp;    public static final String INVALID_INPUT = &quot;Invalid input, please check:\n&quot;;
+&nbsp;    public static final String LENGTH_FIELD_EMPTY = &quot;- Length field is empty.\n&quot;;
+&nbsp;    public static final String WIDTH_FIELD_EMPTY = &quot;- Width field is empty.\n&quot;;
+&nbsp;    public static final String HEIGHT_FIELD_EMPTY = &quot;- Height field is empty.\n&quot;;
+&nbsp;    public static final String WEIGHT_FIELD_EMPTY = &quot;- Weight field is empty.\n&quot;;
+&nbsp;    public static final String ENTER_VALID_NUMBER = &quot;Enter a valid integer number: &quot;;
+&nbsp;
+&nbsp;    // Error messages for the calculator
+&nbsp;    public static final String INVALID_PACKAGE_MESSAGE = &quot;Invalid package parameters: &quot;;
+&nbsp;    public static final String INVALID_PACKAGE_LENGTH = &quot;- Length must be greater than 0.\n&quot;;
+&nbsp;    public static final String INVALID_PACKAGE_WIDTH = &quot;- Width must be greater than 0.\n&quot;;
+&nbsp;    public static final String INVALID_PACKAGE_HEIGHT = &quot;- Height must be greater than 0.\n&quot;;
+&nbsp;    public static final String INVALID_PACKAGE_WEIGHT = &quot;- Weight must be greater than 0.\n&quot;;
+&nbsp;    public static final String NO_SHIPPING_RULE_FOUND = &quot;No suitable shipping rule found for the given package dimensions and weight.&quot;;
+&nbsp;    public static final String PACKAGE_IS_NULL = &quot;Package is null. Please provide valid package dimensions and weight.&quot;;
+&nbsp;
+&nbsp;    // Other error texts
+&nbsp;    public static final String CALCULATION_ERROR_RESULT = &quot;Error&quot;;
+&nbsp;
+&nbsp;    // Labels for the user interface
+&nbsp;    public static final String LENGTH_LABEL = &quot;Length:&quot;;
+&nbsp;    public static final String WIDTH_LABEL = &quot;Width:&quot;;
+&nbsp;    public static final String HEIGHT_LABEL = &quot;Height:&quot;;
+&nbsp;    public static final String WEIGHT_LABEL = &quot;Weight:&quot;;
+&nbsp;    public static final String RESULT_LABEL = &quot;Shipping Costs:&quot;;
+&nbsp;    public static final String CALCULATE_BUTTON = &quot;Calculate&quot;;
+&nbsp;    public static final String CALCULATOR_AREA_LABEL = &quot;Shipping Cost Calculator&quot;;
+&nbsp;    public static final String COSTVIEW_AREA_LABEL = &quot;Cost Overview&quot;;
+&nbsp;    public static final String COSTVIEW_TABLE_TYPE_COLUM_HEADER = &quot;Type&quot;;
+&nbsp;    public static final String COSTVIEW_TABLE_COST_COLUM_HEADER = &quot;Cost&quot;;
+&nbsp;    public static final String COSTVIEW_TABLE_DIMENSIONS_COLUM_HEADER = &quot;Dimensions&quot;;
+&nbsp;    public static final String COSTVIEW_TABLE_GIRTH_COLUMN_HEADER = &quot;Max Girth&quot;;
+&nbsp;    public static final String COSTVIEW_TABLE_MAXWEIGHT_COLUMN_HEADER = &quot;Max Weight&quot;;
+&nbsp;
+&nbsp;    // Other texts
+&nbsp;    public static final String CALUCLATE_ANIMATION_SYMBOL = &quot;.&quot;;
+&nbsp;
+&nbsp;    // Further parameters for the user interface
+&nbsp;    public static final String FONT_NAME = &quot;System&quot;;
+&nbsp;
+&nbsp;    // Labels for the settings
+&nbsp;    public static final String SETTINGS_DIALOG_TITLE = &quot;Settings&quot;;
+&nbsp;    public static final String SETTINGS_MEASUREMENT_SYSTEM_SELECT_LABEL = &quot;Measurement system&quot;;
+&nbsp;    public static final String SETTINGS_CURRENCY_SELECT_LABEL = &quot;Currency&quot;;
+&nbsp;    public static final String SETTINGS_ERROR_DISPLAY_SELECT_LABEL = &quot;Show error messages:&quot;;
+&nbsp;    public static final String SETTINGS_APPLY_BUTTON = &quot;Apply&quot;;
+&nbsp;    public static final String SETTINGS_CANCEL_BUTTON = &quot;Cancel&quot;;
+&nbsp;
+&nbsp;    // Labels for the toolbar
+&nbsp;    public static final String TOOLBAR_SETTINGS_BUTTON_LABEL = &quot;Settings&quot;;
+&nbsp;    public static final String TOOLBAR_INFO_BUTTON_LABEL = &quot;About&quot;;
+&nbsp;    public static final String TOOLBAR_EXIT_BUTTON_LABEL = &quot;Exit&quot;;
+&nbsp;    public static final String CALCULATE_BUTTON_NOTE = &quot;Note: All different orientations of the package will\nbe tested automatically.&quot;;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

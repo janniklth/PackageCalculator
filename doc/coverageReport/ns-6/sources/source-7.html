@@ -1,0 +1,258 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ShippingRuleLoaderTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test</a>
+</div>
+
+<h1>Coverage Summary for Class: ShippingRuleLoaderTest (test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShippingRuleLoaderTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96.2%
+  </span>
+  <span class="absValue">
+    (25/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test;
+&nbsp;
+&nbsp;import control.ShippingRuleLoader;
+&nbsp;import data.ShippingRule;
+&nbsp;import exceptions.ShippingRuleException;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;import java.io.File;
+&nbsp;import java.io.FileWriter;
+&nbsp;import java.io.IOException;
+&nbsp;import java.net.URL;
+&nbsp;import java.nio.file.Files;
+&nbsp;import java.nio.file.Path;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * Provides test cases for the {@link ShippingRuleLoader} class.
+&nbsp; *
+&nbsp; * &lt;p&gt;Tests the loading of shipping rules from JSON files, including the default rules and custom rules as well as testing
+&nbsp; * error handling when the json file is not found or corrupted.&lt;/p&gt;
+&nbsp; *
+&nbsp; * &lt;p&gt;Contains the following test cases:&lt;/p&gt;
+&nbsp; * &lt;ul&gt;
+&nbsp; *     &lt;li&gt; {@link #testLoadShippingRulesSuccessfully()} - Tests that shipping rules are loaded correctly from a JSON file
+&nbsp; *     with the correct parameters. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testLoadDefaultShippingRules()} - Tests that the default shipping rules are loaded successfully. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testLoadShippingRulesWithDimensionsAndWeight()} - Tests that all dimensions and weight limits are
+&nbsp; *     correctly loaded from the JSON file. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testLoadShippingRulesWithEmptyJson()} - Tests that an empty JSON file throws a {@link ShippingRuleException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testLoadShippingRulesWithCorruptedJson()} - Tests that a corrupted JSON file throws a {@link ShippingRuleException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testShippingRulesAreSortedByCost()} - Tests that the rules are sorted by cost after loading. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testLoadShippingRulesFileNotFound()} - Tests that a {@link ShippingRuleException} is thrown when the
+&nbsp; *     shipping rules file cannot be found. &lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; *
+&nbsp; * @see ShippingRuleLoader
+&nbsp; * @see ShippingRule
+&nbsp; * @see ShippingRuleException
+&nbsp; */
+<b class="fc">&nbsp;public class ShippingRuleLoaderTest {</b>
+&nbsp;    /**
+&nbsp;     * Tests that shipping rules are loaded correctly from a JSON file.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testLoadShippingRulesSuccessfully() throws Exception {
+&nbsp;        // load shipping rules from the test JSON file
+<b class="fc">&nbsp;        List&lt;ShippingRule&gt; shippingRules = ShippingRuleLoader.loadCustomShippingRules(&quot;test/ressources/test_basic_rules.json&quot;);</b>
+&nbsp;
+&nbsp;        // Assert that the shipping rules are not null and that there are 2 rules loaded with the correct types
+<b class="fc">&nbsp;        assertNotNull(shippingRules, &quot;Shipping rules list should not be null.&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(2, shippingRules.size(), &quot;There should be exactly 2 shipping rules.&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(&quot;Small&quot;, shippingRules.get(0).getType(), &quot;First rule type from test json should be &#39;Small&#39;.&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(&quot;Large&quot;, shippingRules.get(1).getType(), &quot;Second rule type from test json should be &#39;Large&#39;.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that the default shipping rules (from hardcoded path) are loaded successfully.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testLoadDefaultShippingRules() {
+&nbsp;        // Assert that the default shipping rules are loaded successfully
+<b class="fc">&nbsp;        assertDoesNotThrow(() -&gt; ShippingRuleLoader.loadShippingRules());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that all dimensions and weight limits are correctly loaded from the JSON file.
+&nbsp;     *
+&nbsp;     * @throws Exception
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testLoadShippingRulesWithDimensionsAndWeight() throws Exception {
+&nbsp;        // load shipping rules from the test JSON file
+<b class="fc">&nbsp;        List&lt;ShippingRule&gt; shippingRules = ShippingRuleLoader.loadCustomShippingRules(&quot;test/ressources/test_basic_rules.json&quot;);</b>
+&nbsp;
+&nbsp;        // Assert that the first rule has the correct dimensions and weight
+<b class="fc">&nbsp;        ShippingRule smallRule = shippingRules.get(0);</b>
+<b class="fc">&nbsp;        assertEquals(400, smallRule.getMaxLength(), &quot;Small rule should have max length of 100.&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(100, smallRule.getMaxWidth(), &quot;Small rule should have max width of 50.&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(100, smallRule.getMaxHeight(), &quot;Small rule should have max height of 50.&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(500, smallRule.getMaxWeight(), &quot;Small rule should have max weight of 5000.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that an empty JSON file throws an exception.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testLoadShippingRulesWithEmptyJson() {
+&nbsp;        // Assert that the shippingRuleLoader should throw an exception
+<b class="fc">&nbsp;        Exception exception = assertThrows(ShippingRuleException.class, () -&gt; ShippingRuleLoader.loadCustomShippingRules(&quot;test/ressources/test_empty_rules.json&quot;));</b>
+<b class="fc">&nbsp;        assertTrue(exception.getCause().toString().contains(&quot;No shipping rules found in the file&quot;), &quot;Exception message should indicate no rules found.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a corrupted JSON file throws an exception (e.g. missing closing bracket).
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testLoadShippingRulesWithCorruptedJson() {
+&nbsp;        // Assert that the shippingRuleLoader should throw an exception
+<b class="fc">&nbsp;        Exception exception = assertThrows(ShippingRuleException.class, () -&gt; ShippingRuleLoader.loadCustomShippingRules(&quot;test/ressources/test_corrupted_rules.json&quot;));</b>
+<b class="fc">&nbsp;        assertTrue(exception.getMessage().contains(&quot;Error loading shipping rules&quot;), &quot;Exception message should indicate error loading rules.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that the rules are sorted by cost after loading (ascending order).
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testShippingRulesAreSortedByCost() throws Exception {
+&nbsp;        // load shipping rules from the test JSON file
+<b class="fc">&nbsp;        List&lt;ShippingRule&gt; shippingRules = ShippingRuleLoader.loadCustomShippingRules(&quot;test/ressources/test_unssorted_rules.json&quot;);</b>
+&nbsp;
+&nbsp;        // assert that the shipping rules are not null and that they are sorted by cost
+<b class="fc">&nbsp;        assertNotNull(shippingRules, &quot;Shipping rules list should not be null.&quot;);</b>
+<b class="fc">&nbsp;        assertTrue(isSortedByCost(shippingRules), &quot;Shipping rules are not sorted by cost.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that an error is thrown when the shipping rules files cannot be found.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testLoadShippingRulesFileNotFound() {
+&nbsp;        // Assert that the shippingRuleLoader should throw an exception
+<b class="fc">&nbsp;        Exception exception = assertThrows(ShippingRuleException.class, () -&gt; ShippingRuleLoader.loadCustomShippingRules(&quot;test/ressources/non_existent_file.json&quot;));</b>
+<b class="fc">&nbsp;        assertTrue(exception.getMessage().contains(&quot;Shipping rules file not found&quot;), &quot;Exception message should indicate file not found.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Helper function that checks if a list of shipping rules is sorted by cost.
+&nbsp;     *
+&nbsp;     * @param shippingRules the list of shipping rules to check
+&nbsp;     * @return true if the list is sorted by cost, false otherwise
+&nbsp;     */
+&nbsp;    private boolean isSortedByCost(List&lt;ShippingRule&gt; shippingRules) {
+<b class="fc">&nbsp;        for (int i = 1; i &lt; shippingRules.size(); i++) {</b>
+<b class="pc">&nbsp;            if (shippingRules.get(i - 1).getCost() &gt; shippingRules.get(i).getCost()) {</b>
+<b class="nc">&nbsp;                return false;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

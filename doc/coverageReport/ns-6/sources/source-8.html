@@ -1,0 +1,256 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ShippingRuleTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test</a>
+</div>
+
+<h1>Coverage Summary for Class: ShippingRuleTest (test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShippingRuleTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.8%
+  </span>
+  <span class="absValue">
+    (30/32)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test;
+&nbsp;
+&nbsp;import data.Packet;
+&nbsp;import data.ShippingRule;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * Provides test cases for the {@link ShippingRule} class.
+&nbsp; *
+&nbsp; * &lt;p&gt;Tests the matching of packets to shipping rules based on the dimensions and weight of the packet. The tests
+&nbsp; * ensure that packets that match the rule are correctly identified as a match and packets that do not match the rule
+&nbsp; * are correctly identified as not a match.&lt;/p&gt;
+&nbsp; *
+&nbsp; * &lt;p&gt;Contains the following test cases:&lt;/p&gt;
+&nbsp; * &lt;ul&gt;
+&nbsp; *     &lt;li&gt; {@link #testMatches_ValidPacket_MatchesRule()} - Tests that a packet with dimensions and weight that are
+&nbsp; *     clearly below the rule is correctly identified as a match. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testMatches_ValidLimitPacket_MatchesRule()} - Tests that a packet with dimension and weight at the
+&nbsp; *     limit of the rule is correctly identified as a match. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testMatches_InvalidPacket_DimensionsExceed()} - Tests that a packet with dimensions that exceed the
+&nbsp; *     rule is correctly identified as not a match. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testMatches_InvalidPacket_WeightExceeds()} - Tests that a packet with weight that exceeds the rule
+&nbsp; *     is correctly identified as not a match. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testMatches_InvalidPacket_GirthExceeds()} - Tests that a packet with girth that exceeds the rule
+&nbsp; *     (with girth limit) is correctly identified as not a match. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testMatches_InvalidPacket_NullPacket()} - Tests that a null-packet throws a NullPointerException. &lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; *
+&nbsp; * @see ShippingRule
+&nbsp; * @see Packet
+&nbsp; * @see NullPointerException
+&nbsp; */
+<b class="fc">&nbsp;public class ShippingRuleTest {</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a packet with dimensions and weight that are clearly below the rule is correctly identified as a match.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testMatches_ValidPacket_MatchesRule() {
+&nbsp;        // create a shipping rule and a packet that matches this rule
+<b class="fc">&nbsp;        ShippingRule rule = createShippingRule(&quot;Small&quot;, 100, 100, 100, 100, null, 5.99);</b>
+<b class="fc">&nbsp;        Packet packet = new Packet(50, 50, 50, 50);</b>
+&nbsp;
+&nbsp;        // assert that the packet matches the rule
+<b class="fc">&nbsp;        assertTrue(rule.matches(packet), &quot;The packet should match the rule.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a packet with dimension and weight at the limit of the rule is correctly identified as a match.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testMatches_ValidLimitPacket_MatchesRule() {
+&nbsp;        // create a shipping rule and a packet that matches this rules
+<b class="fc">&nbsp;        ShippingRule rule = createShippingRule(&quot;Small&quot;, 100, 100, 100, 100, null, 5.99);</b>
+<b class="fc">&nbsp;        Packet packet = new Packet(100, 100, 100, 100);</b>
+&nbsp;
+&nbsp;        // assert that the packet matches the rule
+<b class="fc">&nbsp;        assertTrue(rule.matches(packet), &quot;The packet should match the rule.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a packet with dimensions that exceed the rule is correctly identified as not a match.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testMatches_InvalidPacket_DimensionsExceed() {
+&nbsp;        // create a shipping rule and a packet that does not match this rule due to dimensions
+<b class="fc">&nbsp;        ShippingRule rule = createShippingRule(&quot;Small&quot;, 100, 100, 100, 100, null, 5.99);</b>
+<b class="fc">&nbsp;        Packet packet = new Packet(200, 200, 200, 100); // Length exceeds the limit</b>
+&nbsp;
+&nbsp;        // assert assert that the packet does not match the rule
+<b class="fc">&nbsp;        assertFalse(rule.matches(packet), &quot;The packet should not match the rule as the dimensions exceed the limit.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a packet with weight that exceeds the rule is correctly identified as not a match.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testMatches_InvalidPacket_WeightExceeds() {
+&nbsp;        // create a shipping rule and an according packet that does not match this rule due to weight
+<b class="fc">&nbsp;        ShippingRule rule = createShippingRule(&quot;Small&quot;, 100, 100, 100, 100, null, 5.99);</b>
+<b class="fc">&nbsp;        Packet packet = new Packet(100, 100, 100, 200);</b>
+&nbsp;
+&nbsp;        // assert that the packet does not match the rule
+<b class="fc">&nbsp;        assertFalse(rule.matches(packet), &quot;The packet should not match the rule as the weight exceeds the limit.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a packet with girth that exceeds the rule (with girth limit) is correctly identified as not a match.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testMatches_InvalidPacket_GirthExceeds() {
+&nbsp;        // create a shipping rule and a packet that does not match this rule due to girth
+<b class="fc">&nbsp;        ShippingRule rule = createShippingRule(&quot;Small&quot;, 100, 100, 100, 100, 100, 5.99);</b>
+<b class="fc">&nbsp;        Packet packet = new Packet(100, 100, 100, 100); // Girth exceeds the limit</b>
+&nbsp;
+&nbsp;        // assert that
+<b class="fc">&nbsp;        assertFalse(rule.matches(packet), &quot;The packet should not match the rule as the girth exceeds the limit.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a null-packet throws a NullPointerException.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testMatches_InvalidPacket_NullPacket() {
+&nbsp;        // create a shipping rule
+<b class="fc">&nbsp;        ShippingRule rule = createShippingRule(&quot;Small&quot;, 100, 100, 100, 100, null, 5.0);</b>
+&nbsp;
+&nbsp;        // assert that a null packet throws a NullPointerException
+<b class="fc">&nbsp;        assertThrows(NullPointerException.class, () -&gt; rule.matches(null), &quot;A null packet should throw a NullPointerException.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Helper method to create a shipping rule with the given parameters.
+&nbsp;     * @param type
+&nbsp;     * @param maxLength
+&nbsp;     * @param maxWidth
+&nbsp;     * @param maxHeight
+&nbsp;     * @param maxWeight
+&nbsp;     * @param maxGirth
+&nbsp;     * @param cost
+&nbsp;     * @return the created shipping rule
+&nbsp;     */
+&nbsp;    private ShippingRule createShippingRule(String type, int maxLength, int maxWidth, int maxHeight, int maxWeight, Integer maxGirth, double cost) {
+<b class="fc">&nbsp;        ShippingRule rule = new ShippingRule();</b>
+<b class="fc">&nbsp;        setField(rule, &quot;type&quot;, type);</b>
+<b class="fc">&nbsp;        setField(rule, &quot;maxLength&quot;, maxLength);</b>
+<b class="fc">&nbsp;        setField(rule, &quot;maxWidth&quot;, maxWidth);</b>
+<b class="fc">&nbsp;        setField(rule, &quot;maxHeight&quot;, maxHeight);</b>
+<b class="fc">&nbsp;        setField(rule, &quot;maxWeight&quot;, maxWeight);</b>
+<b class="fc">&nbsp;        setField(rule, &quot;maxGirth&quot;, maxGirth);</b>
+<b class="fc">&nbsp;        setField(rule, &quot;cost&quot;, cost);</b>
+<b class="fc">&nbsp;        return rule;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Helper method to set a field of an object via reflection.
+&nbsp;     * @param object
+&nbsp;     * @param fieldName
+&nbsp;     * @param value
+&nbsp;     */
+&nbsp;    private void setField(Object object, String fieldName, Object value) {
+&nbsp;        try {
+<b class="fc">&nbsp;            var field = object.getClass().getDeclaredField(fieldName);</b>
+<b class="fc">&nbsp;            field.setAccessible(true);</b>
+<b class="fc">&nbsp;            field.set(object, value);</b>
+<b class="nc">&nbsp;        } catch (Exception e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;Error setting field via reflection&quot;, e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

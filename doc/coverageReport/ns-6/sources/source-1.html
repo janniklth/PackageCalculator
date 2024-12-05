@@ -1,0 +1,303 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CalculatorRandomTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test</a>
+</div>
+
+<h1>Coverage Summary for Class: CalculatorRandomTest (test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CalculatorRandomTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    81.2%
+  </span>
+  <span class="absValue">
+    (52/64)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93%
+  </span>
+  <span class="absValue">
+    (66/71)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test;
+&nbsp;
+&nbsp;import control.Calculator;
+&nbsp;import data.Packet;
+&nbsp;import exceptions.ShippingRuleException;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * Provides a random based test for the {@link Calculator} class.
+&nbsp; *
+&nbsp; * &lt;p&gt;Tests the shipping cost calculation for 1000 random packets based on the defined shipping rules. Ensures that
+&nbsp; * exceptions are thrown for oversized packets and packets with invalid dimensions or weight.&lt;/p&gt;
+&nbsp; *
+&nbsp; * @see Calculator
+&nbsp; * @see Packet
+&nbsp; * @see IllegalArgumentException
+&nbsp; * @see Random
+&nbsp; */
+<b class="fc">&nbsp;public class CalculatorRandomTest {</b>
+&nbsp;
+<b class="fc">&nbsp;    private final Random random = new Random();</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that 1000 random packets are correctly calculated based on the shipping rules.
+&nbsp;     * Ensures exceptions are thrown for oversized packets.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testRandomPackets() {
+<b class="fc">&nbsp;        for (int i = 0; i &lt; 1000; i++) {</b>
+&nbsp;            // Generate random packet
+<b class="fc">&nbsp;            Packet packet = generateRandomPacket();</b>
+&nbsp;
+&nbsp;            // Check if the packet is oversized or any dimension is zero
+<b class="fc">&nbsp;            if (isOversized(packet)) {</b>
+&nbsp;                // Assert that an exception is thrown for oversized packets
+<b class="fc">&nbsp;                assertThrows(IllegalArgumentException.class,</b>
+<b class="fc">&nbsp;                        () -&gt; Calculator.calcShippingCosts(packet),</b>
+<b class="fc">&nbsp;                        String.format(&quot;Expected exception for oversized packet: %s&quot;, packet));</b>
+<b class="pc">&nbsp;            } else if (packet.getWidth() == 0 || packet.getHeight() == 0 || packet.getLength() == 0 || packet.getWeight() == 0) {</b>
+&nbsp;                // Assert that an exception is thrown for invalid packets
+<b class="nc">&nbsp;                assertThrows(IllegalArgumentException.class,</b>
+<b class="nc">&nbsp;                        () -&gt; Calculator.calcShippingCosts(packet),</b>
+<b class="nc">&nbsp;                        String.format(&quot;Expected exception for invalid packet: %s&quot;, packet));</b>
+&nbsp;            } else {
+&nbsp;                // Calculate actual and expected costs for valid packets
+<b class="fc">&nbsp;                double actualCost = assertDoesNotThrow(() -&gt; Calculator.calcShippingCosts(packet));</b>
+<b class="fc">&nbsp;                double expectedCost = calculateExpectedCost(packet);</b>
+&nbsp;
+&nbsp;                // Assert that the actual cost matches the expected cost
+<b class="fc">&nbsp;                assertEquals(expectedCost, actualCost, 0.01,</b>
+<b class="fc">&nbsp;                        String.format(&quot;Mismatch for packet, height: %d, width: %d, length: %d, weight: %d&quot;,</b>
+<b class="fc">&nbsp;                                packet.getHeight(), packet.getWidth(), packet.getLength(), packet.getWeight()));</b>
+&nbsp;
+&nbsp;                // Additional checks for the shipping cost
+<b class="pc">&nbsp;                assertTrue(actualCost &gt;= 0, &quot;Shipping cost must never be negative.&quot;);</b>
+<b class="pc">&nbsp;                assertTrue(actualCost &lt;= 100, &quot;Shipping cost must never exceed 100.&quot;);</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a random packet with random dimensions and weight.
+&nbsp;     *
+&nbsp;     * @return a random packet
+&nbsp;     */
+&nbsp;    private Packet generateRandomPacket() {
+<b class="fc">&nbsp;        int length = random.nextInt(1500); // Generate random length up to 1500 mm</b>
+<b class="fc">&nbsp;        int width = random.nextInt(800);  // Generate random width up to 800 mm</b>
+<b class="fc">&nbsp;        int height = random.nextInt(800); // Generate random height up to 800 mm</b>
+<b class="fc">&nbsp;        int weight = random.nextInt(40000); // Generate random weight up to 40 kg</b>
+<b class="fc">&nbsp;        return new Packet(length, width, height, weight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Calculates the cost for a given packet orientation based on predefined shipping rules.
+&nbsp;     *
+&nbsp;     * @param length the length of the packet
+&nbsp;     * @param width  the width of the packet
+&nbsp;     * @param height the height of the packet
+&nbsp;     * @param weight the weight of the packet
+&nbsp;     * @param girth  the girth of the packet (optional, can be null)
+&nbsp;     * @return the calculated cost for the given orientation, or Double.MAX_VALUE if no rule matches
+&nbsp;     */
+&nbsp;    private double calculateCostForOrientation(int length, int width, int height, int weight, Integer girth) {
+<b class="pc">&nbsp;        if (length &lt;= 300 &amp;&amp; width &lt;= 300 &amp;&amp; height &lt;= 150 &amp;&amp; weight &lt;= 1000) {</b>
+<b class="nc">&nbsp;            return 3.89;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (length &lt;= 600 &amp;&amp; width &lt;= 300 &amp;&amp; height &lt;= 150 &amp;&amp; weight &lt;= 2000) {</b>
+<b class="fc">&nbsp;            return 4.39;</b>
+&nbsp;        }
+<b class="pc">&nbsp;        if (length &lt;= 1200 &amp;&amp; width &lt;= 600 &amp;&amp; height &lt;= 600) {</b>
+<b class="pc">&nbsp;            if (girth == null || girth &lt;= 3000) {</b>
+<b class="fc">&nbsp;                if (weight &lt;= 5000) {</b>
+<b class="fc">&nbsp;                    return 5.89;</b>
+&nbsp;                }
+<b class="fc">&nbsp;                if (weight &lt;= 10000) {</b>
+<b class="fc">&nbsp;                    return 7.99;</b>
+&nbsp;                }
+<b class="pc">&nbsp;                if (weight &lt;= 31000) {</b>
+<b class="fc">&nbsp;                    return 14.99;</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;            // If girth is not required, return the default cost for these dimensions
+<b class="fc">&nbsp;            return 14.99;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return Double.MAX_VALUE; // No valid rule matches</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Calculates the lowest shipping cost for a given packet by considering all possible orientations.
+&nbsp;     *
+&nbsp;     * @param packet the packet for which the shipping cost is to be calculated
+&nbsp;     * @return the lowest possible shipping cost
+&nbsp;     * @throws IllegalArgumentException if no matching rule is found for any orientation
+&nbsp;     */
+&nbsp;    private double calculateExpectedCost(Packet packet) {
+&nbsp;        // All possible orientations of the packet
+<b class="fc">&nbsp;        int[][] orientations = {</b>
+<b class="fc">&nbsp;                {packet.getLength(), packet.getWidth(), packet.getHeight()},</b>
+<b class="fc">&nbsp;                {packet.getLength(), packet.getHeight(), packet.getWidth()},</b>
+<b class="fc">&nbsp;                {packet.getWidth(), packet.getLength(), packet.getHeight()},</b>
+<b class="fc">&nbsp;                {packet.getWidth(), packet.getHeight(), packet.getLength()},</b>
+<b class="fc">&nbsp;                {packet.getHeight(), packet.getLength(), packet.getWidth()},</b>
+<b class="fc">&nbsp;                {packet.getHeight(), packet.getWidth(), packet.getLength()}</b>
+&nbsp;        };
+&nbsp;
+<b class="fc">&nbsp;        double lowestCost = Double.MAX_VALUE;</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int[] orientation : orientations) {</b>
+<b class="fc">&nbsp;            int length = orientation[0];</b>
+<b class="fc">&nbsp;            int width = orientation[1];</b>
+<b class="fc">&nbsp;            int height = orientation[2];</b>
+&nbsp;
+&nbsp;            // Calculate the girth for the current orientation
+<b class="fc">&nbsp;            int girth = length + 2 * (width + height);</b>
+&nbsp;
+&nbsp;            // Calculate the cost for the current orientation
+<b class="fc">&nbsp;            double cost = this.calculateCostForOrientation(length, width, height, packet.getWeight(), girth);</b>
+<b class="fc">&nbsp;            lowestCost = Math.min(lowestCost, cost);</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (lowestCost == Double.MAX_VALUE) {</b>
+<b class="nc">&nbsp;            throw new IllegalArgumentException(&quot;No matching rule found for the given packet dimensions and weight.&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return lowestCost;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Helper function that determines whether a packet exceeds the maximum allowed dimensions or weight
+&nbsp;     * by checking every possible orientation.
+&nbsp;     *
+&nbsp;     * @param packet the packet to check
+&nbsp;     * @return true if the packet is oversized in all orientations, false otherwise
+&nbsp;     */
+&nbsp;    private boolean isOversized(Packet packet) {
+&nbsp;        // All possible orientations of the packet
+<b class="fc">&nbsp;        int[][] orientations = {</b>
+<b class="fc">&nbsp;                {packet.getLength(), packet.getWidth(), packet.getHeight()},</b>
+<b class="fc">&nbsp;                {packet.getLength(), packet.getHeight(), packet.getWidth()},</b>
+<b class="fc">&nbsp;                {packet.getWidth(), packet.getLength(), packet.getHeight()},</b>
+<b class="fc">&nbsp;                {packet.getWidth(), packet.getHeight(), packet.getLength()},</b>
+<b class="fc">&nbsp;                {packet.getHeight(), packet.getLength(), packet.getWidth()},</b>
+<b class="fc">&nbsp;                {packet.getHeight(), packet.getWidth(), packet.getLength()}</b>
+&nbsp;        };
+&nbsp;
+<b class="fc">&nbsp;        for (int[] orientation : orientations) {</b>
+<b class="fc">&nbsp;            int length = orientation[0];</b>
+<b class="fc">&nbsp;            int width = orientation[1];</b>
+<b class="fc">&nbsp;            int height = orientation[2];</b>
+<b class="fc">&nbsp;            int girth = 2 * (width + height);</b>
+&nbsp;
+&nbsp;            // Check if this orientation fits within the allowed dimensions and weight
+<b class="pc">&nbsp;            if (length &lt;= 1200 &amp;&amp; width &lt;= 600 &amp;&amp; height &lt;= 600 &amp;&amp; girth &lt;= 3000 &amp;&amp; packet.getWeight() &lt;= 31000) {</b>
+<b class="fc">&nbsp;                return false; // The packet fits in this orientation</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return true; // The packet is oversized in all orientations</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

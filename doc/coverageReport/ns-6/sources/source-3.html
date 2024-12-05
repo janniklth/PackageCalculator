@@ -1,0 +1,177 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CurrencyTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test</a>
+</div>
+
+<h1>Coverage Summary for Class: CurrencyTest (test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CurrencyTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test;
+&nbsp;
+&nbsp;import data.Currency;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * Provides test cases for the {@link Currency} enum.
+&nbsp; *
+&nbsp; * &lt;p&gt;Tests methods for converting amounts to and from Euro and for finding a {@link Currency} by its display string.&lt;/p&gt;
+&nbsp; *
+&nbsp; * &lt;p&gt;Contains the following test cases:&lt;/p&gt;
+&nbsp; * &lt;ul&gt;
+&nbsp; *     &lt;li&gt;{@link #testConvertToDisplayString()} - Tests the generation of the display string&lt;/li&gt;
+&nbsp; *     &lt;li&gt;{@link #testFromDisplayString()} - Tests finding a currency by its display string&lt;/li&gt;
+&nbsp; *     &lt;li&gt;{@link #testConvertToEuro()} - Tests conversion of amounts to Euro&lt;/li&gt;
+&nbsp; *     &lt;li&gt;{@link #testConvertFromEuro()} - Tests conversion of amounts from Euro&lt;/li&gt;
+&nbsp; *     &lt;li&gt;{@link #testInvalidDisplayString()} - Tests handling of invalid display strings&lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; *
+&nbsp; * @see Currency
+&nbsp; */
+<b class="fc">&nbsp;public class CurrencyTest {</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests the generation of the display string.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testConvertToDisplayString() {
+<b class="fc">&nbsp;        assertEquals(&quot;Euro (€)&quot;, Currency.EURO.convertToDisplayString(), &quot;Euro display string should be &#39;Euro (€)&#39;&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(&quot;US Dollar ($)&quot;, Currency.US_DOLLAR.convertToDisplayString(), &quot;US Dollar display string should be &#39;US Dollar ($)&#39;&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(&quot;British Pound (£)&quot;, Currency.BRITISH_POUND.convertToDisplayString(), &quot;British Pound display string should be &#39;British Pound (£)&#39;&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests finding a currency by its display string.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testFromDisplayString() {
+<b class="fc">&nbsp;        assertEquals(Currency.EURO, Currency.fromDisplayString(&quot;Euro (€)&quot;), &quot;Should return EURO for &#39;Euro (€)&#39;&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(Currency.US_DOLLAR, Currency.fromDisplayString(&quot;US Dollar ($)&quot;), &quot;Should return US_DOLLAR for &#39;US Dollar ($)&#39;&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(Currency.BRITISH_POUND, Currency.fromDisplayString(&quot;British Pound (£)&quot;), &quot;Should return BRITISH_POUND for &#39;British Pound (£)&#39;&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests the conversion of amounts to Euro.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testConvertToEuro() {
+<b class="fc">&nbsp;        assertEquals(100.0, Currency.EURO.convertToEuro(100), &quot;100 Euro should equal 100 Euro&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(93.46, Currency.US_DOLLAR.convertToEuro(100), 0.01, &quot;100 US Dollar should equal 93.46 Euro&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(119.05, Currency.BRITISH_POUND.convertToEuro(100), 0.01, &quot;100 British Pounds should equal 119.05 Euro&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests the conversion of amounts from Euro.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testConvertFromEuro() {
+<b class="fc">&nbsp;        assertEquals(100.0, Currency.EURO.convertFromEuro(100), &quot;100 Euro should equal 100 Euro&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(107.0, Currency.US_DOLLAR.convertFromEuro(100), 0.01, &quot;100 Euro should equal 107 US Dollar&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(84.0, Currency.BRITISH_POUND.convertFromEuro(100), 0.01, &quot;100 Euro should equal 84 British Pounds&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests handling of invalid display strings.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testInvalidDisplayString() {
+<b class="fc">&nbsp;        assertThrows(IllegalArgumentException.class, () -&gt; Currency.fromDisplayString(&quot;Invalid&quot;), &quot;Should throw exception for invalid display string&quot;);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

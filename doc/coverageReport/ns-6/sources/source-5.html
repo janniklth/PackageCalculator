@@ -1,0 +1,173 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MeasurementSystemTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test</a>
+</div>
+
+<h1>Coverage Summary for Class: MeasurementSystemTest (test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MeasurementSystemTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test;
+&nbsp;
+&nbsp;import data.MeasurementSystem;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+&nbsp;/**
+&nbsp; * Provides test cases for the {@link MeasurementSystem} enum.
+&nbsp; *
+&nbsp; * &lt;p&gt;Tests the methods for retrieving unit symbols, converting between measurement systems, and
+&nbsp; * finding a {@link MeasurementSystem} by its display string.&lt;/p&gt;
+&nbsp; *
+&nbsp; * &lt;p&gt;Contains the following test cases:&lt;/p&gt;
+&nbsp; * &lt;ul&gt;
+&nbsp; *     &lt;li&gt;{@link #testConvertToDisplayString()} - Tests the generation of the display string&lt;/li&gt;
+&nbsp; *     &lt;li&gt;{@link #testFromDisplayString()} - Tests finding a measurement system by its display string&lt;/li&gt;
+&nbsp; *     &lt;li&gt;{@link #testConvertLength()} - Tests the conversion of length between systems&lt;/li&gt;
+&nbsp; *     &lt;li&gt;{@link #testConvertWeight()} - Tests the conversion of weight between systems&lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; *
+&nbsp; * @see MeasurementSystem
+&nbsp; */
+<b class="fc">&nbsp;public class MeasurementSystemTest {</b>
+&nbsp;    /**
+&nbsp;     * Tests the generation of the display string.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testConvertToDisplayString() {
+<b class="fc">&nbsp;        assertEquals(&quot;Metric (mm + g)&quot;, MeasurementSystem.METRIC.convertToDisplayString(), &quot;Metric display string should be &#39;Metric (mm + g)&#39;&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(&quot;Imperial (in + lb)&quot;, MeasurementSystem.IMPERIAL.convertToDisplayString(), &quot;Imperial display string should be &#39;Imperial (in + lb)&#39;&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests finding a measurement system by its display string.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testFromDisplayString() {
+<b class="fc">&nbsp;        assertEquals(MeasurementSystem.METRIC, MeasurementSystem.fromDisplayString(&quot;Metric (mm + g)&quot;), &quot;Should return METRIC for &#39;Metric (mm + g)&#39;&quot;);</b>
+<b class="fc">&nbsp;        assertEquals(MeasurementSystem.IMPERIAL, MeasurementSystem.fromDisplayString(&quot;Imperial (in + lb)&quot;), &quot;Should return IMPERIAL for &#39;Imperial (in + lb)&#39;&quot;);</b>
+<b class="fc">&nbsp;        assertThrows(IllegalArgumentException.class, () -&gt; MeasurementSystem.fromDisplayString(&quot;Unknown&quot;), &quot;Should throw exception for invalid display string&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests the conversion of length between systems.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testConvertLength() {
+&nbsp;        // Metric to Imperial
+<b class="fc">&nbsp;        assertEquals(3.94, MeasurementSystem.METRIC.convertLength(100, MeasurementSystem.IMPERIAL, false), 0.01, &quot;100 mm should equal 3.94 inches&quot;);</b>
+&nbsp;        // Imperial to Metric
+<b class="fc">&nbsp;        assertEquals(254.0, MeasurementSystem.IMPERIAL.convertLength(10, MeasurementSystem.METRIC, false), 0.01, &quot;10 inches should equal 254 mm&quot;);</b>
+&nbsp;        // No conversion
+<b class="fc">&nbsp;        assertEquals(100.0, MeasurementSystem.METRIC.convertLength(100, MeasurementSystem.METRIC, true), &quot;100 mm should equal 100 mm&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests the conversion of weight between systems.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testConvertWeight() {
+&nbsp;        // Metric to Imperial
+<b class="fc">&nbsp;        assertEquals(2.2, MeasurementSystem.METRIC.convertWeight(1000, MeasurementSystem.IMPERIAL, false), 0.01, &quot;1000 g should equal 2.2 lb&quot;);</b>
+&nbsp;        // Imperial to Metric
+<b class="fc">&nbsp;        assertEquals(4535.92, MeasurementSystem.IMPERIAL.convertWeight(10, MeasurementSystem.METRIC, true), 0.01, &quot;10 lb should equal 4535.92 g&quot;);</b>
+&nbsp;        // No conversion
+<b class="fc">&nbsp;        assertEquals(100.0, MeasurementSystem.METRIC.convertWeight(100, MeasurementSystem.METRIC, true), &quot;100 g should equal 100 g&quot;);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

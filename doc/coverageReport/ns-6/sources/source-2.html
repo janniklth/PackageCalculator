@@ -1,0 +1,390 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CalculatorTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">test</a>
+</div>
+
+<h1>Coverage Summary for Class: CalculatorTest (test)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CalculatorTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (29/29)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (68/68)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package test;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+&nbsp;import control.Calculator;
+&nbsp;import data.Packet;
+&nbsp;import exceptions.ShippingRuleException;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;/**
+&nbsp; * Provides test cases for the {@link Calculator} class.
+&nbsp; *
+&nbsp; * &lt;p&gt;Tests the shipping cost calculation for parcels based on the defined default shipping rules. Ensures that the correct
+&nbsp; * shipping cost is calculated for parcels of different sizes and weights and that exceptions are thrown for oversized
+&nbsp; * parcels and parcels with invalid dimensions or weight.&lt;/p&gt;
+&nbsp; *
+&nbsp; * &lt;p&gt;Contains the following test cases:&lt;/p&gt;
+&nbsp; * &lt;ul&gt;
+&nbsp; *     &lt;li&gt; {@link #testSmallParcelRate()} - Tests that a small parcel with dimensions up to 30x30x15 cm and up to 1 kg
+&nbsp; *     is correctly calculated to cost 3.89 EUR. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testMediumParcelRate()} - Tests that a medium parcel with dimensions up to 60x30x15 cm and up to 2 kg
+&nbsp; *     is correctly calculated to cost 4.39 EUR. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testLargeParcelRate()} - Tests that a large parcel with dimensions up to 120x60x60 cm, girth up to 300 cm,
+&nbsp; *     and up to 5 kg is correctly calculated to cost 5.89 EUR. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testXLParcelRate()} - Tests that an extra-large parcel with dimensions up to 120x60x60 cm, girth up to 300 cm,
+&nbsp; *     and up to 10 kg is correctly calculated to cost 7.99 EUR. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testXXLParcelRate()} - Tests that an extra-extra-large parcel with dimensions up to 120x60x60 cm
+&nbsp; *     and a weight up to 31 kg is correctly calculated to cost 14.99 EUR. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testRotatedParcelRate()} - Tests that a parcel that has to be rotated to fit the dimensions is priced correctly. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testSmallHeavyParcelRate()} - Tests that a small parcel with a heavy weight is priced correctly. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testExceedMaxWeight()} - Tests that a parcel exceeding the maximum weight of 31 kg throws an
+&nbsp; *     {@link IllegalArgumentException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testExceedMaxDimensions()} - Tests that a parcel exceeding the maximum dimensions of 120x60x60 cm
+&nbsp; *     throws an {@link IllegalArgumentException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testAllZeroDimensions()} - Tests that a parcel with all dimensions set to zero throws an
+&nbsp; *     {@link IllegalArgumentException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testOneZeroDimension()} - Tests that a parcel with only one zero dimension throws an
+&nbsp; *     {@link IllegalArgumentException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testNegativeDimensions()} - Tests that a parcel with negative dimensions throws an
+&nbsp; *     {@link IllegalArgumentException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testNegativeWeight()} - Tests that a parcel with negative weight throws an
+&nbsp; *     {@link IllegalArgumentException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testNullPacket()} - Tests that passing a null packet to the calculator throws an
+&nbsp; *     {@link IllegalArgumentException}. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testExceedMaxGirth()} - Tests that a parcel exceeding the girth limit is priced correctly. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testOrientationsWidth()} - Tests that a parcel which would normally not fit due to it&#39;s width is
+&nbsp; *     priced correctly (due to trying all orientations). &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testOrientationsHeight()} - Tests that a parcel which would normally not fit due to it&#39;s height is
+&nbsp; *     priced correctly (due to trying all orientations). &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testFloatingPointPrecisionForWeight()} - Tests calculation precision for a weight very close to
+&nbsp; *     the 10 kg boundary. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testNearLimitCombination()} - Tests a parcel with near-limit dimensions and weight to ensure
+&nbsp; *     correct rule selection. &lt;/li&gt;
+&nbsp; *     &lt;li&gt; {@link #testMaxIntegerDimensions()} - Tests that a parcel with maximum integer dimensions and weight does
+&nbsp; *     not crash the program and throws an appropriate {@link IllegalArgumentException}. &lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; *
+&nbsp; * @see Calculator
+&nbsp; * @see Packet
+&nbsp; * @see ShippingRuleException
+&nbsp; * @see IllegalArgumentException
+&nbsp; */
+&nbsp;
+<b class="fc">&nbsp;public class CalculatorTest {</b>
+&nbsp;    /**
+&nbsp;     * Tests that a small parcel with dimensions up to 30x30x15 cm and up to 1 kg
+&nbsp;     * is correctly calculated to cost 3.89 EUR.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testSmallParcelRate() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(300, 300, 150, 1000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(3.89, result, &quot;A parcel up to 30x30x15 cm and up to 1 kg should cost 3.89 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a medium parcel with dimensions up to 60x30x15 cm and up to 2 kg
+&nbsp;     * is correctly calculated to cost 4.39 EUR.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testMediumParcelRate() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(600, 300, 150, 2000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(4.39, result, &quot;A parcel up to 60x30x15 cm and up to 2 kg should cost 4.39 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a large parcel with dimensions up to 120x60x60 cm, a girth of up to 300 cm,
+&nbsp;     * and a weight up to 5 kg is correctly calculated to cost 5.89 EUR.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testLargeParcelRate() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(1000, 500, 500, 5000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(5.89, result, &quot;A parcel up to 120x60x60 cm, girth &lt;= 300 cm, and up to 5 kg should cost 5.89 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that an extra-large parcel with dimensions up to 120x60x60 cm, a girth of up to 300 cm,
+&nbsp;     * and a weight up to 10 kg is correctly calculated to cost 7.99 EUR.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testXLParcelRate() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(1000, 500, 500, 10000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(7.99, result, &quot;A parcel up to 120x60x60 cm, girth &lt;= 300 cm, and up to 10 kg should cost 7.99 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that an extra-extra-large parcel with dimensions up to 120x60x60 cm
+&nbsp;     * and a weight up to 31 kg is correctly calculated to cost 14.99 EUR.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testXXLParcelRate() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(1200, 600, 600, 31000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(14.99, result, &quot;A parcel up to 120x60x60 cm and up to 31 kg should cost 14.99 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel that has to be rotated to fit the dimensions is priced correctly.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testRotatedParcelRate() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(600, 1200, 600, 5000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(14.99, result, &quot;Rotated parcel should cost 14.99 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that  small heavy parcel is priced correctly.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testSmallHeavyParcelRate() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(300, 300, 150, 29000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(14.99, result, &quot;A small parcel up to 1 kg should cost 3.89 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel exceeding the maximum weight of 31 kg throws an IllegalArgumentException.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testExceedMaxWeight() {
+<b class="fc">&nbsp;        Packet packet = new Packet(1200, 600, 600, 32000);</b>
+<b class="fc">&nbsp;        Exception exception = assertThrows(IllegalArgumentException.class, () -&gt; {</b>
+<b class="fc">&nbsp;            Calculator.calcShippingCosts(packet);</b>
+&nbsp;        });
+<b class="fc">&nbsp;        assertEquals(&quot;No suitable shipping rule found for the given package dimensions and weight.&quot;, exception.getMessage());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel exceeding the maximum dimensions of 120x60x60 cm throws an IllegalArgumentException.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testExceedMaxDimensions() {
+<b class="fc">&nbsp;        Packet packet = new Packet(1300, 700, 700, 10000);</b>
+<b class="fc">&nbsp;        Exception exception = assertThrows(IllegalArgumentException.class, () -&gt; {</b>
+<b class="fc">&nbsp;            Calculator.calcShippingCosts(packet);</b>
+&nbsp;        });
+<b class="fc">&nbsp;        assertEquals(&quot;No suitable shipping rule found for the given package dimensions and weight.&quot;, exception.getMessage());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel with no dimension throws an IllegalArgumentException.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testAllZeroDimensions() {
+<b class="fc">&nbsp;        Packet packet = new Packet(0, 0, 0, 1000);</b>
+<b class="fc">&nbsp;        Exception exception = assertThrows(IllegalArgumentException.class, () -&gt; {</b>
+<b class="fc">&nbsp;            Calculator.calcShippingCosts(packet);</b>
+&nbsp;        });
+<b class="fc">&nbsp;        assertTrue(exception.getMessage().contains(&quot;Invalid package parameters&quot;),</b>
+&nbsp;                &quot;Exception message should indicate invalid package dimensions or weight.&quot;);
+&nbsp;    }
+&nbsp;
+&nbsp;    // TODO: Maybe add a test for every dimension being 0?
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel with only one null dimension throws an IllegalArgumentException.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testOneZeroDimension() {
+<b class="fc">&nbsp;        Packet packet = new Packet(0, 300, 150, 1000);</b>
+<b class="fc">&nbsp;        Exception exception = assertThrows(IllegalArgumentException.class, () -&gt; {</b>
+<b class="fc">&nbsp;            Calculator.calcShippingCosts(packet);</b>
+&nbsp;        });
+<b class="fc">&nbsp;        assertEquals(&quot;Invalid package parameters: - Length must be greater than 0.&quot;, exception.getMessage());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel with negative dimensions throws an IllegalArgumentException.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testNegativeDimensions() {
+<b class="fc">&nbsp;        Packet packet = new Packet(-300, 300, 150, 1000);</b>
+<b class="fc">&nbsp;        Exception exception = assertThrows(IllegalArgumentException.class, () -&gt; {</b>
+<b class="fc">&nbsp;            Calculator.calcShippingCosts(packet);</b>
+&nbsp;        });
+<b class="fc">&nbsp;        assertEquals(&quot;Invalid package parameters: - Length must be greater than 0.&quot;, exception.getMessage());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel with negative weight throws an IllegalArgumentException.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testNegativeWeight() {
+<b class="fc">&nbsp;        Packet packet = new Packet(300, 300, 150, -1000);</b>
+<b class="fc">&nbsp;        Exception exception = assertThrows(IllegalArgumentException.class, () -&gt; {</b>
+<b class="fc">&nbsp;            Calculator.calcShippingCosts(packet);</b>
+&nbsp;        });
+<b class="fc">&nbsp;        assertEquals(&quot;Invalid package parameters: - Weight must be greater than 0.&quot;, exception.getMessage());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a Null parcel throws an IllegalArgumentException.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testNullPacket() {
+<b class="fc">&nbsp;        Exception exception = assertThrows(IllegalArgumentException.class, () -&gt; {</b>
+<b class="fc">&nbsp;            Calculator.calcShippingCosts(null);</b>
+&nbsp;        });
+<b class="fc">&nbsp;        assertEquals(&quot;Package is null. Please provide valid package dimensions and weight.&quot;, exception.getMessage());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel exceeding the girth limit is priced correctly.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testExceedMaxGirth() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(1200, 600, 600, 5000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(14.99, result, &quot;Parcel exceeding girth limit should cost 14.99 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel which would normally not fit (width), is priced correctly due to trying all orientations.
+&nbsp;     */
+&nbsp;    @Test void testOrientationsWidth() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(600, 1200, 600, 5000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(14.99, result, &quot;Rotated parcel should cost 14.99 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel which would normally not fit (height), is priced correctly due to trying all orientations.
+&nbsp;     */
+&nbsp;    @Test void testOrientationsHeight() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(600, 600, 1200, 5000);</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(14.99, result, &quot;Rotated parcel should cost 14.99 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests calculation precision for a weight that is very close to 10 kg boundary.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testFloatingPointPrecisionForWeight() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(100, 100, 100, 9999); // Very close to 10 kg</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(7.99, result, &quot;Parcel very close to 10 kg boundary should cost 5.89 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests a parcel with near-limit dimensions and weight to ensure correct rule selection.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testNearLimitCombination() throws ShippingRuleException {
+<b class="fc">&nbsp;        Packet packet = new Packet(299, 299, 150, 999); // Just below small parcel limits</b>
+<b class="fc">&nbsp;        double result = Calculator.calcShippingCosts(packet);</b>
+<b class="fc">&nbsp;        assertEquals(3.89, result, &quot;Parcel just below the small parcel limit should cost 3.89 EUR.&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Tests that a parcel with maximum integer dimensions and weight does not crash the program.
+&nbsp;     */
+&nbsp;    @Test
+&nbsp;    public void testMaxIntegerDimensions() {
+<b class="fc">&nbsp;        Packet packet = new Packet(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);</b>
+<b class="fc">&nbsp;        Exception exception = assertThrows(IllegalArgumentException.class, () -&gt; {</b>
+<b class="fc">&nbsp;            Calculator.calcShippingCosts(packet);</b>
+&nbsp;        });
+<b class="fc">&nbsp;        assertEquals(&quot;No suitable shipping rule found for the given package dimensions and weight.&quot;, exception.getMessage());</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

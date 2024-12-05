@@ -1,0 +1,281 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > MeasurementSystem</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">data</a>
+</div>
+
+<h1>Coverage Summary for Class: MeasurementSystem (data)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MeasurementSystem</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77.8%
+  </span>
+  <span class="absValue">
+    (7/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91.7%
+  </span>
+  <span class="absValue">
+    (22/24)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    89.7%
+  </span>
+  <span class="absValue">
+    (35/39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package data;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * The MeasurementSystem enum represents different systems of measurement and provides methods to convert between them.
+&nbsp; *
+&nbsp; * &lt;p&gt;The following systems are available:&lt;/p&gt;
+&nbsp; * &lt;ul&gt;
+&nbsp; *     &lt;li&gt;{@link data.MeasurementSystem#METRIC} - Metric system with units in millimeters and grams&lt;/li&gt;
+&nbsp; *     &lt;li&gt;{@link data.MeasurementSystem#IMPERIAL} - Imperial system with units in inches and pounds&lt;/li&gt;
+&nbsp; * &lt;/ul&gt;
+&nbsp; */
+<b class="fc">&nbsp;public enum MeasurementSystem {</b>
+&nbsp;    /**
+&nbsp;     * Metric system with units in millimeters and grams
+&nbsp;     */
+<b class="fc">&nbsp;    METRIC(&quot;Metric&quot;, &quot;mm&quot;, &quot;g&quot;),</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Imperial system with units in inches and pounds
+&nbsp;     */
+<b class="fc">&nbsp;    IMPERIAL(&quot;Imperial&quot;, &quot;in&quot;, &quot;lb&quot;);</b>
+&nbsp;
+&nbsp;    private final String name;
+&nbsp;    private final String lengthUnitSymbol;
+&nbsp;    private final String weightUnitSymbol;
+&nbsp;    private final String displayString;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new MeasurementUnit with the given name, length unit symbol, and weight unit symbol.
+&nbsp;     *
+&nbsp;     * @param name the name of the measurement unit
+&nbsp;     * @param lengthUnitSymbol the symbol for the length unit
+&nbsp;     * @param weightUnitSymbol the symbol for the weight unit
+&nbsp;     */
+<b class="fc">&nbsp;    MeasurementSystem(String name, String lengthUnitSymbol, String weightUnitSymbol) {</b>
+<b class="fc">&nbsp;        this.name = name;</b>
+<b class="fc">&nbsp;        this.lengthUnitSymbol = lengthUnitSymbol;</b>
+<b class="fc">&nbsp;        this.weightUnitSymbol = weightUnitSymbol;</b>
+<b class="fc">&nbsp;        this.displayString = name + &quot; (&quot; + lengthUnitSymbol + &quot; + &quot; + weightUnitSymbol + &quot;)&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the length unit symbol for this measurement unit.
+&nbsp;     *
+&nbsp;     * @return the length unit symbol
+&nbsp;     */
+&nbsp;    public String getLengthUnitSymbol() {
+<b class="nc">&nbsp;        return lengthUnitSymbol;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the weight unit symbol for this measurement unit.
+&nbsp;     *
+&nbsp;     * @return the weight unit symbol
+&nbsp;     */
+&nbsp;    public String getWeightUnitSymbol() {
+<b class="nc">&nbsp;        return weightUnitSymbol;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a user-friendly display string for the measurement unit.
+&nbsp;     *
+&nbsp;     * @return the display string
+&nbsp;     */
+&nbsp;    public String convertToDisplayString() {
+<b class="fc">&nbsp;        return displayString;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Finds a MeasurementUnit by its display string.
+&nbsp;     *
+&nbsp;     * @param displayString the display string to search for
+&nbsp;     * @return the corresponding MeasurementUnit
+&nbsp;     * @throws IllegalArgumentException if no match is found
+&nbsp;     */
+&nbsp;    public static MeasurementSystem fromDisplayString(String displayString) {
+<b class="fc">&nbsp;        for (MeasurementSystem unit : values()) {</b>
+<b class="fc">&nbsp;            if (unit.displayString.equals(displayString)) {</b>
+<b class="fc">&nbsp;                return unit;</b>
+&nbsp;            }
+&nbsp;        }
+<b class="fc">&nbsp;        throw new IllegalArgumentException(&quot;Invalid display string: &quot; + displayString);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts the given length value from the current unit to the target unit.
+&nbsp;     *
+&nbsp;     * @param length the length value to convert
+&nbsp;     * @param toUnit the target measurement unit
+&nbsp;     * @param exact whether to round the result to two decimal places
+&nbsp;     * @return the converted length value
+&nbsp;     */
+&nbsp;    public double convertLength(double length, MeasurementSystem toUnit, boolean exact) {
+<b class="fc">&nbsp;        double convertedLength = 0.0;</b>
+&nbsp;
+&nbsp;        // Check if the unit is already in the target unit
+<b class="fc">&nbsp;        if (this == toUnit) {</b>
+<b class="fc">&nbsp;            convertedLength = length;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Perform the conversion
+<b class="pc">&nbsp;        switch (this) {</b>
+&nbsp;            default:
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Unsupported conversion from &quot; + this + &quot; to &quot; + toUnit);</b>
+&nbsp;            case METRIC:
+<b class="fc">&nbsp;                if (toUnit == IMPERIAL) {</b>
+<b class="fc">&nbsp;                    convertedLength = length / 25.4; // mm to inches</b>
+&nbsp;                }
+&nbsp;                break;
+&nbsp;            case IMPERIAL:
+<b class="pc">&nbsp;                if (toUnit == METRIC) {</b>
+<b class="fc">&nbsp;                    convertedLength = length * 25.4; // inches to mm</b>
+&nbsp;                }
+&nbsp;                break;
+&nbsp;        }
+&nbsp;
+&nbsp;        // Round the result to two decimal places if needed
+<b class="fc">&nbsp;        if (exact) {</b>
+<b class="fc">&nbsp;            return convertedLength;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return Math.round(convertedLength * 100.0) / 100.0;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts the given weight value from the current unit to the target unit.
+&nbsp;     *
+&nbsp;     * @param weight the weight value to convert
+&nbsp;     * @param toUnit the target measurement unit
+&nbsp;     * @param exact whether to return the exact conversion or round to two decimal places
+&nbsp;     * @return the converted weight value
+&nbsp;     */
+&nbsp;    public double convertWeight(double weight, MeasurementSystem toUnit, boolean exact) {
+<b class="fc">&nbsp;        double convertedWeight = 0.0;</b>
+&nbsp;
+&nbsp;        // Check if the unit is already in the target unit
+<b class="fc">&nbsp;        if (this == toUnit) {</b>
+<b class="fc">&nbsp;            convertedWeight = weight;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Perform the conversion
+<b class="pc">&nbsp;        switch (this) {</b>
+&nbsp;            default:
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Unsupported conversion from &quot; + this + &quot; to &quot; + toUnit);</b>
+&nbsp;            case METRIC:
+<b class="fc">&nbsp;                if (toUnit == IMPERIAL) {</b>
+<b class="fc">&nbsp;                    convertedWeight = weight / 453.592; // grams to pounds</b>
+&nbsp;                }
+&nbsp;                break;
+&nbsp;            case IMPERIAL:
+<b class="pc">&nbsp;                if (toUnit == METRIC) {</b>
+<b class="fc">&nbsp;                    convertedWeight = weight * 453.592; // pounds to grams</b>
+&nbsp;                }
+&nbsp;                break;
+&nbsp;        }
+&nbsp;
+&nbsp;        // Round the result to two decimal places if needed
+<b class="fc">&nbsp;        if (exact) {</b>
+<b class="fc">&nbsp;            return convertedWeight;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return Math.round(convertedWeight * 100.0) / 100.0;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

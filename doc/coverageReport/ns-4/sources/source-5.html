@@ -1,0 +1,225 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PackageCalculator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">gui</a>
+</div>
+
+<h1>Coverage Summary for Class: PackageCalculator (gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PackageCalculator</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package gui;
+&nbsp;
+&nbsp;import control.MessageHandler;
+&nbsp;import javafx.application.Application;
+&nbsp;import javafx.geometry.Orientation;
+&nbsp;import javafx.geometry.Rectangle2D;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.SplitPane;
+&nbsp;import javafx.scene.layout.BorderPane;
+&nbsp;import javafx.stage.Screen;
+&nbsp;import javafx.stage.Stage;
+&nbsp;
+&nbsp;/**
+&nbsp; * The PackageCalculator class serves as the main entry point for the application. It is responsible for initializing
+&nbsp; * and configuring the layout and functionality of the user interface components, managing the application window, and
+&nbsp; * setting up the primary stage for this JavaFX application.
+&nbsp; *
+&nbsp; * &lt;p&gt;This class utilizes a singleton pattern to ensure only one instance exists and can be accessed globally within
+&nbsp; * the application.&lt;/p&gt;
+&nbsp; *
+&nbsp; * @see javafx.application.Application
+&nbsp; */
+<b class="nc">&nbsp;public class PackageCalculator extends Application {</b>
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * The name of the application, displayed as the title of the main window.
+&nbsp;	 */
+&nbsp;	public final static String APPNAME = &quot;PackageCalculator&quot;;
+&nbsp;
+&nbsp;	// Singleton instance of PackageCalculator
+&nbsp;	private static PackageCalculator instance;
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Returns the singleton instance of the PackageCalculator class.
+&nbsp;	 * TODO: Make it a real singleton.
+&nbsp;	 *
+&nbsp;	 * @return The singleton instance of PackageCalculator.
+&nbsp;	 */
+&nbsp;	public static PackageCalculator getInstance() {
+<b class="nc">&nbsp;		return instance;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// - - - - - - GUI areas for different parts of the application - - - - - -
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * The MessagesArea class represents a section of the user interface that displays a list of messages or logs.
+&nbsp;	 */
+<b class="nc">&nbsp;	public MessagesArea messagesArea = new MessagesArea();</b>
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * The ToolbarArea class represents a section of the user interface that contains various tools and actions that can
+&nbsp;	 * be performed.
+&nbsp;	 */
+<b class="nc">&nbsp;	public ToolbarArea toolbarArea = new ToolbarArea();</b>
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * The CalculatorArea class represents a section of the user interface where calculations can be performed.
+&nbsp;	 */
+<b class="nc">&nbsp;	public CalculatorArea calculatorArea = new CalculatorArea();</b>
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * The InspectorArea class represents a section of the user interface where details or properties of a selected item can
+&nbsp;	 * be inspected and modified.
+&nbsp;	 */
+<b class="nc">&nbsp;	public CostsOverviewArea costsOverviewArea = new CostsOverviewArea();</b>
+&nbsp;
+&nbsp;
+&nbsp;	// Primary stage (window) for the application
+&nbsp;	private Stage primaryStage;
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Sets up the primary layout and initializes the user interface with various sections, including toolbar, explorer,
+&nbsp;	 * editor, messages, and status areas.
+&nbsp;	 *
+&nbsp;	 * @param primaryStage The primary stage provided by the JavaFX runtime.
+&nbsp;	 */
+&nbsp;	@Override
+&nbsp;	public void start(Stage primaryStage) {
+&nbsp;		// Initialize singleton instance
+<b class="nc">&nbsp;		PackageCalculator.instance = this;</b>
+&nbsp;
+&nbsp;		// Store the primary stage reference
+<b class="nc">&nbsp;		this.primaryStage = primaryStage;</b>
+&nbsp;
+&nbsp;		// Create a SplitPane for calculator and inspector sections
+<b class="nc">&nbsp;		SplitPane lr2SplitPane = new SplitPane();</b>
+<b class="nc">&nbsp;		calculatorArea.setMaxWidth(320);</b>
+<b class="nc">&nbsp;		calculatorArea.setMinWidth(320);</b>
+<b class="nc">&nbsp;		lr2SplitPane.getItems().addAll(calculatorArea, costsOverviewArea);</b>
+&nbsp;
+&nbsp;		// Create a vertical SplitPane for editor/inspector and messages areas
+<b class="nc">&nbsp;		SplitPane tdSplitPane = new SplitPane();</b>
+<b class="nc">&nbsp;		tdSplitPane.setOrientation(Orientation.VERTICAL);</b>
+<b class="nc">&nbsp;		tdSplitPane.getItems().addAll(lr2SplitPane, messagesArea.getMessagesListView());</b>
+<b class="nc">&nbsp;		tdSplitPane.setDividerPositions(0.8f, 0.2f);</b>
+&nbsp;
+&nbsp;		// Set up the main layout, including toolbar, main split pane, and status area
+<b class="nc">&nbsp;		BorderPane mainPane = new BorderPane();</b>
+<b class="nc">&nbsp;		mainPane.setTop(toolbarArea);</b>
+<b class="nc">&nbsp;		mainPane.setCenter(tdSplitPane);</b>
+&nbsp;
+&nbsp;		// Configure the scene and set the window size to the screen&#39;s visual bounds
+<b class="nc">&nbsp;		Scene scene = new Scene(mainPane, 850, 500, true);</b>
+<b class="nc">&nbsp;		primaryStage.setTitle(APPNAME);</b>
+<b class="nc">&nbsp;		primaryStage.setScene(scene);</b>
+<b class="nc">&nbsp;		primaryStage.setResizable(false);</b>
+<b class="nc">&nbsp;		primaryStage.show();</b>
+&nbsp;
+&nbsp;		// Flush pending messages to the MessagesArea
+<b class="nc">&nbsp;		MessageHandler.flushPendingMessages();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * The main method to launch the JavaFX application.
+&nbsp;	 *
+&nbsp;	 * @param args Command-line arguments passed to the application.
+&nbsp;	 */
+&nbsp;	public static void main(String[] args) {
+<b class="nc">&nbsp;		launch(args);</b>
+&nbsp;	}
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

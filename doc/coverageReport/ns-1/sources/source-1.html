@@ -1,0 +1,263 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Calculator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">control</a>
+</div>
+
+<h1>Coverage Summary for Class: Calculator (control)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Calculator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97.7%
+  </span>
+  <span class="absValue">
+    (42/43)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package control;
+&nbsp;
+&nbsp;import data.MeasurementSystem;
+&nbsp;import data.Packet;
+&nbsp;import data.ShippingRule;
+&nbsp;import exceptions.ShippingRuleException;
+&nbsp;import ressources.Constants;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * The Calculator class provides methods for calculating shipping costs based on packet dimensions and weight.
+&nbsp; *
+&nbsp; * &lt;p&gt;Includes a method for calculating shipping costs using the loaded shipping rules and converting
+&nbsp; * the packet dimensions to metric units if needed using the current setting from {@link SettingsManager} and converting
+&nbsp; * method provided by {@link MeasurementSystem}. Also uses the {@link ShippingRuleLoader} to load the shipping rules
+&nbsp; * from an external JSON file.&lt;/p&gt;
+&nbsp; *
+&nbsp; * @see ShippingRuleLoader
+&nbsp; * @see SettingsManager
+&nbsp; * @see MeasurementSystem
+&nbsp; */
+<b class="nc">&nbsp;public class Calculator {</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Calculates the shipping costs based on the dimensions and weight of the given packet.
+&nbsp;     * Uses the shipping rules loaded from an external JSON file.
+&nbsp;     *
+&nbsp;     * @param pack the packet for which the shipping costs are to be calculated
+&nbsp;     * @return the calculated shipping costs
+&nbsp;     * @throws ShippingRuleException if the shipping rules cannot be loaded
+&nbsp;     */
+&nbsp;    public static double calcShippingCosts(Packet pack) throws ShippingRuleException {
+&nbsp;        // Load shipping rules from the external JSON file
+<b class="fc">&nbsp;        List&lt;ShippingRule&gt; shippingRules = ShippingRuleLoader.loadShippingRules();</b>
+&nbsp;
+&nbsp;        // Defensive checks for invalid or nonsensical inputs
+<b class="fc">&nbsp;        if (pack == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(Constants.PACKAGE_IS_NULL);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Validate the packet dimensions and weight
+<b class="fc">&nbsp;        Calculator.validatePacket(pack);</b>
+&nbsp;
+&nbsp;        // Convert the packet dimensions to metric units if needed
+<b class="fc">&nbsp;        Packet convertedPack = convertToMetric(pack);</b>
+&nbsp;
+&nbsp;        // Test all possible orientations of the packet
+<b class="fc">&nbsp;        double length = convertedPack.getLength();</b>
+<b class="fc">&nbsp;        double width = convertedPack.getWidth();</b>
+<b class="fc">&nbsp;        double height = convertedPack.getHeight();</b>
+&nbsp;
+&nbsp;        // Permutations of dimensions: {length, width, height}, {length, height, width}, ...
+<b class="fc">&nbsp;        double[][] orientations = {</b>
+&nbsp;                {length, width, height},
+&nbsp;                {length, height, width},
+&nbsp;                {width, length, height},
+&nbsp;                {width, height, length},
+&nbsp;                {height, length, width},
+&nbsp;                {height, width, length}
+&nbsp;        };
+&nbsp;
+<b class="fc">&nbsp;        double minCost = Double.MAX_VALUE; // Initialize with a very high value</b>
+&nbsp;
+&nbsp;        // Loop through the orientations and check each for the shipping rules
+<b class="fc">&nbsp;        for (double[] orientation : orientations) {</b>
+<b class="fc">&nbsp;            Packet orientedPacket = new Packet((int) orientation[0], (int) orientation[1], (int) orientation[2], convertedPack.getWeight());</b>
+&nbsp;
+<b class="fc">&nbsp;            for (ShippingRule rule : shippingRules) {</b>
+<b class="fc">&nbsp;                if (rule.matches(orientedPacket)) {</b>
+<b class="fc">&nbsp;                    double costInEuro = rule.getCost();</b>
+<b class="fc">&nbsp;                    double convertedCost = SettingsManager.getCurrency().convertFromEuro(costInEuro);</b>
+<b class="fc">&nbsp;                    minCost = Math.min(minCost, convertedCost); // Update minimum cost</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        // If no rule matches, throw an exception
+<b class="fc">&nbsp;        if (minCost == Double.MAX_VALUE) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(Constants.NO_SHIPPING_RULE_FOUND);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return minCost; // Return the minimum cost</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts the dimensions and weight of the given packet to metric units if the current
+&nbsp;     * measurement unit is imperial.
+&nbsp;     *
+&nbsp;     * @param pack the packet to convert
+&nbsp;     * @return a new packet with dimensions and weight in metric units
+&nbsp;     */
+&nbsp;    private static Packet convertToMetric(Packet pack) {
+<b class="fc">&nbsp;        MeasurementSystem measurementSystem = SettingsManager.getMeasurementSystem();</b>
+&nbsp;
+&nbsp;        // Convert the packet dimensions and weight to metric units if the current unit is imperial
+<b class="fc">&nbsp;        double lengthInMM = measurementSystem.convertLength(pack.getLength(), MeasurementSystem.METRIC, true);</b>
+<b class="fc">&nbsp;        double widthInMM = measurementSystem.convertLength(pack.getWidth(), MeasurementSystem.METRIC, true);</b>
+<b class="fc">&nbsp;        double heightInMM = measurementSystem.convertLength(pack.getHeight(), MeasurementSystem.METRIC, true);</b>
+<b class="fc">&nbsp;        double weightInGrams = measurementSystem.convertWeight(pack.getWeight(), MeasurementSystem.METRIC, true);</b>
+&nbsp;
+&nbsp;        // Return a new packet with the converted dimensions and weight (cast to integers)
+<b class="fc">&nbsp;        return new Packet((int) lengthInMM, (int) widthInMM, (int) heightInMM, (int) weightInGrams);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Validates the dimensions and weight of the given packet and gives a detailed error message if any of them are invalid.
+&nbsp;     *
+&nbsp;     * @param pack the packet to validate
+&nbsp;     * @throws IllegalArgumentException if any of the dimensions or weight are invalid
+&nbsp;     */
+&nbsp;    private static void validatePacket(Packet pack) {
+<b class="fc">&nbsp;        StringBuilder errorMessage = new StringBuilder(Constants.INVALID_PACKAGE_MESSAGE);</b>
+<b class="fc">&nbsp;        boolean hasError = false;</b>
+&nbsp;
+&nbsp;        // Check if the length is greater than 0
+<b class="fc">&nbsp;        if (pack.getLength() &lt;= 0) {</b>
+<b class="fc">&nbsp;            errorMessage.append(Constants.INVALID_PACKAGE_LENGTH);</b>
+<b class="fc">&nbsp;            hasError = true;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Check if the width is greater than 0
+<b class="fc">&nbsp;        if (pack.getWidth() &lt;= 0) {</b>
+<b class="fc">&nbsp;            errorMessage.append(Constants.INVALID_PACKAGE_WIDTH);</b>
+<b class="fc">&nbsp;            hasError = true;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Check if the height is greater than 0
+<b class="fc">&nbsp;        if (pack.getHeight() &lt;= 0) {</b>
+<b class="fc">&nbsp;            errorMessage.append(Constants.INVALID_PACKAGE_HEIGHT);</b>
+<b class="fc">&nbsp;            hasError = true;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Check if the weight is greater than 0
+<b class="fc">&nbsp;        if (pack.getWeight() &lt;= 0) {</b>
+<b class="fc">&nbsp;            errorMessage.append(Constants.INVALID_PACKAGE_WEIGHT);</b>
+<b class="fc">&nbsp;            hasError = true;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        // Throw an exception with the error message if any of the parameters are invalid
+<b class="fc">&nbsp;        if (hasError) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(errorMessage.toString().trim());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > CostsOverviewArea</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">gui</a>
+</div>
+
+<h1>Coverage Summary for Class: CostsOverviewArea (gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CostsOverviewArea</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/49)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package gui;
+&nbsp;
+&nbsp;import control.MessageHandler;
+&nbsp;import control.SettingsManager;
+&nbsp;import control.ShippingRuleLoader;
+&nbsp;import data.MeasurementSystem;
+&nbsp;import data.ShippingRule;
+&nbsp;import exceptions.ShippingRuleException;
+&nbsp;import javafx.beans.property.SimpleStringProperty;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.geometry.Insets;
+&nbsp;import javafx.scene.control.*;
+&nbsp;import javafx.scene.control.cell.PropertyValueFactory;
+&nbsp;import javafx.scene.layout.VBox;
+&nbsp;import javafx.scene.paint.Color;
+&nbsp;import javafx.scene.text.Font;
+&nbsp;import javafx.scene.text.FontWeight;
+&nbsp;import ressources.Constants;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * The CostsOverviewArea class represents the area of the application that displays an overview of the shipping costs.
+&nbsp; *
+&nbsp; * &lt;p&gt;Includes a TableView that displays the shipping rules loaded from an external JSON file using the {@link ShippingRuleLoader}.
+&nbsp; * The table displays the type, cost, dimensions, and weight of each shipping rule. The dimensions and weight are displayed
+&nbsp; * in the current measurement system and currency set in the {@link SettingsManager} and updated dynamically when the settings change.&lt;/p&gt;
+&nbsp; *
+&nbsp; * @see ShippingRuleLoader
+&nbsp; * @see SettingsManager
+&nbsp; * @see ShippingRule
+&nbsp; * @see TableView
+&nbsp; * @see TableColumn
+&nbsp; * @see data.MeasurementSystem
+&nbsp; * @see data.Currency
+&nbsp; */
+&nbsp;public class CostsOverviewArea extends VBox implements SettingsManager.SettingsListener {
+&nbsp;
+<b class="nc">&nbsp;    private final TableView&lt;ShippingRule&gt; tableView = new TableView&lt;&gt;();</b>
+<b class="nc">&nbsp;    private final TableColumn&lt;ShippingRule, String&gt; dimensionsColumn = new TableColumn&lt;&gt;();</b>
+<b class="nc">&nbsp;    private final TableColumn&lt;ShippingRule, String&gt; girthColumn = new TableColumn&lt;&gt;();</b>
+<b class="nc">&nbsp;    private final TableColumn&lt;ShippingRule, String&gt; weightColumn = new TableColumn&lt;&gt;();</b>
+<b class="nc">&nbsp;    private final MeasurementSystem baseSystem = MeasurementSystem.METRIC;</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new CostsOverviewArea with a heading and a TableView displaying the shipping rules.
+&nbsp;     * TODO: Add constants or external style sheets for styling the ui components.
+&nbsp;     */
+<b class="nc">&nbsp;    public CostsOverviewArea() {</b>
+&nbsp;        // heading
+<b class="nc">&nbsp;        final Label heading = new Label(Constants.COSTVIEW_AREA_LABEL);</b>
+<b class="nc">&nbsp;        heading.setFont(Font.font(Constants.FONT_NAME, FontWeight.BOLD, 20));</b>
+<b class="nc">&nbsp;        heading.setTextFill(Color.DARKSLATEBLUE);</b>
+&nbsp;
+&nbsp;        // TableView setup
+<b class="nc">&nbsp;        final TableColumn&lt;ShippingRule, String&gt; typeColumn = new TableColumn&lt;&gt;(Constants.COSTVIEW_TABLE_TYPE_COLUM_HEADER);</b>
+<b class="nc">&nbsp;        typeColumn.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;type&quot;));</b>
+&nbsp;
+&nbsp;        // Initialize column for cost
+<b class="nc">&nbsp;        final TableColumn&lt;ShippingRule, String&gt; costColumn = new TableColumn&lt;&gt;(Constants.COSTVIEW_TABLE_COST_COLUM_HEADER);</b>
+<b class="nc">&nbsp;        costColumn.setCellValueFactory(rule -&gt;</b>
+<b class="nc">&nbsp;                new SimpleStringProperty(String.format(&quot;%.2f &quot; + SettingsManager.getCurrency().getSymbol(),</b>
+<b class="nc">&nbsp;                        Double.valueOf(SettingsManager.getCurrency().convertFromEuro(rule.getValue().getCost())))));</b>
+<b class="nc">&nbsp;        costColumn.setStyle(&quot;-fx-alignment: CENTER; -fx-font-weight: bold;&quot;);</b>
+&nbsp;
+&nbsp;        // Initialize column for dimensions with dynamic header
+<b class="nc">&nbsp;        this.dimensionsColumn.setText(Constants.COSTVIEW_TABLE_DIMENSIONS_COLUM_HEADER + &quot; (&quot; + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + &quot;)&quot;);</b>
+<b class="nc">&nbsp;        this.dimensionsColumn.setCellValueFactory(rule -&gt;</b>
+<b class="nc">&nbsp;                new SimpleStringProperty(String.format(&quot;%.1f x %.1f x %.1f&quot;,</b>
+<b class="nc">&nbsp;                        Double.valueOf(this.baseSystem.convertLength(rule.getValue().getMaxLength(), SettingsManager.getMeasurementSystem(),</b>
+&nbsp;                                false)),
+<b class="nc">&nbsp;                        Double.valueOf(this.baseSystem.convertLength(rule.getValue().getMaxWidth(), SettingsManager.getMeasurementSystem(),</b>
+&nbsp;                                false)),
+<b class="nc">&nbsp;                        Double.valueOf(this.baseSystem.convertLength(rule.getValue().getMaxHeight(), SettingsManager.getMeasurementSystem(),</b>
+&nbsp;                                false)))));
+&nbsp;
+&nbsp;        // Initialize column for girth with dynamic header (- if null)
+<b class="nc">&nbsp;        this.girthColumn.setText(Constants.COSTVIEW_TABLE_GIRTH_COLUMN_HEADER + &quot; (&quot; + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + &quot;)&quot;);</b>
+<b class="nc">&nbsp;        this.girthColumn.setCellValueFactory(rule -&gt; {</b>
+<b class="nc">&nbsp;            if (rule.getValue().getMaxGirth() == null) {</b>
+<b class="nc">&nbsp;                return new SimpleStringProperty(&quot;- - -&quot;);</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                return new SimpleStringProperty(String.format(&quot;%.1f %s&quot;,</b>
+<b class="nc">&nbsp;                        Double.valueOf(this.baseSystem.convertLength(rule.getValue().getMaxGirth(), SettingsManager.getMeasurementSystem(), false)),</b>
+<b class="nc">&nbsp;                        SettingsManager.getMeasurementSystem().getLengthUnitSymbol()));</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;        // Initialize column for weight with dynamic header
+<b class="nc">&nbsp;        this.weightColumn.setText(Constants.COSTVIEW_TABLE_MAXWEIGHT_COLUMN_HEADER + &quot; (&quot; + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + &quot;)&quot;);</b>
+<b class="nc">&nbsp;        this.weightColumn.setCellValueFactory(rule -&gt;</b>
+<b class="nc">&nbsp;                new SimpleStringProperty(String.format(&quot;%.1f %s&quot;,</b>
+<b class="nc">&nbsp;                        Double.valueOf(this.baseSystem.convertWeight(rule.getValue().getMaxWeight(), SettingsManager.getMeasurementSystem(), false)),</b>
+<b class="nc">&nbsp;                        SettingsManager.getMeasurementSystem().getWeightUnitSymbol())));</b>
+&nbsp;
+&nbsp;        // Add the columns to the table and set the column resize policy
+<b class="nc">&nbsp;        tableView.getColumns().addAll(typeColumn, costColumn, dimensionsColumn, girthColumn, weightColumn);</b>
+<b class="nc">&nbsp;        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);</b>
+&nbsp;
+&nbsp;
+&nbsp;        // load shipping rules into table
+<b class="nc">&nbsp;        this.loadShippingRulesIntoTable();</b>
+&nbsp;
+&nbsp;
+&nbsp;        // compose layout
+<b class="nc">&nbsp;        this.setSpacing(20);</b>
+<b class="nc">&nbsp;        this.setPadding(new Insets(20));</b>
+<b class="nc">&nbsp;        this.getChildren().addAll(heading, tableView);</b>
+&nbsp;
+&nbsp;        // Register for settings updates
+<b class="nc">&nbsp;        SettingsManager.registerListener(this);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Loads the shipping rules from an external JSON file using the {@link ShippingRuleLoader} and populates the TableView.
+&nbsp;     *
+&nbsp;     * @see ShippingRuleLoader
+&nbsp;     */
+&nbsp;    private void loadShippingRulesIntoTable() {
+&nbsp;        try {
+<b class="nc">&nbsp;            List&lt;ShippingRule&gt; rules = ShippingRuleLoader.loadShippingRules();</b>
+<b class="nc">&nbsp;            this.tableView.setItems(FXCollections.observableArrayList(rules));</b>
+<b class="nc">&nbsp;        } catch (ShippingRuleException e) {</b>
+<b class="nc">&nbsp;            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.SHIPPING_RULES_ERROR_LOADING, e.getMessage() + &quot;\n&quot; + e.getCause());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Called when the settings are changed to update the column headers and refresh the table data.
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void onSettingsChanged() {
+&nbsp;        // Update column headers
+<b class="nc">&nbsp;        this.dimensionsColumn.setText(Constants.COSTVIEW_TABLE_DIMENSIONS_COLUM_HEADER + &quot; (&quot; + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + &quot;)&quot;);</b>
+<b class="nc">&nbsp;        this.girthColumn.setText(Constants.COSTVIEW_TABLE_GIRTH_COLUMN_HEADER + &quot; (&quot; + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + &quot;)&quot;);</b>
+<b class="nc">&nbsp;        this.weightColumn.setText(Constants.COSTVIEW_TABLE_MAXWEIGHT_COLUMN_HEADER + &quot; (&quot; + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + &quot;)&quot;);</b>
+&nbsp;
+&nbsp;        // Refresh the table data
+<b class="nc">&nbsp;        this.tableView.refresh();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>

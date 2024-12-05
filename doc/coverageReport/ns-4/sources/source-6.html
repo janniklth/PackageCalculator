@@ -1,0 +1,249 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > SettingsDialog</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">gui</a>
+</div>
+
+<h1>Coverage Summary for Class: SettingsDialog (gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SettingsDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/64)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package gui;
+&nbsp;
+&nbsp;import control.SettingsManager;
+&nbsp;import data.Currency;
+&nbsp;import data.ErrorDisplayState;
+&nbsp;import data.MeasurementSystem;
+&nbsp;import javafx.geometry.Insets;
+&nbsp;import javafx.geometry.Pos;
+&nbsp;import javafx.scene.Scene;
+&nbsp;import javafx.scene.control.Button;
+&nbsp;import javafx.scene.control.ComboBox;
+&nbsp;import javafx.scene.control.Label;
+&nbsp;import javafx.scene.layout.GridPane;
+&nbsp;import javafx.scene.layout.HBox;
+&nbsp;import javafx.scene.layout.VBox;
+&nbsp;import javafx.stage.Modality;
+&nbsp;import javafx.stage.Stage;
+&nbsp;import ressources.Constants;
+&nbsp;
+&nbsp;/**
+&nbsp; * The SettingsDialog class represents a modal dialog for changing application settings. It allows the user to change
+&nbsp; * the measurement units, currency, and error display settings with ComboBoxes.
+&nbsp; *
+&nbsp; * @see SettingsManager
+&nbsp; * @see MeasurementSystem
+&nbsp; * @see Currency
+&nbsp; * @see ErrorDisplayState
+&nbsp; * @see ComboBox
+&nbsp; */
+<b class="nc">&nbsp;public class SettingsDialog {</b>
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Displays the settings dialog for changing application settings like error messages and currency.
+&nbsp;     */
+&nbsp;    public static void show() {
+<b class="nc">&nbsp;        Stage settingsDialog = new Stage();</b>
+<b class="nc">&nbsp;        settingsDialog.initModality(Modality.APPLICATION_MODAL);</b>
+<b class="nc">&nbsp;        settingsDialog.setTitle(Constants.SETTINGS_DIALOG_TITLE);</b>
+&nbsp;
+&nbsp;        // Measurement units settings
+<b class="nc">&nbsp;        Label measurementSystemLabel = new Label(Constants.SETTINGS_MEASUREMENT_SYSTEM_SELECT_LABEL);</b>
+<b class="nc">&nbsp;        ComboBox&lt;String&gt; measurementSystemComboBox = new ComboBox&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (MeasurementSystem measurementSystem : MeasurementSystem.values()) {</b>
+<b class="nc">&nbsp;            measurementSystemComboBox.getItems().add(measurementSystem.convertToDisplayString());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        measurementSystemComboBox.setValue(SettingsManager.getMeasurementSystem().convertToDisplayString());</b>
+&nbsp;
+&nbsp;        // Currency settings
+<b class="nc">&nbsp;        Label currencyLabel = new Label(Constants.SETTINGS_CURRENCY_SELECT_LABEL);</b>
+<b class="nc">&nbsp;        currencyLabel.setStyle(&quot;-fx-font-size: 14px;&quot;);</b>
+<b class="nc">&nbsp;        ComboBox&lt;String&gt; currencyComboBox = new ComboBox&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (Currency currency : Currency.values()) {</b>
+<b class="nc">&nbsp;            currencyComboBox.getItems().add(currency.convertToDisplayString());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        currencyComboBox.setValue(SettingsManager.getCurrency().convertToDisplayString());</b>
+&nbsp;
+&nbsp;        // Error display settings
+<b class="nc">&nbsp;        Label errorLabel = new Label(Constants.SETTINGS_ERROR_DISPLAY_SELECT_LABEL);</b>
+<b class="nc">&nbsp;        errorLabel.setStyle(&quot;-fx-font-size: 14px;&quot;);</b>
+<b class="nc">&nbsp;        ComboBox&lt;String&gt; errorPopupsComboBox = new ComboBox&lt;&gt;();</b>
+<b class="nc">&nbsp;        for (ErrorDisplayState state : ErrorDisplayState.values()) {</b>
+<b class="nc">&nbsp;            errorPopupsComboBox.getItems().add(state.convertToDisplayString());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        errorPopupsComboBox.setValue(SettingsManager.getErrorDisplayState().convertToDisplayString());</b>
+&nbsp;
+&nbsp;        // Apply button: Save settings to SettingsManager and close dialog
+<b class="nc">&nbsp;        Button applyButton = new Button(Constants.SETTINGS_APPLY_BUTTON);</b>
+<b class="nc">&nbsp;        applyButton.setStyle(&quot;-fx-background-color: #0078D4; -fx-text-fill: white; -fx-font-size: 14px;&quot;);</b>
+<b class="nc">&nbsp;        applyButton.setOnAction(e -&gt; {</b>
+<b class="nc">&nbsp;            String selectedUnit = measurementSystemComboBox.getValue();</b>
+<b class="nc">&nbsp;            SettingsManager.setMeasurementSystem(MeasurementSystem.fromDisplayString(selectedUnit));</b>
+&nbsp;
+<b class="nc">&nbsp;            String selectedErrorDisplay = errorPopupsComboBox.getValue();</b>
+<b class="nc">&nbsp;            SettingsManager.setShowErrorPopups(ErrorDisplayState.fromDisplayString(selectedErrorDisplay));</b>
+&nbsp;
+<b class="nc">&nbsp;            String selectedCurrency = currencyComboBox.getValue();</b>
+<b class="nc">&nbsp;            SettingsManager.setCurrency(Currency.fromDisplayString(selectedCurrency));</b>
+&nbsp;
+<b class="nc">&nbsp;            settingsDialog.close();</b>
+&nbsp;        });
+&nbsp;
+&nbsp;        // Cancel button: Close dialog without saving settings
+<b class="nc">&nbsp;        Button cancelButton = new Button(Constants.SETTINGS_CANCEL_BUTTON);</b>
+<b class="nc">&nbsp;        cancelButton.setStyle(&quot;-fx-font-size: 14px;&quot;);</b>
+<b class="nc">&nbsp;        cancelButton.setOnAction(e -&gt; settingsDialog.close());</b>
+&nbsp;
+&nbsp;        // Layout with GridPane
+<b class="nc">&nbsp;        GridPane gridPane = new GridPane();</b>
+<b class="nc">&nbsp;        gridPane.setHgap(10);</b>
+<b class="nc">&nbsp;        gridPane.setVgap(15);</b>
+<b class="nc">&nbsp;        gridPane.setPadding(new Insets(15));</b>
+<b class="nc">&nbsp;        gridPane.setAlignment(Pos.TOP_CENTER);</b>
+&nbsp;
+&nbsp;        // Uniform width for all ComboBoxes
+<b class="nc">&nbsp;        double comboBoxWidth = 200;</b>
+&nbsp;
+&nbsp;        // Layout for measurement unit settings
+<b class="nc">&nbsp;        VBox unitsBox = new VBox(5, measurementSystemLabel, measurementSystemComboBox);</b>
+<b class="nc">&nbsp;        measurementSystemLabel.setStyle(&quot;-fx-font-size: 14px; -fx-font-weight: bold;&quot;);</b>
+<b class="nc">&nbsp;        measurementSystemComboBox.setPrefWidth(comboBoxWidth);</b>
+<b class="nc">&nbsp;        gridPane.add(unitsBox, 0, 0);</b>
+&nbsp;
+&nbsp;        // Layout for currency settings
+<b class="nc">&nbsp;        VBox currencyBox = new VBox(5, currencyLabel, currencyComboBox);</b>
+<b class="nc">&nbsp;        currencyLabel.setStyle(&quot;-fx-font-size: 14px; -fx-font-weight: bold;&quot;);</b>
+<b class="nc">&nbsp;        currencyComboBox.setPrefWidth(comboBoxWidth);</b>
+<b class="nc">&nbsp;        gridPane.add(currencyBox, 0, 1);</b>
+&nbsp;
+&nbsp;        // Layout for error display settings
+<b class="nc">&nbsp;        VBox errorBox = new VBox(5, errorLabel, errorPopupsComboBox);</b>
+<b class="nc">&nbsp;        errorLabel.setStyle(&quot;-fx-font-size: 14px; -fx-font-weight: bold;&quot;);</b>
+<b class="nc">&nbsp;        errorPopupsComboBox.setPrefWidth(comboBoxWidth);</b>
+<b class="nc">&nbsp;        gridPane.add(errorBox, 0, 2);</b>
+&nbsp;
+&nbsp;        // Button layout
+<b class="nc">&nbsp;        HBox buttonBox = new HBox(20, cancelButton, applyButton);</b>
+<b class="nc">&nbsp;        buttonBox.setAlignment(Pos.CENTER);</b>
+<b class="nc">&nbsp;        applyButton.setPrefWidth(90);</b>
+<b class="nc">&nbsp;        cancelButton.setPrefWidth(90);</b>
+&nbsp;
+&nbsp;        // Main layout
+<b class="nc">&nbsp;        VBox layout = new VBox(20, gridPane, buttonBox);</b>
+<b class="nc">&nbsp;        layout.setPadding(new Insets(20));</b>
+<b class="nc">&nbsp;        layout.setAlignment(Pos.TOP_CENTER);</b>
+<b class="nc">&nbsp;        layout.setStyle(&quot;-fx-background-color: #ffffff;&quot;);</b>
+&nbsp;
+&nbsp;        // Display the dialog
+<b class="nc">&nbsp;        Scene dialogScene = new Scene(layout, 275, 310);</b>
+<b class="nc">&nbsp;        settingsDialog.setScene(dialogScene);</b>
+<b class="nc">&nbsp;        settingsDialog.setResizable(false);</b>
+<b class="nc">&nbsp;        settingsDialog.showAndWait();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-12-05 22:28</div>
+</div>
+</body>
+</html>
