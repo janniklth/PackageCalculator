@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
  *     and up to 10 kg is correctly calculated to cost 7.99 EUR. </li>
  *     <li> {@link #testXXLParcelRate()} - Tests that an extra-extra-large parcel with dimensions up to 120x60x60 cm
  *     and a weight up to 31 kg is correctly calculated to cost 14.99 EUR. </li>
+ *     <li> {@link #testRotatedParcelRate()} - Tests that a parcel that has to be rotated to fit the dimensions is priced correctly. </li>
  *     <li> {@link #testSmallHeavyParcelRate()} - Tests that a small parcel with a heavy weight is priced correctly. </li>
  *     <li> {@link #testExceedMaxWeight()} - Tests that a parcel exceeding the maximum weight of 31 kg throws an
  *     {@link IllegalArgumentException}. </li>
@@ -36,6 +37,8 @@ import org.junit.jupiter.api.Test;
  *     <li> {@link #testOneZeroDimension()} - Tests that a parcel with only one zero dimension throws an
  *     {@link IllegalArgumentException}. </li>
  *     <li> {@link #testNegativeDimensions()} - Tests that a parcel with negative dimensions throws an
+ *     {@link IllegalArgumentException}. </li>
+ *     <li> {@link #testNegativeWeight()} - Tests that a parcel with negative weight throws an
  *     {@link IllegalArgumentException}. </li>
  *     <li> {@link #testNullPacket()} - Tests that passing a null packet to the calculator throws an
  *     {@link IllegalArgumentException}. </li>
@@ -115,6 +118,16 @@ public class CalculatorTest {
     }
 
     /**
+     * Tests that a parcel that has to be rotated to fit the dimensions is priced correctly.
+     */
+    @Test
+    public void testRotatedParcelRate() throws ShippingRuleException {
+        Packet packet = new Packet(600, 1200, 600, 5000);
+        double result = Calculator.calcShippingCosts(packet);
+        assertEquals(14.99, result, "Rotated parcel should cost 14.99 EUR.");
+    }
+
+    /**
      * Tests that  small heavy parcel is priced correctly.
      */
     @Test
@@ -185,6 +198,18 @@ public class CalculatorTest {
             Calculator.calcShippingCosts(packet);
         });
         assertEquals("Invalid package parameters: - Length must be greater than 0.", exception.getMessage());
+    }
+
+    /**
+     * Tests that a parcel with negative weight throws an IllegalArgumentException.
+     */
+    @Test
+    public void testNegativeWeight() {
+        Packet packet = new Packet(300, 300, 150, -1000);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Calculator.calcShippingCosts(packet);
+        });
+        assertEquals("Invalid package parameters: - Weight must be greater than 0.", exception.getMessage());
     }
 
     /**
