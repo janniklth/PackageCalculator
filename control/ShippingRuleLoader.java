@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import data.ShippingRule;
 import javafx.scene.control.Alert;
+import ressources.Constants;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class ShippingRuleLoader {
 
-    private static final String RULES_FILE = "data/shipping_rules.json";
+    private static final String RULES_FILE = Constants.RULES_FILE_PATH;
 
     /**
      * Loads the shipping rules from the JSON file specified by the parameter.
@@ -29,13 +30,12 @@ public class ShippingRuleLoader {
     public static List<ShippingRule> loadCustomShippingRules(String rules_json_path) throws ShippingRuleException {
         URL url = ShippingRuleLoader.class.getClassLoader().getResource(rules_json_path);
         if (url == null) {
-            throw new ShippingRuleException("Shipping rules file not found: " + rules_json_path, null);
+            throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_FILE_NOT_FOUND, rules_json_path), null);
         }
 
         try (InputStream inputStream = ShippingRuleLoader.class.getClassLoader().getResourceAsStream(rules_json_path)) {
             if (inputStream == null) {
-                throw new ShippingRuleException("Shipping rules file could not be opened: " + rules_json_path +
-                        "\n Please check the file.", null);
+                throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_FILE_OPEN_ERROR, rules_json_path), null);
             }
 
             ObjectMapper mapper = new ObjectMapper();
@@ -44,7 +44,7 @@ public class ShippingRuleLoader {
             List<ShippingRule> shippingRules = mapper.readValue(inputStream, new TypeReference<List<ShippingRule>>() {});
 
             if (shippingRules == null || shippingRules.isEmpty()) {
-                throw new ShippingRuleException("No shipping rules found in the file: " + rules_json_path +
+                throw new ShippingRuleException(Constants.SHIPPING_RULES_EMPTY_ERROR + rules_json_path +
                         "\n Please check the file.", null);
             }
 
@@ -59,7 +59,7 @@ public class ShippingRuleLoader {
             return shippingRules;
 
         } catch (Exception e) {
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Error loading shipping rules", e.getMessage());
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.SHIPPING_RULES_ERROR_LOADING, e.getMessage());
             return null;
         }
     }
@@ -72,33 +72,26 @@ public class ShippingRuleLoader {
      */
     private static void validateShippingRule(ShippingRule rule, String rules_json_path) throws ShippingRuleException {
         if (rule.getType() == null || rule.getType().isEmpty()) {
-            throw new ShippingRuleException("Missing 'type' field in shipping rule from file: " + rules_json_path +
-                    "\nPlease check the file.", null);
+            throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_INVALID_FIELD, "type", rules_json_path), null);
         }
         if (rule.getMaxLength() <= 0) {
-            throw new ShippingRuleException("Invalid 'maxLength' field in shipping rule from file: " + rules_json_path +
-                    "\nPlease check the file.", null);
+            throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_INVALID_FIELD, "maxLength", rules_json_path), null);
         }
         if (rule.getMaxWidth() <= 0) {
-            throw new ShippingRuleException("Invalid 'maxWidth' field in shipping rule from file: " + rules_json_path +
-                    "\nPlease check the file.", null);
+            throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_INVALID_FIELD, "maxWidth", rules_json_path), null);
         }
         if (rule.getMaxHeight() <= 0) {
-            throw new ShippingRuleException("Invalid 'maxHeight' field in shipping rule from file: " + rules_json_path +
-                    "\nPlease check the file.", null);
+            throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_INVALID_FIELD, "maxHeight", rules_json_path), null);
         }
         if (rule.getMaxWeight() <= 0) {
-            throw new ShippingRuleException("Invalid 'maxWeight' field in shipping rule from file: " + rules_json_path +
-                    "\nPlease check the file.", null);
+            throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_INVALID_FIELD, "maxWeight", rules_json_path), null);
         }
         if (rule.getCost() <= 0) {
-            throw new ShippingRuleException("Invalid 'cost' field in shipping rule from file: " + rules_json_path +
-                    "\nPlease check the file.", null);
+            throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_INVALID_FIELD, "cost", rules_json_path), null);
         }
         // maxGirth is optional, but if present, it should be a valid positive value
         if (rule.getMaxGirth() != null && rule.getMaxGirth() <= 0) {
-            throw new ShippingRuleException("Invalid 'maxGirth' field in shipping rule from file: " + rules_json_path +
-                    "\nPlease check the file.", null);
+            throw new ShippingRuleException(String.format(Constants.SHIPPING_RULES_INVALID_FIELD, "maxGirth", rules_json_path), null);
         }
     }
 
