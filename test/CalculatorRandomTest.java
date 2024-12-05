@@ -76,38 +76,112 @@ public class CalculatorRandomTest {
     }
 
     /**
-     * Helper function that calculates the expected cost for a given packet based on the defined rules.
+     * Calculates the cost for a given packet orientation based on predefined shipping rules.
      *
-     * @param packet the packet for which the expected cost is to be calculated
-     * @return the expected cost
-     * TODO: Refactor with "introduce parameter object" pattern
+     * @param length the length of the packet
+     * @param width  the width of the packet
+     * @param height the height of the packet
+     * @param weight the weight of the packet
+     * @param girth  the girth of the packet (optional, can be null)
+     * @return the calculated cost for the given orientation, or Double.MAX_VALUE if no rule matches
      */
-    private double calculateExpectedCost(Packet packet) {
-        if (packet.getLength() <= 300 && packet.getWidth() <= 300 && packet.getHeight() <= 150 && packet.getWeight() <= 1000) {
+    private double calculateCostForOrientation(int length, int width, int height, int weight, Integer girth) {
+        if (length <= 300 && width <= 300 && height <= 150 && weight <= 1000) {
             return 3.89;
-        } else if (packet.getLength() <= 600 && packet.getWidth() <= 300 && packet.getHeight() <= 150 && packet.getWeight() <= 2000) {
+        }
+        if (length <= 600 && width <= 300 && height <= 150 && weight <= 2000) {
             return 4.39;
-        } else if (packet.getLength() <= 1200 && packet.getWidth() <= 600 && packet.getHeight() <= 600 && packet.getGirth() <= 3000) {
-            if (packet.getWeight() <= 5000) {
-                return 5.89;
-            } else if (packet.getWeight() <= 10000) {
-                return 7.99;
-            } else if (packet.getWeight() <= 31000) {
-                return 14.99;
+        }
+        if (length <= 1200 && width <= 600 && height <= 600) {
+            if (girth == null || girth <= 3000) {
+                if (weight <= 5000) {
+                    return 5.89;
+                }
+                if (weight <= 10000) {
+                    return 7.99;
+                }
+                if (weight <= 31000) {
+                    return 14.99;
+                }
             }
-        } else if (packet.getLength() <= 1200 && packet.getWidth() <= 600 && packet.getHeight() <= 600) {
+            // If girth is not required, return the default cost for these dimensions
             return 14.99;
         }
-        throw new IllegalArgumentException("No matching rule found for the given packet dimensions and weight.");
+        return Double.MAX_VALUE; // No valid rule matches
     }
 
     /**
-     * Helper function that determines whether a packet exceeds the maximum allowed dimensions or weight.
+     * Calculates the lowest shipping cost for a given packet by considering all possible orientations.
+     *
+     * @param packet the packet for which the shipping cost is to be calculated
+     * @return the lowest possible shipping cost
+     * @throws IllegalArgumentException if no matching rule is found for any orientation
+     */
+    private double calculateExpectedCost(Packet packet) {
+        // All possible orientations of the packet
+        int[][] orientations = {
+                {packet.getLength(), packet.getWidth(), packet.getHeight()},
+                {packet.getLength(), packet.getHeight(), packet.getWidth()},
+                {packet.getWidth(), packet.getLength(), packet.getHeight()},
+                {packet.getWidth(), packet.getHeight(), packet.getLength()},
+                {packet.getHeight(), packet.getLength(), packet.getWidth()},
+                {packet.getHeight(), packet.getWidth(), packet.getLength()}
+        };
+
+        double lowestCost = Double.MAX_VALUE;
+
+        for (int[] orientation : orientations) {
+            int length = orientation[0];
+            int width = orientation[1];
+            int height = orientation[2];
+
+            // Calculate the girth for the current orientation
+            int girth = length + 2 * (width + height);
+
+            // Calculate the cost for the current orientation
+            double cost = this.calculateCostForOrientation(length, width, height, packet.getWeight(), girth);
+            lowestCost = Math.min(lowestCost, cost);
+        }
+
+        if (lowestCost == Double.MAX_VALUE) {
+            throw new IllegalArgumentException("No matching rule found for the given packet dimensions and weight.");
+        }
+
+        return lowestCost;
+    }
+
+
+    /**
+     * Helper function that determines whether a packet exceeds the maximum allowed dimensions or weight
+     * by checking every possible orientation.
      *
      * @param packet the packet to check
-     * @return true if the packet is oversized, false otherwise
+     * @return true if the packet is oversized in all orientations, false otherwise
      */
     private boolean isOversized(Packet packet) {
-        return packet.getLength() > 1200 || packet.getWidth() > 600 || packet.getHeight() > 600 || packet.getGirth() > 30000 || packet.getWeight() > 31000;
+        // All possible orientations of the packet
+        int[][] orientations = {
+                {packet.getLength(), packet.getWidth(), packet.getHeight()},
+                {packet.getLength(), packet.getHeight(), packet.getWidth()},
+                {packet.getWidth(), packet.getLength(), packet.getHeight()},
+                {packet.getWidth(), packet.getHeight(), packet.getLength()},
+                {packet.getHeight(), packet.getLength(), packet.getWidth()},
+                {packet.getHeight(), packet.getWidth(), packet.getLength()}
+        };
+
+        for (int[] orientation : orientations) {
+            int length = orientation[0];
+            int width = orientation[1];
+            int height = orientation[2];
+            int girth = 2 * (width + height);
+
+            // Check if this orientation fits within the allowed dimensions and weight
+            if (length <= 1200 && width <= 600 && height <= 600 && girth <= 3000 && packet.getWeight() <= 31000) {
+                return false; // The packet fits in this orientation
+            }
+        }
+
+        return true; // The packet is oversized in all orientations
     }
+
 }

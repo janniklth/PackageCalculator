@@ -41,15 +41,6 @@
     "maxWidth": 600,
     "maxHeight": 600,
     "maxWeight": 31000,
-    "maxGirth": 3000,
-    "cost": 14.99
-  },
-  {
-    "type": "XXXL Parcel",
-    "maxLength": 1200,
-    "maxWidth": 600,
-    "maxHeight": 600,
-    "maxWeight": 31000,
     "maxGirth": null,
     "cost": 14.99
   }
