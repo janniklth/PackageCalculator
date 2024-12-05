@@ -107,7 +107,7 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
             List<ShippingRule> rules = ShippingRuleLoader.loadShippingRules();
             this.tableView.setItems(FXCollections.observableArrayList(rules));
         } catch (ShippingRuleException e) {
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Error loading rules", e.getMessage());
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.SHIPPING_RULES_ERROR_LOADING, e.getMessage() + "\n" + e.getCause());
         }
     }
 

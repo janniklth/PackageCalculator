@@ -13,7 +13,7 @@ public class Constants {
     public static final String SHIPPING_RULES_FILE_OPEN_ERROR = "Shipping rules file could not be opened: '%s' \nPlease check the file.";
     public static final String SHIPPING_RULES_EMPTY_ERROR = "No shipping rules found in the file: '%s' \nPlease check the file.";
     public static final String SHIPPING_RULES_INVALID_FIELD = "Invalid/missing '%s' field in shipping rule from file: '%s' \nPlease check the file.";
-    public static final String SHIPPING_RULES_ERROR_LOADING = "Error loading shipping rules";
+    public static final String SHIPPING_RULES_ERROR_LOADING = "Error loading shipping rules: ";
 
     // Error messages for user input
     public static final String INVALID_INPUT_TITLE = "Invalid Input";

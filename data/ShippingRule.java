@@ -95,10 +95,10 @@ public class ShippingRule {
      * @return true if the packet fits, false otherwise
      */
     private boolean isWithinDimensions(Packet pack) {
-        return pack.length <= this.maxLength &&
-                pack.width <= this.maxWidth &&
-                pack.height <= this.maxHeight &&
-                pack.weight <= this.maxWeight;
+        return pack.getLength() <= this.maxLength &&
+                pack.getWidth() <= this.maxWidth &&
+                pack.getHeight() <= this.maxHeight &&
+                pack.getWeight() <= this.maxWeight;
     }
 
     /**
@@ -108,6 +108,6 @@ public class ShippingRule {
      * @return true if the packet matches this rule, false otherwise
      */
     public boolean matches(Packet pack) {
-        return this.isWithinDimensions(pack) && (this.maxGirth == null || pack.girth <= this.maxGirth);
+        return this.isWithinDimensions(pack) && (this.maxGirth == null || pack.getGirth() <= this.maxGirth);
     }
 }

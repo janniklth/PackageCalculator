@@ -40,9 +40,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * @see ShippingRuleException
  */
 public class ShippingRuleLoaderTest {
-
-    private static final String TEMP_JSON_FILE = "src/test/resources/temp_shipping_rules.json";
-
     /**
      * Tests that shipping rules are loaded correctly from a JSON file.
      */
@@ -102,7 +99,8 @@ public class ShippingRuleLoaderTest {
     public void testLoadShippingRulesWithCorruptedJson() {
         // Assert that the shippingRuleLoader should throw an exception
         Exception exception = assertThrows(ShippingRuleException.class, () -> ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_corrupted_rules.json"));
-        assertTrue(exception.getMessage().contains("Error loading shipping rules from file"), "Exception message should indicate error loading rules.");
+        System.out.println(exception.getMessage());
+        assertTrue(exception.getMessage().contains("Error loading shipping rules"), "Exception message should indicate error loading rules.");
     }
 
     /**

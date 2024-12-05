@@ -95,10 +95,10 @@ public class Calculator {
         MeasurementSystem measurementSystem = SettingsManager.getMeasurementSystem();
 
         // Convert the packet dimensions and weight to metric units if the current unit is imperial
-        double lengthInMM = measurementSystem.convertLength(pack.length, MeasurementSystem.METRIC, true);
-        double widthInMM = measurementSystem.convertLength(pack.width, MeasurementSystem.METRIC, true);
-        double heightInMM = measurementSystem.convertLength(pack.height, MeasurementSystem.METRIC, true);
-        double weightInGrams = measurementSystem.convertWeight(pack.weight, MeasurementSystem.METRIC, true);
+        double lengthInMM = measurementSystem.convertLength(pack.getLength(), MeasurementSystem.METRIC, true);
+        double widthInMM = measurementSystem.convertLength(pack.getWidth(), MeasurementSystem.METRIC, true);
+        double heightInMM = measurementSystem.convertLength(pack.getHeight(), MeasurementSystem.METRIC, true);
+        double weightInGrams = measurementSystem.convertWeight(pack.getWeight(), MeasurementSystem.METRIC, true);
 
         // Return a new packet with the converted dimensions and weight (cast to integers)
         return new Packet((int) lengthInMM, (int) widthInMM, (int) heightInMM, (int) weightInGrams);
@@ -116,25 +116,25 @@ public class Calculator {
         boolean hasError = false;
 
         // Check if the length is greater than 0
-        if (pack.length <= 0) {
+        if (pack.getLength() <= 0) {
             errorMessage.append(Constants.INVALID_PACKAGE_LENGTH);
             hasError = true;
         }
 
         // Check if the width is greater than 0
-        if (pack.width <= 0) {
+        if (pack.getWidth() <= 0) {
             errorMessage.append(Constants.INVALID_PACKAGE_WIDTH);
             hasError = true;
         }
 
         // Check if the height is greater than 0
-        if (pack.height <= 0) {
+        if (pack.getHeight() <= 0) {
             errorMessage.append(Constants.INVALID_PACKAGE_HEIGHT);
             hasError = true;
         }
 
         // Check if the weight is greater than 0
-        if (pack.weight <= 0) {
+        if (pack.getWeight() <= 0) {
             errorMessage.append(Constants.INVALID_PACKAGE_WEIGHT);
             hasError = true;
         }

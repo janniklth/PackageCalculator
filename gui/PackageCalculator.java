@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
@@ -70,15 +69,6 @@ public class PackageCalculator extends Application {
 	private Stage primaryStage;
 
 	/**
-	 * Retrieves the primary stage, which serves as the main window for the application.
-	 *
-	 * @return The primary {@link Stage} instance.
-	 */
-	public Stage getPrimaryStage() {
-		return this.primaryStage;
-	}
-
-	/**
 	 * Sets up the primary layout and initializes the user interface with various sections, including toolbar, explorer,
 	 * editor, messages, and status areas.
 	 *
@@ -110,7 +100,6 @@ public class PackageCalculator extends Application {
 		mainPane.setCenter(tdSplitPane);
 
 		// Configure the scene and set the window size to the screen's visual bounds
-		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 		Scene scene = new Scene(mainPane, 800, 500, true);
 		primaryStage.setTitle(APPNAME);
 		primaryStage.setScene(scene);

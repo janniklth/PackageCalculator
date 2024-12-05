@@ -59,8 +59,8 @@ public class ShippingRuleLoader {
             return shippingRules;
 
         } catch (Exception e) {
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.SHIPPING_RULES_ERROR_LOADING, e.getMessage());
-            return null;
+            System.out.println(Constants.SHIPPING_RULES_ERROR_LOADING + rules_json_path);
+            throw new ShippingRuleException(Constants.SHIPPING_RULES_ERROR_LOADING + "\nfile: " + rules_json_path, e);
         }
     }
 

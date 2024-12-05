@@ -40,7 +40,7 @@ public class CalculatorRandomTest {
                 assertThrows(IllegalArgumentException.class,
                         () -> Calculator.calcShippingCosts(packet),
                         String.format("Expected exception for oversized packet: %s", packet));
-            } else if (packet.width == 0 || packet.height == 0 || packet.length == 0 || packet.weight == 0) {
+            } else if (packet.getWidth() == 0 || packet.getHeight() == 0 || packet.getLength() == 0 || packet.getWeight() == 0) {
                 // Assert that an exception is thrown for invalid packets
                 assertThrows(IllegalArgumentException.class,
                         () -> Calculator.calcShippingCosts(packet),
@@ -53,7 +53,7 @@ public class CalculatorRandomTest {
                 // Assert that the actual cost matches the expected cost
                 assertEquals(expectedCost, actualCost, 0.01,
                         String.format("Mismatch for packet, height: %d, width: %d, length: %d, weight: %d",
-                                packet.height, packet.width, packet.length, packet.weight));
+                                packet.getHeight(), packet.getWidth(), packet.getLength(), packet.getWeight()));
 
                 // Additional checks for the shipping cost
                 assertTrue(actualCost >= 0, "Shipping cost must never be negative.");
@@ -83,19 +83,19 @@ public class CalculatorRandomTest {
      * TODO: Refactor with "introduce parameter object" pattern
      */
     private double calculateExpectedCost(Packet packet) {
-        if (packet.length <= 300 && packet.width <= 300 && packet.height <= 150 && packet.weight <= 1000) {
+        if (packet.getLength() <= 300 && packet.getWidth() <= 300 && packet.getHeight() <= 150 && packet.getWeight() <= 1000) {
             return 3.89;
-        } else if (packet.length <= 600 && packet.width <= 300 && packet.height <= 150 && packet.weight <= 2000) {
+        } else if (packet.getLength() <= 600 && packet.getWidth() <= 300 && packet.getHeight() <= 150 && packet.getWeight() <= 2000) {
             return 4.39;
-        } else if (packet.length <= 1200 && packet.width <= 600 && packet.height <= 600 && packet.girth <= 3000) {
-            if (packet.weight <= 5000) {
+        } else if (packet.getLength() <= 1200 && packet.getWidth() <= 600 && packet.getHeight() <= 600 && packet.getGirth() <= 3000) {
+            if (packet.getWeight() <= 5000) {
                 return 5.89;
-            } else if (packet.weight <= 10000) {
+            } else if (packet.getWeight() <= 10000) {
                 return 7.99;
-            } else if (packet.weight <= 31000) {
+            } else if (packet.getWeight() <= 31000) {
                 return 14.99;
             }
-        } else if (packet.length <= 1200 && packet.width <= 600 && packet.height <= 600) {
+        } else if (packet.getLength() <= 1200 && packet.getWidth() <= 600 && packet.getHeight() <= 600) {
             return 14.99;
         }
         throw new IllegalArgumentException("No matching rule found for the given packet dimensions and weight.");
@@ -108,6 +108,6 @@ public class CalculatorRandomTest {
      * @return true if the packet is oversized, false otherwise
      */
     private boolean isOversized(Packet packet) {
-        return packet.length > 1200 || packet.width > 600 || packet.height > 600 || packet.girth > 30000 || packet.weight > 31000;
+        return packet.getLength() > 1200 || packet.getWidth() > 600 || packet.getHeight() > 600 || packet.getGirth() > 30000 || packet.getWeight() > 31000;
     }
 }

@@ -133,7 +133,7 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("Invalid package dimensions or weight, no suitable shipping rule found.", exception.getMessage());
+        assertEquals("No suitable shipping rule found for the given package dimensions and weight.", exception.getMessage());
     }
 
     /**
@@ -145,7 +145,7 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("Invalid package dimensions or weight, no suitable shipping rule found.", exception.getMessage());
+        assertEquals("No suitable shipping rule found for the given package dimensions and weight.", exception.getMessage());
     }
 
     /**
@@ -157,7 +157,8 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("Invalid package dimensions or weight. All values must be greater than 0.", exception.getMessage());
+        assertTrue(exception.getMessage().contains("Invalid package parameters"),
+                "Exception message should indicate invalid package dimensions or weight.");
     }
 
     // TODO: Maybe add a test for every dimension being 0?
@@ -171,7 +172,7 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("Invalid package dimensions or weight. All values must be greater than 0.", exception.getMessage());
+        assertEquals("Invalid package parameters: - Length must be greater than 0.", exception.getMessage());
     }
 
     /**
@@ -183,7 +184,7 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("Invalid package dimensions or weight. All values must be greater than 0.", exception.getMessage());
+        assertEquals("Invalid package parameters: - Length must be greater than 0.", exception.getMessage());
     }
 
     /**
@@ -194,7 +195,7 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(null);
         });
-        assertEquals("Invalid package dimensions or weight. All values must be greater than 0.", exception.getMessage());
+        assertEquals("Package is null. Please provide valid package dimensions and weight.", exception.getMessage());
     }
 
     /**
@@ -254,7 +255,7 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("Invalid package dimensions or weight, no suitable shipping rule found.", exception.getMessage());
+        assertEquals("No suitable shipping rule found for the given package dimensions and weight.", exception.getMessage());
     }
 }
 

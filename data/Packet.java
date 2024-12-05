@@ -8,27 +8,27 @@ public class Packet {
 	/**
 	 * The length of the package in millimeters
 	 */
-	public int length;
+	private int length;
 
 	/**
 	 * The width of the package in millimeters
 	 */
-	public int width;
+	private int width;
 
 	/**
 	 * The height of the package in millimeters
 	 */
-	public int height;
+	private int height;
 
 	/**
 	 * The weight of the package in grams
 	 */
-	public int weight;
+	private int weight;
 
 	/**
 	 * The girth of the package in millimeters
 	 */
-	public int girth;
+	private int girth;
 
 	/**
 	 * Constructor for the Packet class
@@ -76,5 +76,13 @@ public class Packet {
 	 */
 	public int getWeight() {
 		return weight;
+	}
+
+	/**
+	 * Retrieves the girth of the package
+	 * @return the girth of the package in millimeters
+	 */
+	public int getGirth() {
+		return girth;
 	}
 }

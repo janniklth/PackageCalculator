@@ -61,7 +61,7 @@ public class MessageHandler {
             for (String message : pendingMessages) {
                 calculator.messagesArea.setMessage(message);
             }
-            pendingMessages.clear();
+            MessageHandler.pendingMessages.clear();
         }
     }
 
