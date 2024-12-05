@@ -99,7 +99,6 @@ public class ShippingRuleLoaderTest {
     public void testLoadShippingRulesWithCorruptedJson() {
         // Assert that the shippingRuleLoader should throw an exception
         Exception exception = assertThrows(ShippingRuleException.class, () -> ShippingRuleLoader.loadCustomShippingRules("test/ressources/test_corrupted_rules.json"));
-        System.out.println(exception.getMessage());
         assertTrue(exception.getMessage().contains("Error loading shipping rules"), "Exception message should indicate error loading rules.");
     }
 
