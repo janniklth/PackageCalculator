@@ -1,9 +1,11 @@
 package gui;
 
+import control.MessageHandler;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
@@ -42,6 +44,11 @@ public class PackageCalculator extends Application {
 	// - - - - - - GUI areas for different parts of the application - - - - - -
 
 	/**
+	 * The MessagesArea class represents a section of the user interface that displays a list of messages or logs.
+	 */
+	public MessagesArea messagesArea = new MessagesArea();
+
+	/**
 	 * The ToolbarArea class represents a section of the user interface that contains various tools and actions that can
 	 * be performed.
 	 */
@@ -58,10 +65,6 @@ public class PackageCalculator extends Application {
 	 */
 	public CostsOverviewArea costsOverviewArea = new CostsOverviewArea();
 
-	/**
-	 * The MessagesArea class represents a section of the user interface that displays a list of messages or logs.
-	 */
-	public MessagesArea messagesArea = new MessagesArea();
 
 	// Primary stage (window) for the application
 	private Stage primaryStage;
@@ -113,6 +116,9 @@ public class PackageCalculator extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
+
+		// Flush pending messages to the MessagesArea
+		MessageHandler.flushPendingMessages();
 	}
 
 	/**

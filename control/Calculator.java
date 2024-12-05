@@ -33,9 +33,12 @@ public class Calculator {
         List<ShippingRule> shippingRules = ShippingRuleLoader.loadShippingRules();
 
         // Defensive checks for invalid or nonsensical inputs
-        if (pack == null || pack.length <= 0 || pack.width <= 0 || pack.height <= 0 || pack.weight <= 0) {
-            throw new IllegalArgumentException("Invalid package dimensions or weight. All values must be greater than 0.");
+        if (pack == null) {
+            throw new IllegalArgumentException("The package is null. Please provide a valid package.");
         }
+
+        // Validate the packet dimensions and weight
+        Calculator.validatePacket(pack);
 
         // Convert the packet dimensions to metric units if needed
         Packet convertedPack = convertToMetric(pack);
@@ -71,5 +74,45 @@ public class Calculator {
         // Return a new packet with the converted dimensions and weight (cast to integers)
         return new Packet((int) lengthInMM, (int) widthInMM, (int) heightInMM, (int) weightInGrams);
 
+    }
+
+    /**
+     * Validates the dimensions and weight of the given packet and gives a detailed error message if any of them are invalid.
+     *
+     * @param pack the packet to validate
+     * @throws IllegalArgumentException if any of the dimensions or weight are invalid
+     */
+    private static void validatePacket(Packet pack) {
+        StringBuilder errorMessage = new StringBuilder("Invalid package parameters: ");
+        boolean hasError = false;
+
+        // Check if the length is greater than 0
+        if (pack.length <= 0) {
+            errorMessage.append("\n - length must be greater than 0. ");
+            hasError = true;
+        }
+
+        // Check if the width is greater than 0
+        if (pack.width <= 0) {
+            errorMessage.append("\n - width must be greater than 0. ");
+            hasError = true;
+        }
+
+        // Check if the height is greater than 0
+        if (pack.height <= 0) {
+            errorMessage.append("\n - height must be greater than 0. ");
+            hasError = true;
+        }
+
+        // Check if the weight is greater than 0
+        if (pack.weight <= 0) {
+            errorMessage.append("\n - weight must be greater than 0. ");
+            hasError = true;
+        }
+
+        // Throw an exception with the error message if any of the parameters are invalid
+        if (hasError) {
+            throw new IllegalArgumentException(errorMessage.toString().trim());
+        }
     }
 }

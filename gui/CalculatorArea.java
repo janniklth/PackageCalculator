@@ -104,13 +104,9 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
     private double calcShippingCosts() {
         double costs = 0.0;
 
-        // Check if any text field is empty
-        if (lengthTextField.getText().isEmpty() || widthTextField.getText().isEmpty() ||
-                heightTextField.getText().isEmpty() || weightTextField.getText().isEmpty()) {
-
-            showLoadingDotsAndResult("Error", Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Input Error", "All fields must be filled out.");
-            return costs;
+        // Validate user input
+        if (!validateUserInput()) {
+            return 0;
         }
 
         // Try to parse user input values and calculate shipping cost and catch any exceptions
@@ -131,7 +127,7 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         } catch (NumberFormatException e) {
             // Show an error message if non-numeric input is provided
             showLoadingDotsAndResult("Error", Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Invalid Input", "Please enter valid integer numbers in all fields.");
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Invalid Input", e.getMessage() + " \nPlease enter a valid integer number.");
         } catch (IllegalArgumentException e) {
             // Show the error message if the packet dimensions or weight are invalid
             showLoadingDotsAndResult("Error", Color.RED);
@@ -173,6 +169,48 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         }));
 
         timeline.play();
+    }
+
+    /**
+     * Validates the user input and shows detailed error messages if any of the input fields are invalid. Only validation
+     * of user input is done here, no validation of meaningful values is done here (max values, min values, etc.).
+     */
+    private boolean validateUserInput() {
+        // Initialize error message and check flags
+        StringBuilder errorMessage = new StringBuilder("Invalid input, please check:\n");
+        boolean hasError = false;
+
+        // Check if the length input field is empty
+        if (lengthTextField.getText().isEmpty()) {
+            errorMessage.append("- Length field is empty.\n");
+            hasError = true;
+        }
+
+        // Check if the width input field is empty
+        if (widthTextField.getText().isEmpty()) {
+            errorMessage.append("- Width field is empty.\n");
+            hasError = true;
+        }
+
+        // Check if the height input field is empty
+        if (heightTextField.getText().isEmpty()) {
+            errorMessage.append("- Height field is empty.\n");
+            hasError = true;
+        }
+
+        // Check if the weight input field is empty
+        if (weightTextField.getText().isEmpty()) {
+            errorMessage.append("- Weight field is empty.\n");
+            hasError = true;
+        }
+
+        // Show error message if any check failed
+        if (hasError) {
+            showLoadingDotsAndResult("Error", Color.RED);
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Input Error", errorMessage.toString().trim());
+            return false;
+        }
+        return true;
     }
 
     /**

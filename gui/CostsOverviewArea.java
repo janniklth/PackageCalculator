@@ -80,8 +80,10 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
         tableView.getColumns().addAll(typeColumn, costColumn, dimensionsColumn, weightColumn);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+
         // load shipping rules into table
-        loadShippingRulesIntoTable();
+        this.loadShippingRulesIntoTable();
+
 
         // compose layout
         this.setSpacing(20);

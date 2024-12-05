@@ -5,6 +5,9 @@ import gui.PackageCalculator;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The MessageHandler class provides utility methods for displaying messages and alerts.
  *
@@ -14,6 +17,9 @@ import javafx.scene.control.Alert.AlertType;
  * @see ErrorDisplayState
  */
 public class MessageHandler {
+    // List to store pending messages
+    private static final List<String> pendingMessages = new ArrayList<>();
+
     /**
      * Logs a message to the MessagesArea.
      *
@@ -21,7 +27,14 @@ public class MessageHandler {
      * @param message the message content to log
      */
     private static void logMessage(String title, String message) {
-        PackageCalculator.getInstance().messagesArea.setMessage(title + " - " + message);
+        String fullMessage = title + " - " + message;
+        PackageCalculator calculator = PackageCalculator.getInstance();
+
+        if (calculator != null && calculator.messagesArea != null) {
+            calculator.messagesArea.setMessage(fullMessage);
+        } else {
+            pendingMessages.add(fullMessage); // Nachricht zwischenspeichern
+        }
     }
 
     /**
@@ -37,6 +50,19 @@ public class MessageHandler {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    /**
+     * Flushes all pending messages to the MessagesArea.
+     */
+    public static void flushPendingMessages() {
+        PackageCalculator calculator = PackageCalculator.getInstance();
+        if (calculator != null && calculator.messagesArea != null) {
+            for (String message : pendingMessages) {
+                calculator.messagesArea.setMessage(message);
+            }
+            pendingMessages.clear();
+        }
     }
 
     /**
