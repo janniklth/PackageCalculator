@@ -14,7 +14,7 @@ final submission (Javadoc, test results, code coverage, and code metrics).
 
 ## JavaDoc
 
-The JavaDoc for the project is available in the following directory: [JavaDoc](doc/javadoc/index.html). For the best
+The JavaDoc for the project is available in the following directory: [JavaDoc](doc/JavaDoc/index.html). For the best
 experience, please download the directory and open the index.html file in a browser.
 
 ## Test Results
