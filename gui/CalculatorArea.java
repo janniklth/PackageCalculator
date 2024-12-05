@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+import ressources.Constants;
 
 /**
  * The CalculatorArea class represents the area of the application where the user can input the package dimensions and
@@ -40,8 +41,8 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
      */
     public CalculatorArea() {
         // Heading
-        Label heading = new Label("Shipping Cost Calculator");
-        heading.setFont(Font.font("System", FontWeight.BOLD, 20));
+        Label heading = new Label(Constants.CALCULATOR_AREA_LABEL);
+        heading.setFont(Font.font(Constants.FONT_NAME, FontWeight.BOLD, 20));
         heading.setTextFill(Color.DARKSLATEBLUE);
 
         // Input fields
@@ -50,10 +51,10 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         form.setVgap(10);
         form.setPadding(new Insets(10));
 
-        lengthLabel = new Label("Length (mm):");
-        widthLabel = new Label("Width (mm):");
-        heightLabel = new Label("Height (mm):");
-        weightLabel = new Label("Weight (g):");
+        lengthLabel = new Label(Constants.LENGTH_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        widthLabel = new Label(Constants.WIDTH_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        heightLabel = new Label(Constants.HEIGHT_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        weightLabel = new Label(Constants.WEIGHT_LABEL + " (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + "):");
 
         lengthTextField = new TextField();
         widthTextField = new TextField();
@@ -69,14 +70,14 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         form.add(weightLabel, 0, 3);
         form.add(weightTextField, 1, 3);
 
-        shippingCostLabel = new Label("?");
-        shippingCostLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
+        shippingCostLabel = new Label("...");
+        shippingCostLabel.setFont(Font.font(Constants.FONT_NAME, FontWeight.BOLD, 14));
         shippingCostLabel.setTextFill(Color.GREEN);
 
-        form.add(new Label("Shipping Costs:"), 0, 4);
+        form.add(new Label(Constants.RESULT_LABEL), 0, 4);
         form.add(shippingCostLabel, 1, 4);
 
-        calcButton = new Button("Calculate");
+        calcButton = new Button(Constants.CALCULATE_BUTTON);
         calcButton.setStyle("-fx-background-color: #0078D4; -fx-text-fill: white;");
         calcButton.setOnAction(ae -> calcShippingCosts());
         form.add(calcButton, 0, 5);
@@ -126,16 +127,16 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
 
         } catch (NumberFormatException e) {
             // Show an error message if non-numeric input is provided
-            showLoadingDotsAndResult("Error", Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Invalid Input", e.getMessage() + " \nPlease enter a valid integer number.");
+            showLoadingDotsAndResult(Constants.CALCULATION_ERROR_RESULT, Color.RED);
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.INVALID_INPUT_TITLE, Constants.INVALID_INPUT + Constants.ENTER_VALID_NUMBER + e.getMessage());
         } catch (IllegalArgumentException e) {
             // Show the error message if the packet dimensions or weight are invalid
-            showLoadingDotsAndResult("Error", Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Invalid Input", e.getMessage());
+            showLoadingDotsAndResult(Constants.CALCULATION_ERROR_RESULT, Color.RED);
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.INVALID_INPUT_TITLE, e.getMessage());
         } catch (ShippingRuleException e) {
             // Show the error message if the shipping rules could not be loaded
-            showLoadingDotsAndResult("Error", Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: pac" + e.getCause());
+            showLoadingDotsAndResult(Constants.CALCULATION_ERROR_RESULT, Color.RED);
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: " + e.getCause());
             throw new RuntimeException(e);
         }
         return costs;
@@ -151,19 +152,18 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
      */
     private void showLoadingDotsAndResult(String resultText, Color color) {
         Timeline timeline = new Timeline();
-        String baseText = "";
 
         // Animation of loading dots
-        for (int i = 0; i <= 3; i++) {
+        for (int i = 0; i <= Constants.CALCULATION_ANIMATION_CYCLES; i++) {
             int count = i;
-            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.1 * i), e -> {
-                shippingCostLabel.setText(baseText + ".".repeat(count));
+            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(Constants.CALCULATION_ANIMATION_DELAY * i), e -> {
+                shippingCostLabel.setText(Constants.CALUCLATE_ANIMATION_SYMBOL.repeat(count));
                 shippingCostLabel.setTextFill(Color.BLACK);
             }));
         }
 
         // Show the result after the loading dots in the specified color
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.4), e -> {
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(Constants.CALCULATION_ANIMATION_DURATION), e -> {
             shippingCostLabel.setText(resultText);
             shippingCostLabel.setTextFill(color);
         }));
@@ -177,37 +177,37 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
      */
     private boolean validateUserInput() {
         // Initialize error message and check flags
-        StringBuilder errorMessage = new StringBuilder("Invalid input, please check:\n");
+        StringBuilder errorMessage = new StringBuilder(Constants.INVALID_INPUT);
         boolean hasError = false;
 
         // Check if the length input field is empty
         if (lengthTextField.getText().isEmpty()) {
-            errorMessage.append("- Length field is empty.\n");
+            errorMessage.append(Constants.LENGTH_FIELD_EMPTY);
             hasError = true;
         }
 
         // Check if the width input field is empty
         if (widthTextField.getText().isEmpty()) {
-            errorMessage.append("- Width field is empty.\n");
+            errorMessage.append(Constants.WIDTH_FIELD_EMPTY);
             hasError = true;
         }
 
         // Check if the height input field is empty
         if (heightTextField.getText().isEmpty()) {
-            errorMessage.append("- Height field is empty.\n");
+            errorMessage.append(Constants.HEIGHT_FIELD_EMPTY);
             hasError = true;
         }
 
         // Check if the weight input field is empty
         if (weightTextField.getText().isEmpty()) {
-            errorMessage.append("- Weight field is empty.\n");
+            errorMessage.append(Constants.WEIGHT_FIELD_EMPTY);
             hasError = true;
         }
 
         // Show error message if any check failed
         if (hasError) {
-            showLoadingDotsAndResult("Error", Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "Input Error", errorMessage.toString().trim());
+            showLoadingDotsAndResult(Constants.CALCULATION_ERROR_RESULT, Color.RED);
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.INVALID_INPUT_TITLE, errorMessage.toString().trim());
             return false;
         }
         return true;
@@ -232,13 +232,9 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
      * @see MeasurementSystem
      */
     private void updateLabels() {
-        MeasurementSystem unit = SettingsManager.getMeasurementSystem();
-        String lengthUnit = unit == MeasurementSystem.IMPERIAL ? "inches" : "mm";
-        String weightUnit = unit == MeasurementSystem.IMPERIAL ? "lbs" : "g";
-
-        lengthLabel.setText("Length (" + lengthUnit + "):");
-        widthLabel.setText("Width (" + lengthUnit + "):");
-        heightLabel.setText("Height (" + lengthUnit + "):");
-        weightLabel.setText("Weight (" + weightUnit + "):");
+        lengthLabel.setText(Constants.LENGTH_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        widthLabel.setText(Constants.WIDTH_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        heightLabel.setText(Constants.HEIGHT_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        weightLabel.setText(Constants.WEIGHT_LABEL + " (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + "):");
     }
 }

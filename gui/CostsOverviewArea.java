@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import ressources.Constants;
+
 import java.util.List;
 
 /**
@@ -44,22 +46,22 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
      */
     public CostsOverviewArea() {
         // heading
-        Label heading = new Label("Costs Overview");
-        heading.setFont(Font.font("System", FontWeight.BOLD, 20));
+        Label heading = new Label(Constants.COSTVIEW_AREA_LABEL);
+        heading.setFont(Font.font(Constants.FONT_NAME, FontWeight.BOLD, 20));
         heading.setTextFill(Color.DARKSLATEBLUE);
 
         // TableView setup
-        TableColumn<ShippingRule, String> typeColumn = new TableColumn<>("Type");
+        TableColumn<ShippingRule, String> typeColumn = new TableColumn<>(Constants.COSTVIEW_TABLE_TYPE_COLUM_HEADER);
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
-        TableColumn<ShippingRule, String> costColumn = new TableColumn<>("Cost");
+        TableColumn<ShippingRule, String> costColumn = new TableColumn<>(Constants.COSTVIEW_TABLE_COST_COLUM_HEADER);
         costColumn.setCellValueFactory(rule ->
                 new SimpleStringProperty(String.format("%.2f " + SettingsManager.getCurrency().getSymbol(),
                         SettingsManager.getCurrency().convertFromEuro(rule.getValue().getCost()))));
         costColumn.setStyle("-fx-alignment: CENTER; -fx-font-weight: bold;");
 
         // Initialize column for dimensions with dynamic header
-        dimensionsColumn.setText("Dimensions (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
+        dimensionsColumn.setText(Constants.COSTVIEW_TABLE_DIMENSIONS_COLUM_HEADER + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
         dimensionsColumn.setCellValueFactory(rule ->
                 new SimpleStringProperty(String.format("%.1f x %.1f x %.1f",
                         baseSystem.convertLength(rule.getValue().getMaxLength(), SettingsManager.getMeasurementSystem(),
@@ -70,7 +72,7 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
                                 false))));
 
         // Initialize column for weight with dynamic header
-        weightColumn.setText("Max Weight (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + ")");
+        weightColumn.setText(Constants.COSTVIEW_TABLE_MAXWEIGHT_COLUMN_HEADER + " (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + ")");
         weightColumn.setCellValueFactory(rule ->
                 new SimpleStringProperty(String.format("%.1f %s",
                         baseSystem.convertWeight(rule.getValue().getMaxWeight(), SettingsManager.getMeasurementSystem(), false),
@@ -114,8 +116,8 @@ public class CostsOverviewArea extends VBox implements SettingsManager.SettingsL
     @Override
     public void onSettingsChanged() {
         // Update column headers
-        dimensionsColumn.setText("Dimensions (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
-        weightColumn.setText("Max Weight (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + ")");
+        dimensionsColumn.setText(Constants.COSTVIEW_TABLE_DIMENSIONS_COLUM_HEADER + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + ")");
+        weightColumn.setText(Constants.COSTVIEW_TABLE_MAXWEIGHT_COLUMN_HEADER + " (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + ")");
 
         // Refresh the table data
         tableView.refresh();
