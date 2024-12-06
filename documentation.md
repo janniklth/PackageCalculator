@@ -43,6 +43,11 @@ The following image gives an overview of the code coverage for the project:
 The important parts of this project (especially logic and data handling) are covered 100% by tests. Only the GUI and 
 some Getter/Setter methods are not covered by tests, as this is not common practice in such projects.
 
+The ShippingRuleLoader class is not covered to 100% because it would require generate a corrupt json file for each case.
+It was tested manually by changing the json file and checking the output and it works as expected.
+
+The MessageArea class is not tested because it is only for the user interface, that cannot be tested properly with JUnit.
+
 For more detailed information, please use the generate Code Coverage report, available from the following directory:
 [Code Coverage Report](doc/coverageReport/index.html)
 
