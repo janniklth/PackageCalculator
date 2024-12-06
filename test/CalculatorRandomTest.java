@@ -65,6 +65,8 @@ public class CalculatorRandomTest {
     /**
      * Generates a random packet with random dimensions and weight.
      *
+     * TODO: Generate negative values for dimensions and weight as well to test invalid packets.
+     *
      * @return a random packet
      */
     private Packet generateRandomPacket() {
@@ -86,29 +88,75 @@ public class CalculatorRandomTest {
      * @return the calculated cost for the given orientation, or Double.MAX_VALUE if no rule matches
      */
     private double calculateCostForOrientation(int length, int width, int height, int weight, Integer girth) {
-        if (length <= 300 && width <= 300 && height <= 150 && weight <= 1000) {
+        if (isSmallPacket(length, width, height, weight)) {
             return 3.89;
         }
-        if (length <= 600 && width <= 300 && height <= 150 && weight <= 2000) {
+        if (isMediumPacket(length, width, height, weight)) {
             return 4.39;
         }
-        if (length <= 1200 && width <= 600 && height <= 600) {
-            if (girth == null || girth <= 3000) {
-                if (weight <= 5000) {
-                    return 5.89;
-                }
-                if (weight <= 10000) {
-                    return 7.99;
-                }
-                if (weight <= 31000) {
-                    return 14.99;
-                }
-            }
-            // If girth is not required, return the default cost for these dimensions
-            return 14.99;
+        if (isLargePacket(length, width, height)) {
+            return calculateCostForLargePacket(weight, girth);
         }
         return Double.MAX_VALUE; // No valid rule matches
     }
+
+    /**
+     * Checks if the packet is a small packet based on the given dimensions and weight.
+     * @param length the length of the packet
+     * @param width the width of the packet
+     * @param height the height of the packet
+     * @param weight the weight of the packet
+     * @return true if the packet is a small packet, false otherwise
+     */
+    private boolean isSmallPacket(int length, int width, int height, int weight) {
+        return length <= 300 && width <= 300 && height <= 150 && weight <= 1000;
+    }
+
+    /**
+     * Checks if the packet is a medium packet based on the given dimensions and weight.
+     * @param length the length of the packet
+     * @param width the width of the packet
+     * @param height the height of the packet
+     * @param weight the weight of the packet
+     * @return true if the packet is a medium packet, false otherwise
+     */
+    private boolean isMediumPacket(int length, int width, int height, int weight) {
+        return length <= 600 && width <= 300 && height <= 150 && weight <= 2000;
+    }
+
+    /**
+     * Checks if the packet is a large packet based on the given dimensions and weight.
+     * @param length the length of the packet
+     * @param width the width of the packet
+     * @param height the height of the packet
+     * @return true if the packet is a large packet, false otherwise
+     */
+    private boolean isLargePacket(int length, int width, int height) {
+        return length <= 1200 && width <= 600 && height <= 600;
+    }
+
+    /**
+     * Calculates the cost for a large packet based on the given weight.
+     * @param weight the weight of the packet
+     * @param girth the girth of the packet (optional, can be null)
+     * @return the calculated cost for the large packet
+     */
+    private double calculateCostForLargePacket(int weight, int girth) {
+        if (girth <= 3000) {
+            if (weight <= 5000) {
+                return 5.89;
+            }
+            if (weight <= 10000) {
+                return 7.99;
+            }
+            if (weight <= 31000) {
+                return 14.99;
+            }
+        }
+        // If girth is too large, use the following rule/fare (independent of weight)
+        return 14.99;
+    }
+
 
     /**
      * Calculates the lowest shipping cost for a given packet by considering all possible orientations.
@@ -144,6 +192,7 @@ public class CalculatorRandomTest {
         }
 
         if (lowestCost == Double.MAX_VALUE) {
+            System.out.println("Length: " + packet.getLength() + " Width: " + packet.getWidth() + " Height: " + packet.getHeight() + " Weight: " + packet.getWeight());
             throw new IllegalArgumentException("No matching rule found for the given packet dimensions and weight.");
         }
 
