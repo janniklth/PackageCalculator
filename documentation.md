@@ -16,6 +16,7 @@ final submission (Javadoc, test results, code coverage, and code metrics).
 
 The JavaDoc for the project is available in the following directory: [JavaDoc](doc/JavaDoc/index.html). For the best
 experience, please download the directory and open the index.html file in a browser.
+It is also available online: [Online JavaDoc](https://janniklth.github.io/PackageCalculator/)
 
 ## Test Results
 
