@@ -2,7 +2,6 @@ package test;
 
 import control.Calculator;
 import data.Packet;
-import exceptions.ShippingRuleException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -37,13 +36,11 @@ public class CalculatorRandomTest {
             // Check if the packet is oversized or any dimension is zero
             if (isOversized(packet)) {
                 // Assert that an exception is thrown for oversized packets
-                assertThrows(IllegalArgumentException.class,
-                        () -> Calculator.calcShippingCosts(packet),
+                assertThrows(IllegalArgumentException.class, () -> Calculator.calcShippingCosts(packet),
                         String.format("Expected exception for oversized packet: %s", packet));
-            } else if (packet.getWidth() == 0 || packet.getHeight() == 0 || packet.getLength() == 0 || packet.getWeight() == 0) {
+            } else if (hasZeroDimension(packet)) {
                 // Assert that an exception is thrown for invalid packets
-                assertThrows(IllegalArgumentException.class,
-                        () -> Calculator.calcShippingCosts(packet),
+                assertThrows(IllegalArgumentException.class, () -> Calculator.calcShippingCosts(packet),
                         String.format("Expected exception for invalid packet: %s", packet));
             } else {
                 // Calculate actual and expected costs for valid packets
@@ -51,9 +48,9 @@ public class CalculatorRandomTest {
                 double expectedCost = calculateExpectedCost(packet);
 
                 // Assert that the actual cost matches the expected cost
-                assertEquals(expectedCost, actualCost, 0.01,
-                        String.format("Mismatch for packet, height: %d, width: %d, length: %d, weight: %d",
-                                packet.getHeight(), packet.getWidth(), packet.getLength(), packet.getWeight()));
+                assertEquals(expectedCost, actualCost, 0.01, String.format("Mismatch for packet, height: %d, width: " +
+                                "%d, length: %d, weight: %d", packet.getHeight(), packet.getWidth(), packet.getLength(),
+                        packet.getWeight()));
 
                 // Additional checks for the shipping cost
                 assertTrue(actualCost >= 0, "Shipping cost must never be negative.");
@@ -64,7 +61,7 @@ public class CalculatorRandomTest {
 
     /**
      * Generates a random packet with random dimensions and weight.
-     *
+     * <p>
      * TODO: Generate negative values for dimensions and weight as well to test invalid packets.
      *
      * @return a random packet
@@ -102,8 +99,9 @@ public class CalculatorRandomTest {
 
     /**
      * Checks if the packet is a small packet based on the given dimensions and weight.
+     *
      * @param length the length of the packet
-     * @param width the width of the packet
+     * @param width  the width of the packet
      * @param height the height of the packet
      * @param weight the weight of the packet
      * @return true if the packet is a small packet, false otherwise
@@ -114,8 +112,9 @@ public class CalculatorRandomTest {
 
     /**
      * Checks if the packet is a medium packet based on the given dimensions and weight.
+     *
      * @param length the length of the packet
-     * @param width the width of the packet
+     * @param width  the width of the packet
      * @param height the height of the packet
      * @param weight the weight of the packet
      * @return true if the packet is a medium packet, false otherwise
@@ -126,8 +125,9 @@ public class CalculatorRandomTest {
 
     /**
      * Checks if the packet is a large packet based on the given dimensions and weight.
+     *
      * @param length the length of the packet
-     * @param width the width of the packet
+     * @param width  the width of the packet
      * @param height the height of the packet
      * @return true if the packet is a large packet, false otherwise
      */
@@ -137,8 +137,9 @@ public class CalculatorRandomTest {
 
     /**
      * Calculates the cost for a large packet based on the given weight.
+     *
      * @param weight the weight of the packet
-     * @param girth the girth of the packet (optional, can be null)
+     * @param girth  the girth of the packet (optional, can be null)
      * @return the calculated cost for the large packet
      */
     private double calculateCostForLargePacket(int weight, int girth) {
@@ -167,14 +168,10 @@ public class CalculatorRandomTest {
      */
     private double calculateExpectedCost(Packet packet) {
         // All possible orientations of the packet
-        int[][] orientations = {
-                {packet.getLength(), packet.getWidth(), packet.getHeight()},
-                {packet.getLength(), packet.getHeight(), packet.getWidth()},
-                {packet.getWidth(), packet.getLength(), packet.getHeight()},
-                {packet.getWidth(), packet.getHeight(), packet.getLength()},
-                {packet.getHeight(), packet.getLength(), packet.getWidth()},
-                {packet.getHeight(), packet.getWidth(), packet.getLength()}
-        };
+        int[][] orientations = {{packet.getLength(), packet.getWidth(), packet.getHeight()}, {packet.getLength(),
+                packet.getHeight(), packet.getWidth()}, {packet.getWidth(), packet.getLength(), packet.getHeight()},
+                {packet.getWidth(), packet.getHeight(), packet.getLength()}, {packet.getHeight(), packet.getLength(),
+                packet.getWidth()}, {packet.getHeight(), packet.getWidth(), packet.getLength()}};
 
         double lowestCost = Double.MAX_VALUE;
 
@@ -209,14 +206,10 @@ public class CalculatorRandomTest {
      */
     private boolean isOversized(Packet packet) {
         // All possible orientations of the packet
-        int[][] orientations = {
-                {packet.getLength(), packet.getWidth(), packet.getHeight()},
-                {packet.getLength(), packet.getHeight(), packet.getWidth()},
-                {packet.getWidth(), packet.getLength(), packet.getHeight()},
-                {packet.getWidth(), packet.getHeight(), packet.getLength()},
-                {packet.getHeight(), packet.getLength(), packet.getWidth()},
-                {packet.getHeight(), packet.getWidth(), packet.getLength()}
-        };
+        int[][] orientations = {{packet.getLength(), packet.getWidth(), packet.getHeight()}, {packet.getLength(),
+                packet.getHeight(), packet.getWidth()}, {packet.getWidth(), packet.getLength(), packet.getHeight()},
+                {packet.getWidth(), packet.getHeight(), packet.getLength()}, {packet.getHeight(), packet.getLength(),
+                packet.getWidth()}, {packet.getHeight(), packet.getWidth(), packet.getLength()}};
 
         for (int[] orientation : orientations) {
             int length = orientation[0];
@@ -231,6 +224,16 @@ public class CalculatorRandomTest {
         }
 
         return true; // The packet is oversized in all orientations
+    }
+
+    /**
+     * Checks if the given packet has any dimension set to zero.
+     *
+     * @param packet the packet to check
+     * @return true if any dimension is zero, false otherwise
+     */
+    private static boolean hasZeroDimension(Packet packet) {
+        return packet.getWidth() == 0 || packet.getHeight() == 0 || packet.getLength() == 0 || packet.getWeight() == 0;
     }
 
 }
