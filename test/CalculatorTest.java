@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 /**
  * Provides test cases for the {@link Calculator} class.
  *
- * <p>Tests the shipping cost calculation for parcels based on the defined default shipping rules. Ensures that the correct
+ * <p>Tests the shipping cost calculation for parcels based on the defined default shipping rules. Ensures that the
+ * correct
  * shipping cost is calculated for parcels of different sizes and weights and that exceptions are thrown for oversized
  * parcels and parcels with invalid dimensions or weight.</p>
  *
@@ -18,16 +19,21 @@ import org.junit.jupiter.api.Test;
  * <ul>
  *     <li> {@link #testSmallParcelRate()} - Tests that a small parcel with dimensions up to 30x30x15 cm and up to 1 kg
  *     is correctly calculated to cost 3.89 EUR. </li>
- *     <li> {@link #testMediumParcelRate()} - Tests that a medium parcel with dimensions up to 60x30x15 cm and up to 2 kg
+ *     <li> {@link #testMediumParcelRate()} - Tests that a medium parcel with dimensions up to 60x30x15 cm and up to
+ *     2 kg
  *     is correctly calculated to cost 4.39 EUR. </li>
- *     <li> {@link #testLargeParcelRate()} - Tests that a large parcel with dimensions up to 120x60x60 cm, girth up to 300 cm,
+ *     <li> {@link #testLargeParcelRate()} - Tests that a large parcel with dimensions up to 120x60x60 cm, girth up
+ *     to 300 cm,
  *     and up to 5 kg is correctly calculated to cost 5.89 EUR. </li>
- *     <li> {@link #testXLParcelRate()} - Tests that an extra-large parcel with dimensions up to 120x60x60 cm, girth up to 300 cm,
+ *     <li> {@link #testXLParcelRate()} - Tests that an extra-large parcel with dimensions up to 120x60x60 cm, girth
+ *     up to 300 cm,
  *     and up to 10 kg is correctly calculated to cost 7.99 EUR. </li>
  *     <li> {@link #testXXLParcelRate()} - Tests that an extra-extra-large parcel with dimensions up to 120x60x60 cm
  *     and a weight up to 31 kg is correctly calculated to cost 14.99 EUR. </li>
- *     <li> {@link #testRotatedParcelRate()} - Tests that a parcel that has to be rotated to fit the dimensions is priced correctly. </li>
- *     <li> {@link #testSmallHeavyParcelRate()} - Tests that a small parcel with a heavy weight is priced correctly. </li>
+ *     <li> {@link #testRotatedParcelRate()} - Tests that a parcel that has to be rotated to fit the dimensions is
+ *     priced correctly. </li>
+ *     <li> {@link #testSmallHeavyParcelRate()} - Tests that a small parcel with a heavy weight is priced correctly.
+ *     </li>
  *     <li> {@link #testExceedMaxWeight()} - Tests that a parcel exceeding the maximum weight of 31 kg throws an
  *     {@link IllegalArgumentException}. </li>
  *     <li> {@link #testExceedMaxDimensions()} - Tests that a parcel exceeding the maximum dimensions of 120x60x60 cm
@@ -92,7 +98,8 @@ public class CalculatorTest {
     public void testLargeParcelRate() throws ShippingRuleException {
         Packet packet = new Packet(1000, 500, 500, 5000);
         double result = Calculator.calcShippingCosts(packet);
-        assertEquals(5.89, result, "A parcel up to 120x60x60 cm, girth <= 300 cm, and up to 5 kg should cost 5.89 EUR.");
+        assertEquals(5.89, result, "A parcel up to 120x60x60 cm, girth <= 300 cm, and up to 5 kg should cost 5.89 EUR" +
+                ".");
     }
 
     /**
@@ -103,7 +110,8 @@ public class CalculatorTest {
     public void testXLParcelRate() throws ShippingRuleException {
         Packet packet = new Packet(1000, 500, 500, 10000);
         double result = Calculator.calcShippingCosts(packet);
-        assertEquals(7.99, result, "A parcel up to 120x60x60 cm, girth <= 300 cm, and up to 10 kg should cost 7.99 EUR.");
+        assertEquals(7.99, result, "A parcel up to 120x60x60 cm, girth <= 300 cm, and up to 10 kg should cost 7.99 " +
+                "EUR.");
     }
 
     /**
@@ -146,7 +154,8 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("No suitable shipping rule found for the given package dimensions and weight.", exception.getMessage());
+        assertEquals("No suitable shipping rule found for the given package dimensions and weight.",
+                exception.getMessage());
     }
 
     /**
@@ -158,7 +167,8 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("No suitable shipping rule found for the given package dimensions and weight.", exception.getMessage());
+        assertEquals("No suitable shipping rule found for the given package dimensions and weight.",
+                exception.getMessage());
     }
 
     /**
@@ -236,7 +246,8 @@ public class CalculatorTest {
     /**
      * Tests that a parcel which would normally not fit (width), is priced correctly due to trying all orientations.
      */
-    @Test void testOrientationsWidth() throws ShippingRuleException {
+    @Test
+    void testOrientationsWidth() throws ShippingRuleException {
         Packet packet = new Packet(600, 1200, 600, 5000);
         double result = Calculator.calcShippingCosts(packet);
         assertEquals(14.99, result, "Rotated parcel should cost 14.99 EUR.");
@@ -245,7 +256,8 @@ public class CalculatorTest {
     /**
      * Tests that a parcel which would normally not fit (height), is priced correctly due to trying all orientations.
      */
-    @Test void testOrientationsHeight() throws ShippingRuleException {
+    @Test
+    void testOrientationsHeight() throws ShippingRuleException {
         Packet packet = new Packet(600, 600, 1200, 5000);
         double result = Calculator.calcShippingCosts(packet);
         assertEquals(14.99, result, "Rotated parcel should cost 14.99 EUR.");
@@ -280,7 +292,8 @@ public class CalculatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             Calculator.calcShippingCosts(packet);
         });
-        assertEquals("No suitable shipping rule found for the given package dimensions and weight.", exception.getMessage());
+        assertEquals("No suitable shipping rule found for the given package dimensions and weight.",
+                exception.getMessage());
     }
 }
 

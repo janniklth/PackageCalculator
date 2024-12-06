@@ -25,7 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
  *     is correctly identified as not a match. </li>
  *     <li> {@link #testMatches_InvalidPacket_GirthExceeds()} - Tests that a packet with girth that exceeds the rule
  *     (with girth limit) is correctly identified as not a match. </li>
- *     <li> {@link #testMatches_InvalidPacket_NullPacket()} - Tests that a null-packet throws a NullPointerException. </li>
+ *     <li> {@link #testMatches_InvalidPacket_NullPacket()} - Tests that a null-packet throws a NullPointerException.
+ *     </li>
  * </ul>
  *
  * @see ShippingRule
@@ -35,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ShippingRuleTest {
 
     /**
-     * Tests that a packet with dimensions and weight that are clearly below the rule is correctly identified as a match.
+     * Tests that a packet with dimensions and weight that are clearly below the rule is correctly identified as a
+     * match.
      */
     @Test
     public void testMatches_ValidPacket_MatchesRule() {
@@ -108,11 +110,13 @@ public class ShippingRuleTest {
         ShippingRule rule = createShippingRule("Small", 100, 100, 100, 100, null, 5.0);
 
         // assert that a null packet throws a NullPointerException
-        assertThrows(NullPointerException.class, () -> rule.matches(null), "A null packet should throw a NullPointerException.");
+        assertThrows(NullPointerException.class, () -> rule.matches(null), "A null packet should throw a " +
+                "NullPointerException.");
     }
 
     /**
      * Helper method to create a shipping rule with the given parameters.
+     *
      * @param type
      * @param maxLength
      * @param maxWidth
@@ -122,7 +126,8 @@ public class ShippingRuleTest {
      * @param cost
      * @return the created shipping rule
      */
-    private ShippingRule createShippingRule(String type, int maxLength, int maxWidth, int maxHeight, int maxWeight, Integer maxGirth, double cost) {
+    private ShippingRule createShippingRule(String type, int maxLength, int maxWidth, int maxHeight, int maxWeight,
+                                            Integer maxGirth, double cost) {
         ShippingRule rule = new ShippingRule();
         setField(rule, "type", type);
         setField(rule, "maxLength", maxLength);
@@ -136,6 +141,7 @@ public class ShippingRuleTest {
 
     /**
      * Helper method to set a field of an object via reflection.
+     *
      * @param object
      * @param fieldName
      * @param value

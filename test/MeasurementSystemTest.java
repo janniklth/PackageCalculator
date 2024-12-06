@@ -27,8 +27,10 @@ public class MeasurementSystemTest {
      */
     @Test
     public void testConvertToDisplayString() {
-        assertEquals("Metric (mm + g)", MeasurementSystem.METRIC.convertToDisplayString(), "Metric display string should be 'Metric (mm + g)'");
-        assertEquals("Imperial (in + lb)", MeasurementSystem.IMPERIAL.convertToDisplayString(), "Imperial display string should be 'Imperial (in + lb)'");
+        assertEquals("Metric (mm + g)", MeasurementSystem.METRIC.convertToDisplayString(), "Metric display string " +
+                "should be 'Metric (mm + g)'");
+        assertEquals("Imperial (in + lb)", MeasurementSystem.IMPERIAL.convertToDisplayString(), "Imperial display " +
+                "string should be 'Imperial (in + lb)'");
     }
 
     /**
@@ -36,9 +38,12 @@ public class MeasurementSystemTest {
      */
     @Test
     public void testFromDisplayString() {
-        assertEquals(MeasurementSystem.METRIC, MeasurementSystem.fromDisplayString("Metric (mm + g)"), "Should return METRIC for 'Metric (mm + g)'");
-        assertEquals(MeasurementSystem.IMPERIAL, MeasurementSystem.fromDisplayString("Imperial (in + lb)"), "Should return IMPERIAL for 'Imperial (in + lb)'");
-        assertThrows(IllegalArgumentException.class, () -> MeasurementSystem.fromDisplayString("Unknown"), "Should throw exception for invalid display string");
+        assertEquals(MeasurementSystem.METRIC, MeasurementSystem.fromDisplayString("Metric (mm + g)"), "Should return" +
+                " METRIC for 'Metric (mm + g)'");
+        assertEquals(MeasurementSystem.IMPERIAL, MeasurementSystem.fromDisplayString("Imperial (in + lb)"), "Should " +
+                "return IMPERIAL for 'Imperial (in + lb)'");
+        assertThrows(IllegalArgumentException.class, () -> MeasurementSystem.fromDisplayString("Unknown"), "Should " +
+                "throw exception for invalid display string");
     }
 
     /**
@@ -47,11 +52,14 @@ public class MeasurementSystemTest {
     @Test
     public void testConvertLength() {
         // Metric to Imperial
-        assertEquals(3.94, MeasurementSystem.METRIC.convertLength(100, MeasurementSystem.IMPERIAL, false), 0.01, "100 mm should equal 3.94 inches");
+        assertEquals(3.94, MeasurementSystem.METRIC.convertLength(100, MeasurementSystem.IMPERIAL, false), 0.01, "100" +
+                " mm should equal 3.94 inches");
         // Imperial to Metric
-        assertEquals(254.0, MeasurementSystem.IMPERIAL.convertLength(10, MeasurementSystem.METRIC, false), 0.01, "10 inches should equal 254 mm");
+        assertEquals(254.0, MeasurementSystem.IMPERIAL.convertLength(10, MeasurementSystem.METRIC, false), 0.01, "10 " +
+                "inches should equal 254 mm");
         // No conversion
-        assertEquals(100.0, MeasurementSystem.METRIC.convertLength(100, MeasurementSystem.METRIC, true), "100 mm should equal 100 mm");
+        assertEquals(100.0, MeasurementSystem.METRIC.convertLength(100, MeasurementSystem.METRIC, true), "100 mm " +
+                "should equal 100 mm");
     }
 
     /**
@@ -60,10 +68,13 @@ public class MeasurementSystemTest {
     @Test
     public void testConvertWeight() {
         // Metric to Imperial
-        assertEquals(2.2, MeasurementSystem.METRIC.convertWeight(1000, MeasurementSystem.IMPERIAL, false), 0.01, "1000 g should equal 2.2 lb");
+        assertEquals(2.2, MeasurementSystem.METRIC.convertWeight(1000, MeasurementSystem.IMPERIAL, false), 0.01,
+                "1000 g should equal 2.2 lb");
         // Imperial to Metric
-        assertEquals(4535.92, MeasurementSystem.IMPERIAL.convertWeight(10, MeasurementSystem.METRIC, true), 0.01, "10 lb should equal 4535.92 g");
+        assertEquals(4535.92, MeasurementSystem.IMPERIAL.convertWeight(10, MeasurementSystem.METRIC, true), 0.01, "10" +
+                " lb should equal 4535.92 g");
         // No conversion
-        assertEquals(100.0, MeasurementSystem.METRIC.convertWeight(100, MeasurementSystem.METRIC, true), "100 g should equal 100 g");
+        assertEquals(100.0, MeasurementSystem.METRIC.convertWeight(100, MeasurementSystem.METRIC, true), "100 g " +
+                "should equal 100 g");
     }
 }

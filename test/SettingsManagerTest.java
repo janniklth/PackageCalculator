@@ -14,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Provides test cases for the {@link SettingsManager} class.
  *
- * <p>Tests the methods for getting and setting the current {@link MeasurementSystem}, {@link ErrorDisplayState}, and {@link Currency},
+ * <p>Tests the methods for getting and setting the current {@link MeasurementSystem}, {@link ErrorDisplayState}, and
+ * {@link Currency},
  * as well as the registration of listeners to be notified when settings change to reflect the changes in the UI.</p>
  *
  * <p>Contains the following test cases:</p>
@@ -24,7 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
  *     <li> {@link #testSetAndGetErrorDisplayState()} - Tests the setting and getting of the error display state</li>
  *     <li> {@link #testSetAndGetCurrency()} - Tests the setting and getting of the currency</li>
  *     <li> {@link #testListenerNotification()} - Tests the notification of a listener when settings change</li>
- *     <li> {@link #testMultipleListenersNotification()} - Tests the notification of multiple listeners when settings change</li>
+ *     <li> {@link #testMultipleListenersNotification()} - Tests the notification of multiple listeners when settings
+ *     change</li>
  * </ul>
  *
  * @see SettingsManager
@@ -49,8 +51,10 @@ public class SettingsManagerTest {
      */
     @Test
     public void testDefaultValues() {
-        assertEquals(MeasurementSystem.METRIC, SettingsManager.getMeasurementSystem(), "Default Measurement System should be METRIC");
-        assertEquals(ErrorDisplayState.POPUP_AND_LOG, SettingsManager.getErrorDisplayState(), "Default Error Display State should be POPUP_AND_LOG");
+        assertEquals(MeasurementSystem.METRIC, SettingsManager.getMeasurementSystem(), "Default Measurement System " +
+                "should be METRIC");
+        assertEquals(ErrorDisplayState.POPUP_AND_LOG, SettingsManager.getErrorDisplayState(), "Default Error Display " +
+                "State should be POPUP_AND_LOG");
         assertEquals(Currency.EURO, SettingsManager.getCurrency(), "Default Currency should be EURO");
     }
 
@@ -60,7 +64,8 @@ public class SettingsManagerTest {
     @Test
     public void testSetAndGetMeasurementSystem() {
         SettingsManager.setMeasurementSystem(MeasurementSystem.IMPERIAL);
-        assertEquals(MeasurementSystem.IMPERIAL, SettingsManager.getMeasurementSystem(), "Measurement System should be set to IMPERIAL");
+        assertEquals(MeasurementSystem.IMPERIAL, SettingsManager.getMeasurementSystem(), "Measurement System should " +
+                "be set to IMPERIAL");
     }
 
     /**
@@ -69,7 +74,8 @@ public class SettingsManagerTest {
     @Test
     public void testSetAndGetErrorDisplayState() {
         SettingsManager.setShowErrorPopups(ErrorDisplayState.LOG_ONLY);
-        assertEquals(ErrorDisplayState.LOG_ONLY, SettingsManager.getErrorDisplayState(), "Error Display State should be set to POPUP_ONLY");
+        assertEquals(ErrorDisplayState.LOG_ONLY, SettingsManager.getErrorDisplayState(), "Error Display State should " +
+                "be set to POPUP_ONLY");
     }
 
     /**
