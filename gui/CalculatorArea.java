@@ -57,14 +57,18 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         form.setPadding(new Insets(10));
 
         // Labels for the text fields
-        this.lengthLabel = new Label(Constants.LENGTH_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
-        this.widthLabel = new Label(Constants.WIDTH_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
-        this.heightLabel = new Label(Constants.HEIGHT_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
-        this.weightLabel = new Label(Constants.WEIGHT_LABEL + " (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + "):");
+        this.lengthLabel =
+                new Label(Constants.LENGTH_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        this.widthLabel =
+                new Label(Constants.WIDTH_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        this.heightLabel =
+                new Label(Constants.HEIGHT_LABEL + " (" + SettingsManager.getMeasurementSystem().getLengthUnitSymbol() + "):");
+        this.weightLabel =
+                new Label(Constants.WEIGHT_LABEL + " (" + SettingsManager.getMeasurementSystem().getWeightUnitSymbol() + "):");
 
         // Text fields for the user input
         this.lengthTextField = new TextField();
-        this. widthTextField = new TextField();
+        this.widthTextField = new TextField();
         this.heightTextField = new TextField();
         this.weightTextField = new TextField();
 
@@ -109,9 +113,8 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
     /**
      * Calculates the shipping costs based on the user's input.
      * <p>
-     * This method retrieves the dimensions and weight entered by the user, creates a Packet object,
-     * and calculates the shipping costs using the Calculator class. The result is returned and also displayed in the
-     * shippingCostLabel.
+     * This method retrieves the dimensions and weight entered by the user, creates a Packet object, and calculates the
+     * shipping costs using the Calculator class. The result is returned and also displayed in the shippingCostLabel.
      *
      * @throws IllegalArgumentException if any input field contains invalid or wrong formatted data
      */
@@ -139,7 +142,8 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         } catch (NumberFormatException e) {
             // Show an error message if non-numeric input is provided
             this.showLoadingDotsAndResult(Constants.CALCULATION_ERROR_RESULT, Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.INVALID_INPUT_TITLE, Constants.INVALID_INPUT + Constants.ENTER_VALID_NUMBER + e.getMessage());
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.INVALID_INPUT_TITLE,
+                    Constants.INVALID_INPUT + Constants.ENTER_VALID_NUMBER + e.getMessage());
         } catch (IllegalArgumentException e) {
             // Show the error message if the packet dimensions or weight are invalid
             this.showLoadingDotsAndResult(Constants.CALCULATION_ERROR_RESULT, Color.RED);
@@ -147,15 +151,17 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         } catch (ShippingRuleException e) {
             // Show the error message if the shipping rules could not be loaded
             this.showLoadingDotsAndResult(Constants.CALCULATION_ERROR_RESULT, Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause: " + e.getCause());
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, "ShippingRuleException", e.getMessage() + "\n\nCause:" +
+                    " " + e.getCause());
             throw new RuntimeException(e);
         }
     }
 
     /**
      * Shows a loading animation with three black dots and then the result text in the specified color.
+     *
      * @param resultText the text to show after the loading dots
-     * @param color the color to use for the result text
+     * @param color      the color to use for the result text
      * @see Color
      * @see Timeline
      * @see KeyFrame
@@ -182,7 +188,8 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
     }
 
     /**
-     * Validates the user input and shows detailed error messages if any of the input fields are invalid. Only validation
+     * Validates the user input and shows detailed error messages if any of the input fields are invalid. Only
+     * validation
      * of user input is done here, no validation of meaningful values is done here (max values, min values, etc.).
      */
     private boolean validateUserInput() {
@@ -217,7 +224,8 @@ public class CalculatorArea extends VBox implements SettingsManager.SettingsList
         // Show error message if any check failed
         if (hasError) {
             this.showLoadingDotsAndResult(Constants.CALCULATION_ERROR_RESULT, Color.RED);
-            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.INVALID_INPUT_TITLE, errorMessage.toString().trim());
+            MessageHandler.handleMessage(Alert.AlertType.ERROR, Constants.INVALID_INPUT_TITLE,
+                    errorMessage.toString().trim());
             return false;
         }
         return true;

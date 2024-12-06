@@ -64,7 +64,8 @@ public class Calculator {
 
         // Loop through the orientations and check each for the shipping rules
         for (double[] orientation : orientations) {
-            Packet orientedPacket = new Packet((int) orientation[0], (int) orientation[1], (int) orientation[2], convertedPack.getWeight());
+            Packet orientedPacket = new Packet((int) orientation[0], (int) orientation[1], (int) orientation[2],
+                    convertedPack.getWeight());
 
             for (ShippingRule rule : shippingRules) {
                 if (rule.matches(orientedPacket)) {
@@ -106,7 +107,8 @@ public class Calculator {
     }
 
     /**
-     * Validates the dimensions and weight of the given packet and gives a detailed error message if any of them are invalid.
+     * Validates the dimensions and weight of the given packet and gives a detailed error message if any of them are not
+     * valid.
      *
      * @param pack the packet to validate
      * @throws IllegalArgumentException if any of the dimensions or weight are invalid

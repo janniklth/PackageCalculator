@@ -88,7 +88,7 @@ public enum MeasurementSystem {
      *
      * @param length the length value to convert
      * @param toUnit the target measurement unit
-     * @param exact whether to round the result to two decimal places
+     * @param exact  whether to round the result to two decimal places
      * @return the converted length value
      */
     public double convertLength(double length, MeasurementSystem toUnit, boolean exact) {
@@ -128,7 +128,7 @@ public enum MeasurementSystem {
      *
      * @param weight the weight value to convert
      * @param toUnit the target measurement unit
-     * @param exact whether to return the exact conversion or round to two decimal places
+     * @param exact  whether to return the exact conversion or round to two decimal places
      * @return the converted weight value
      */
     public double convertWeight(double weight, MeasurementSystem toUnit, boolean exact) {

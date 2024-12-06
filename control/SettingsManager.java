@@ -10,8 +10,9 @@ import java.util.List;
 /**
  * The SettingsManager class provides methods for managing user settings and notifying listeners of changes.
  *
- * <p>Includes methods for getting and setting the current {@link MeasurementSystem}, {@link ErrorDisplayState}, and {@link Currency},
- * as well as registering listeners to be notified when settings change to reflect teh changes in the UI.</p>
+ * <p>Includes methods for getting and setting the current {@link MeasurementSystem}, {@link ErrorDisplayState},
+ * and {@link Currency}, as well as registering listeners to be notified when settings change to reflect the changes
+ * in the UI.</p>
  *
  * @see MeasurementSystem
  * @see ErrorDisplayState

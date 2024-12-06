@@ -43,6 +43,7 @@ public enum Currency {
 
     /**
      * Returns the currency symbol.
+     *
      * @return the currency symbol as a string
      */
     public String getSymbol() {
