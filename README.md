@@ -8,6 +8,8 @@ The project was part of the lecture advanced software engineering at DHBW Stuttg
 Please note: A detailed documentation especially for the final submission (Javadoc, test results, code coverage, and code metrics) is 
 available in the [documentation](documentation.md).
 
+Link to the online repository: [GitHub Repository](https://github.com/janniklth/PackageCalculator.git)
+
 ## Features
 
 ### Required Features
