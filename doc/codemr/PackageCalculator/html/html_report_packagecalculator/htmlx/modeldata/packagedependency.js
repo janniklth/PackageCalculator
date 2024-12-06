@@ -1,4 +1,4 @@
-var matrix = [[0,0,0,0],[4,0,1,1],[3,3,0,2],[0,0,0,0]]
+var matrix = [[0,0,0,0,0],[2,0,1,0,1],[3,3,0,2,4],[0,0,0,0,0],[0,0,0,0,0]]
 var packages = [{
 "name": " data", "color": " #3182bd"
 }
@@ -10,5 +10,8 @@ var packages = [{
 }
 ,{
 "name": " exceptions", "color": " #c6dbef"
+}
+,{
+"name": " ressources", "color": " #e6550d"
 }
 ];
